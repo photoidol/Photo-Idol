@@ -1,0 +1,24 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Open Sans", sans-serif;
+  @apply text-slategray font-normal;
+}
+.containers {
+  @apply max-w-[1440px] mx-auto px-4;
+}
+button {
+  @apply cursor-pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply text-indigo;
+}

@@ -28,16 +28,14 @@ exports.initiatePayment = async (req, res) => {
     const uniqueUuid = generateUniqueId();
     const transactionUuid = `${userId}-${uniqueUuid}`;
 
-    const signature = this.createSignature(
-      `total_amount=${paidAmount.priceLimit},transaction_uuid=${transactionUuid},product_code=EPAYTEST`
-    );
+    const signature = this.createSignature(`total_amount=${paidAmount.priceLimit},transaction_uuid=${transactionUuid},product_code=NP-ES-FOTOIDOL`);
 
     const formData = {
       amount: paidAmount.priceLimit,
       failure_url: failureRedirectUrl,
       product_delivery_charge: "0",
       product_service_charge: "0",
-      product_code: "EPAYTEST",
+      product_code: "NP-ES-FOTOIDOL",
       signature: signature,
       signed_field_names: "total_amount,transaction_uuid,product_code",
       success_url: "http://localhost:5001/api/v1/payment/success/esewa",
@@ -65,18 +63,14 @@ exports.initiatePayment = async (req, res) => {
     //console.log("Payment Successfully");
   } catch (err) {
     // console.error(err);
-    return res
-      .status(400)
-      .json({ message: err?.message || "No Payment Available" });
+    return res.status(400).json({ message: err?.message || "No Payment Available" });
   }
 };
 
 exports.handleEsewaSuccess = async (req, res, next) => {
   try {
     const { data } = req.query;
-    const decodedData = JSON.parse(
-      Buffer.from(data, "base64").toString("utf-8")
-    );
+    const decodedData = JSON.parse(Buffer.from(data, "base64").toString("utf-8"));
     // console.log(decodedData);
 
     if (decodedData.status !== "COMPLETE") {
