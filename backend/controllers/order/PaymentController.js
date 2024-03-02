@@ -3,7 +3,7 @@ const PriceLimitConfigModel = require("../../models/order/PriceLimitConfigModel"
 const PaymentModel = require("../../models/order/PaymentModel");
 const { ESEWA_KEY } = require("../../utils/variables");
 const UserModel = require("../../models/users/UserModel");
-const failureRedirectUrl = "http://localhost:5173/";
+const failureRedirectUrl = "http://fotoidol.com";
 
 function generateUniqueId() {
   return Math.floor((1 + Math.random()) * 0x10000)
@@ -38,7 +38,7 @@ exports.initiatePayment = async (req, res) => {
       product_code: "NP-ES-FOTOIDOL",
       signature: signature,
       signed_field_names: "total_amount,transaction_uuid,product_code",
-      success_url: "http://localhost:5001/api/v1/payment/success/esewa",
+      success_url: "http://api.fotoidol.com/api/v1/payment/success/esewa",
       tax_amount: "0",
       total_amount: paidAmount.priceLimit,
       transaction_uuid: transactionUuid,
@@ -113,7 +113,7 @@ exports.updatePaymentInfo = async (req, res) => {
     const userId = payment.userId;
     await UserModel.findByIdAndUpdate(userId, { paid: true });
 
-    res.redirect("http://localhost:5173/admin");
+    res.redirect("http://fotoidol.com/admin");
 
     //console.log("Payment info updated successfully");
   } catch (err) {

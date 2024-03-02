@@ -49,7 +49,7 @@ const toggleCategoryFeature = async (resourceId) => {
   return response.data;
 };
 const getCategoryFeaturesLists = async () => {
-  const response = await axios.get(API_URL_CATEGORY); 
+  const response = await axios.get(API_URL_CATEGORY);
   return response.data;
 };
 
@@ -87,7 +87,7 @@ const settingService = {
   addPostLimit,
   getPostLimit,
   toggleCategoryFeature,
-  getCategoryFeaturesLists
+  getCategoryFeaturesLists,
 };
 
 export default settingService;

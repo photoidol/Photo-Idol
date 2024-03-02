@@ -1,13 +1,7 @@
 const path = require("path");
 const nodemailer = require("nodemailer");
 const generateTemplate = require("../../mail/template");
-const {
-  NODE_MAILER_USER,
-  NODE_MAILER_PASS,
-  VERIFICATION_EMAIL,
-  FORNTEND_URL,
-  SIGN_IN_URL,
-} = require("../variables");
+const { NODE_MAILER_USER, NODE_MAILER_PASS, VERIFICATION_EMAIL, FORNTEND_URL, SIGN_IN_URL } = require("../variables");
 
 const generateMailTransporter = () => {
   const transport = nodemailer.createTransport({

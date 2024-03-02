@@ -1,5 +1,5 @@
 import axios from "axios";
-const BACKEND_URL = "http://localhost:5001";
+const BACKEND_URL = "http://api.fotoidol.com";
 export const API_URL = `${BACKEND_URL}/api/v1/payment/`;
 
 const initiatePayment = async () => {

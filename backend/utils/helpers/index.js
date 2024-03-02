@@ -13,10 +13,7 @@ const generateChecksum = (data, secretKey) => {
   const jsonData = JSON.stringify(data);
 
   // Create a HMAC-SHA256 hash with the secret key
-  const hash = crypto
-    .createHmac("sha256", secretKey)
-    .update(jsonData)
-    .digest("hex");
+  const hash = crypto.createHmac("sha256", secretKey).update(jsonData).digest("hex");
 
   return hash;
 };
