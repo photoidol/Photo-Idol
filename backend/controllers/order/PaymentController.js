@@ -38,7 +38,7 @@ exports.initiatePayment = async (req, res) => {
       product_code: "NP-ES-FOTOIDOL",
       signature: signature,
       signed_field_names: "total_amount,transaction_uuid,product_code",
-      success_url: "http://api.fotoidol.com/api/v1/payment/success/esewa",
+      success_url: "https://api.fotoidol.com/api/v1/payment/success/esewa",
       tax_amount: "0",
       total_amount: paidAmount.priceLimit,
       transaction_uuid: transactionUuid,

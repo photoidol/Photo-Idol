@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "http://api.fotoidol.com/api/v1/",
+  baseURL: "https://api.fotoidol.com/api/v1/",
 });

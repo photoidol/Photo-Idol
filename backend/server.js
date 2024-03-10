@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 
 app.use(
   cors({
-    origin: ["http://fotoidol.com", "https://fotoidol.com", "http://fotoidol.online", "https://fotoidol.online", "http://api.fotoidol.com"],
+    origin: ["https://fotoidol.com", "http://admin.fotoidol.com"],
     credentials: true,
   })
 );
