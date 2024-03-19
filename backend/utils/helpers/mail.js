@@ -24,7 +24,7 @@ const sendVerificationMail = (verificationToken, profile) => {
   try {
     const transport = generateMailTransporter();
     const { name, email } = profile;
-    const message = `Welcome to OurApp! Dear ${name}, We're thrilled to have you on board. Thank you for choosing OurApp! To get started, all you need to do is verify your account.`;
+    const message = `Dear ${name}, We're excited to have you join us at Foto Idol! To get started, all you need to do is verify your account.`;
 
     transport.sendMail({
       to: email,
@@ -60,10 +60,9 @@ const sendForgotPassworLink = (options) => {
   try {
     const transport = generateMailTransporter();
     const { name, email, link } = options;
-    const message = `We received a request to reset your password for your account with ${name}. To proceed with the password reset process, please click the link below: 
+    const message = `We received a request to reset your password for your account with ${name}. To proceed with the password reset process, please click "Resend Link": 
   <br/> <b>If you didn't initiate this request, you can safely ignore this email. Your account security is important to us, and no changes will be made to your password.</b>
   `;
-
     transport.sendMail({
       to: email,
       from: VERIFICATION_EMAIL,

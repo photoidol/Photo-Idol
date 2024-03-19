@@ -7,10 +7,7 @@ const userSchema = mongoose.Schema(
     email: { type: String, required: true },
     password: {
       type: String,
-      require: [
-        true,
-        "Password should contain at least 8 characters, including at least one lowercase letter, one uppercase letter, and one number",
-      ],
+      require: [true, "Password should contain at least 8 characters, including at least one lowercase letter, one uppercase letter, and one number"],
     },
     avatar: {
       type: Object,
@@ -19,7 +16,7 @@ const userSchema = mongoose.Schema(
       default: "https://cdn-icons-png.flaticon.com/512/14722/14722952.png",
     },
     phone: { type: Number },
-    bio: { type: String, default: "Wellcome to Photo Idol" },
+    bio: { type: String, default: "" },
     country: { type: String },
     address: { type: String },
     role: {

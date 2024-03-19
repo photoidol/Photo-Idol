@@ -39,25 +39,15 @@ const storage = multer.diskStorage({
     cb(null, "uploads");
   },
   filename: function (req, file, cb) {
-    cb(
-      null,
-      new Date().toISOString().replace(/:/g, "-") + "-" + file.originalname
-    );
+    cb(null, new Date().toISOString().replace(/:/g, "-") + "-" + file.originalname);
   },
 });
 
 function fileFilter(req, file, cb) {
-  if (
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg" ||
-    file.mimetype === "image/jpeg"
-  ) {
+  if (file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg") {
     cb(null, true);
   } else {
-    cb(
-      new Error("Invalid file type. Supported types are jpg, png, and jpeg."),
-      false
-    );
+    cb(new Error("Invalid file type. Supported types are jpg, png, and jpeg."), false);
   }
 }
 
@@ -78,9 +68,7 @@ const checkImageSize = (req, res, next) => {
   // Check file size
   if (req.file.size > 1 * 1024 * 1024) {
     // Check if file size exceeds 1MB (1 * 1024 * 1024 bytes)
-    return res
-      .status(400)
-      .json({ message: "Image size must be less than 1MB." });
+    return res.status(400).json({ message: "Image size must be less than 1MB." });
   }
 
   // If all checks pass, proceed to the next middleware/route handler

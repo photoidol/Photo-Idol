@@ -3,7 +3,21 @@ const { admin, protect } = require("../middleware/authMiddleware");
 const validation = require("../middleware/Validation");
 const { upload } = require("../utils/uploadImg");
 const { createHomeSliderValidation } = require("../utils/validations");
-const { createHomeSlider, getAllhomeSlider, deletehomeSlider, updatehomeSlider, toggleHomeFeature, getFeaturesLists, createOrUpdateContactInfo, getContactInfo, gethomeSlider, toggleCategoryFeature, getCategoryLists, createOrUpdatePostsLimit, getPostsLimit } = require("../controllers/SettingCtr");
+const {
+  createHomeSlider,
+  getAllhomeSlider,
+  deletehomeSlider,
+  updatehomeSlider,
+  toggleHomeFeature,
+  getFeaturesLists,
+  createOrUpdateContactInfo,
+  getContactInfo,
+  gethomeSlider,
+  toggleCategoryFeature,
+  getCategoryLists,
+  createOrUpdatePostsLimit,
+  getPostsLimit,
+} = require("../controllers/SettingCtr");
 const router = express.Router();
 
 router.post("/homeslider", protect, admin, upload.single("cover"), validation(createHomeSliderValidation), createHomeSlider);

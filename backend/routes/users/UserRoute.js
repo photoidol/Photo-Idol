@@ -2,7 +2,34 @@ const express = require("express");
 const router = express.Router();
 const validation = require("../../middleware/Validation");
 const { CreateUser, UserPassword, changePasswordVld } = require("../../utils/validations/UserValidation");
-const { register, login, logout, getUserProfile, updateUserProfile, loginStatus, sendVerificationEmail, verifiedToUser, forgotPassword, resetPassword, changePassword, sendOTPctr, loginWithOTP, loginWithGoogle, deleteAccount, getAllAccounts, getAccount, deleteAccountByAdmin, updateRole, adminLogin, createLinks, getLinks, deleteLink, updateLink, getUserLinks, updateUserStatus } = require("../../controllers/users/UserControllers");
+const {
+  register,
+  login,
+  logout,
+  getUserProfile,
+  updateUserProfile,
+  loginStatus,
+  sendVerificationEmail,
+  verifiedToUser,
+  forgotPassword,
+  resetPassword,
+  changePassword,
+  sendOTPctr,
+  loginWithOTP,
+  loginWithGoogle,
+  deleteAccount,
+  getAllAccounts,
+  getAccount,
+  deleteAccountByAdmin,
+  updateRole,
+  adminLogin,
+  createLinks,
+  getLinks,
+  deleteLink,
+  updateLink,
+  getUserLinks,
+  updateUserStatus,
+} = require("../../controllers/users/UserControllers");
 const { protect, admin, verified } = require("../../middleware/authMiddleware");
 const { upload } = require("../../utils/uploadImg");
 

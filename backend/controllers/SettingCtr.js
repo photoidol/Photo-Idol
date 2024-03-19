@@ -1,11 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const {
-  HomeSlider,
-  HomeFeature,
-  ContactInfo,
-  CategoryFeature,
-  PostsLimit,
-} = require("../models/SettingModel");
+const { HomeSlider, HomeFeature, ContactInfo, CategoryFeature, PostsLimit } = require("../models/SettingModel");
 const PostsModel = require("../models/posts/PostsModel");
 const { isValidObjectId } = require("mongoose");
 const CategoryModel = require("../models/posts/CategoryModel");
@@ -17,9 +11,7 @@ const createHomeSlider = asyncHandler(async (req, res) => {
   const isTitleExists = await HomeSlider.findOne({ title, category });
   if (isTitleExists) {
     res.status(400);
-    throw new Error(
-      "A home content feature with the same title and category already exists."
-    );
+    throw new Error("A home content feature with the same title and category already exists.");
   }
 
   const totalDocumentsWithCategory = await HomeSlider.countDocuments({
@@ -27,9 +19,7 @@ const createHomeSlider = asyncHandler(async (req, res) => {
   });
   if (totalDocumentsWithCategory >= 6) {
     res.status(400);
-    throw new Error(
-      "There are already 6 or more content with the same category."
-    );
+    throw new Error("There are already 6 or more content with the same category.");
   }
 
   if (!req.file) {
@@ -38,9 +28,7 @@ const createHomeSlider = asyncHandler(async (req, res) => {
 
   const acceptedImageTypes = ["image/png", "image/jpeg", "image/jpg"];
   if (!acceptedImageTypes.includes(req.file.mimetype)) {
-    return res
-      .status(400)
-      .json({ error: "Cover image must be in PNG, JPEG, or JPG format" });
+    return res.status(400).json({ error: "Cover image must be in PNG, JPEG, or JPG format" });
   }
 
   let fileData = {};
@@ -108,9 +96,7 @@ const gethomeSlider = asyncHandler(async (req, res) => {
 
   if (!homeSliders) {
     res.status(500);
-    throw new Error(
-      "An unexpected error occurred. Please try again later or contact our support team for assistance."
-    );
+    throw new Error("An unexpected error occurred. Please try again later or contact our support team for assistance.");
   }
 
   res.status(200).json(homeSliders);
@@ -124,9 +110,7 @@ const getAllhomeSlider = asyncHandler(async (req, res) => {
 
   if (!homeSliders) {
     res.status(500);
-    throw new Error(
-      "An unexpected error occurred. Please try again later or contact our support team for assistance."
-    );
+    throw new Error("An unexpected error occurred. Please try again later or contact our support team for assistance.");
   }
 
   res.status(200).json(homeSliders);
@@ -149,26 +133,19 @@ const deletehomeSlider = asyncHandler(async (req, res) => {
 
   if (!homeSlider) {
     res.status(404);
-    throw new Error(
-      "Home Slider not found. Please check the provided information."
-    );
+    throw new Error("Home Slider not found. Please check the provided information.");
   }
 
   if (homeSlider.cover && homeSlider.cover.publicId) {
     try {
-      const result = await cloudinary.uploader.destroy(
-        homeSlider.cover.publicId
-      );
+      const result = await cloudinary.uploader.destroy(homeSlider.cover.publicId);
       if (result.result !== "ok") {
-        res
-          .status(500)
-          .json({ message: "Error deleting cover from Cloudinary" });
+        res.status(500).json({ message: "Error deleting cover from Cloudinary" });
         return;
       }
     } catch (error) {
       res.status(500).json({
-        message:
-          "An error occurred while deleting the cover image from Cloudinary.",
+        message: "An error occurred while deleting the cover image from Cloudinary.",
       });
       return;
     }
@@ -215,9 +192,7 @@ const updatehomeSlider = asyncHandler(async (req, res) => {
       try {
         await cloudinary.uploader.destroy(homeSliderToUpdate.cover.publicId);
       } catch (error) {
-        return res
-          .status(500)
-          .json({ message: "Error deleting previous cover from Cloudinary." });
+        return res.status(500).json({ message: "Error deleting previous cover from Cloudinary." });
       }
     }
 
@@ -229,11 +204,7 @@ const updatehomeSlider = asyncHandler(async (req, res) => {
       ...(fileData && { cover: fileData }),
     };
 
-    const updatedHomeSlider = await HomeSlider.findByIdAndUpdate(
-      id,
-      updateFields,
-      { new: true }
-    );
+    const updatedHomeSlider = await HomeSlider.findByIdAndUpdate(id, updateFields, { new: true });
 
     if (!updatedHomeSlider) {
       res.status(404).json({ message: "HomeSlider not found." });
@@ -245,9 +216,7 @@ const updatehomeSlider = asyncHandler(async (req, res) => {
       data: updatedHomeSlider,
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "An error occurred while updating the HomeSlider." });
+    res.status(500).json({ message: "An error occurred while updating the HomeSlider." });
   }
 });
 
@@ -257,8 +226,7 @@ const toggleHomeFeature = asyncHandler(async (req, res) => {
   const resourceId = req.body.resourceId;
   let status = "added";
 
-  if (!isValidObjectId(resourceId))
-    return res.status(422).json({ error: "Post id is invalid!" });
+  if (!isValidObjectId(resourceId)) return res.status(422).json({ error: "Post id is invalid!" });
 
   const resource = await PostsModel.findById(resourceId);
   if (!resource) return res.status(404).json({ error: "Post not found!" });
@@ -320,8 +288,7 @@ const toggleCategoryFeature = asyncHandler(async (req, res) => {
   const resourceId = req.body.resourceId;
   let status = "added";
 
-  if (!isValidObjectId(resourceId))
-    return res.status(422).json({ error: "Category id is invalid!" });
+  if (!isValidObjectId(resourceId)) return res.status(422).json({ error: "Category id is invalid!" });
 
   // Find the user's favorite list
   const favoriteList = await CategoryFeature.findOne({ owner: req.user.id });
@@ -345,8 +312,7 @@ const toggleCategoryFeature = asyncHandler(async (req, res) => {
       // Check if the user has reached the limit of 9 items
       if (favoriteList.items.length >= 9) {
         return res.status(422).json({
-          error:
-            "You have already added 9 categories to your favorites. Remove one to add a new one.",
+          error: "You have already added 9 categories to your favorites. Remove one to add a new one.",
         });
       }
 
@@ -470,9 +436,7 @@ const createOrUpdatePostsLimit = asyncHandler(async (req, res) => {
 
     await assetLimitConfig.save();
 
-    res
-      .status(200)
-      .json({ message: "Posts limit configuration updated successfully" });
+    res.status(200).json({ message: "Posts limit configuration updated successfully" });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
