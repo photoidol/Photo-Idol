@@ -21,7 +21,7 @@ export const CardSlanted = ({ title, image, styles, postSlug }) => {
             className={`${styles} object-cover min-h-[225px] xxl:h-[360px] xxl:w-[240px] w-[180px] h-[280px]`}
           />
         </div>
-        <h2 className="capitalize font-medium mt-5 text-white absolute bottom-0 xxl:m-4 m-3 leading-[1.3] xxl:text-base text-[14px] z-30 ">
+        <h2 className="capitalize font-medium mt-5 text-white absolute bottom-0 xxl:m-4 m-3 leading-[1.3] xxl:text-base text-[13px] z-30">
           {title.length > POST_CARD_TITLE_TEXT_LIMIT
             ? title.slice(0, POST_CARD_TITLE_TEXT_LIMIT) + "..."
             : title}

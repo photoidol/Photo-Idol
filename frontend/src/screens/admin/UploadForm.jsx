@@ -1,7 +1,7 @@
 import { Card, Typography } from "@material-tailwind/react";
 import Loader from "../../components/common/Loader";
 import { useEffect, useRef, useState } from "react";
-import { getUserPosts } from "../../redux/slices/postsSlice";
+import { getUserPosts, searchUserPosts } from "../../redux/slices/postsSlice";
 import {
   createResource,
   getallResource,
@@ -18,6 +18,8 @@ import { Button } from "@material-tailwind/react";
 import { FiChevronRight } from "react-icons/fi";
 import { staticImages } from "../../images";
 import { MdUpload } from "react-icons/md";
+import { selectUser } from "../../redux/slices/authSlice";
+import { scrollToTop } from "../../utils/scrollToTop";
 
 const initialState = {
   title: "",
@@ -27,14 +29,15 @@ const initialState = {
 };
 
 const UploadForm = () => {
-  // const user = useSelector(selectUser);
+  const user = useSelector(selectUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const userPosts = useSelector((state) => state.posts.searchedUserPosts);
 
   useRedirectLoggedOutUser("/login");
   const [resource, setResource] = useState(initialState);
-  const [resourceImages, setResourceImages] = useState([]);
-  const [imagePreviews, setImagePreviews] = useState([]);
+  const [resourceImage, setResourceImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const { title, description, category } = resource;
   const { isSuccess, isLoading } = useSelector((state) => state.resource);
   const fileInputRef = useRef(null);
@@ -72,12 +75,12 @@ const UploadForm = () => {
   };
 
   const validateImage = (value) => {
-    if (!value || value.length === 0) {
+    if (!value) {
       return "Please choose an image.";
     } else if (value.length > 1) {
       return "Please select only one image.";
-    } else if (value[0].size > 3 * 1024 * 1024) {
-      return "Image size can't be larger than 3 MB.";
+    } else if (value.size > 1 * 1024 * 1024) {
+      return "Image size can't be larger than 1 MB.";
     }
     return "";
   };
@@ -102,9 +105,11 @@ const UploadForm = () => {
               {guideline.guidelines.map((guideline, index) => (
                 <li
                   key={index}
-                  className="flex text-slategray items-center gap-x-2 flex-wrap text-sm my-[2px]"
+                  className="flex text-slategray items-baseline gap-x-2 text-sm my-1.5"
                 >
-                  <FaClipboardCheck />
+                  <span className="flex items-center">
+                    <FaClipboardCheck />
+                  </span>
                   <span>{guideline.desc}</span>
                 </li>
               ))}
@@ -127,44 +132,36 @@ const UploadForm = () => {
 
   const handleImageChange = (e) => {
     e.preventDefault();
-    const selectedImages = Array.from(e.target.files || e.dataTransfer.files);
+    const selectedImage = e.target.files[0] || e.dataTransfer.files[0];
     const allowedFormats = ["image/jpeg", "image/png", "image/jpg"];
 
-    const invalidFiles = selectedImages.filter(
-      (file) => !allowedFormats.includes(file.type)
-    );
-
-    if (invalidFiles.length === 0) {
-      setResourceImages(selectedImages);
-      const previews = selectedImages.map((image) =>
-        URL.createObjectURL(image)
-      );
-      setImagePreviews(previews);
-    } else {
-      setResourceImages([]);
+    if (selectedImage && allowedFormats.includes(selectedImage.type)) {
+      setResourceImage(selectedImage);
+      const preview = URL.createObjectURL(selectedImage);
+      setImagePreview(preview);
       setErrors({
         ...errors,
-        image: `Invalid file formats. Please upload only JPEG, PNG, or JPG images. Invalid files: ${invalidFiles
-          .map((file) => file.name)
-          .join(", ")}`,
+        image: null,
+      });
+    } else {
+      setResourceImage(null);
+      setErrors({
+        ...errors,
+        image: `Invalid file formats. Please upload only JPEG, PNG, or JPG images`,
       });
     }
     setIsDragOver(false);
   };
 
-  const handleDeleteImage = (indexToDelete) => {
-    const updatedImages = [...resourceImages];
-    updatedImages.splice(indexToDelete, 1);
-    setResourceImages(updatedImages);
-
-    const updatedPreviews = [...imagePreviews];
-    updatedPreviews.splice(indexToDelete, 1);
-    setImagePreviews(updatedPreviews);
+  const handleDeleteImage = () => {
+    resetFileInput();
   };
 
   const resetFileInput = () => {
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
+      setResourceImage(null);
+      setImagePreview(null);
     }
   };
 
@@ -173,7 +170,7 @@ const UploadForm = () => {
     const titleError = validateTitle(resource.title);
     const descriptionError = validateDescription(resource.description);
     const categoryError = validateCategory(resource.category);
-    const imageError = validateImage(resourceImages);
+    const imageError = validateImage(resourceImage);
 
     setErrors({
       title: titleError,
@@ -186,10 +183,7 @@ const UploadForm = () => {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("description", description);
-
-      resourceImages.forEach((image) => {
-        formData.append("assets", image);
-      });
+      formData.append("assets", resourceImage);
 
       if (category) {
         formData.append("category", category.value);
@@ -198,8 +192,8 @@ const UploadForm = () => {
       try {
         await dispatch(createResource(formData));
         setResource(initialState);
-        setResourceImages([]);
-        setImagePreviews([]);
+        setResourceImage(null);
+        setImagePreview();
         navigate("/admin/images");
         resetFileInput();
         await dispatch(getallResource());
@@ -250,7 +244,25 @@ const UploadForm = () => {
     }, 4000);
 
     return () => clearTimeout(timeoutId);
-  }, [errors]); // Run this effect whenever the errors state changes
+  }, [errors]);
+
+  useEffect(() => {
+    if (user) {
+      dispatch(searchUserPosts({ userId: user._id, email: user.email }));
+    }
+  }, [dispatch, user]);
+
+  useEffect(() => {
+    if (!user?.paid) {
+      navigate("/admin");
+    }
+
+    if (userPosts?.totalPost >= 3) {
+      navigate("/admin");
+    }
+  }, [userPosts?.totalPost, navigate, user?.paid]);
+
+  useEffect(() => scrollToTop(), []);
 
   return (
     <div className="bg-white pt-2 pb-6 my-5 shadow-xl rounded-md grid xxl:grid-cols-[600px_auto] xl:grid-cols-[600px_auto] gap-4">
@@ -360,26 +372,20 @@ const UploadForm = () => {
                 </div>
               )}
 
-              {imagePreviews.length > 0 ? (
+              {imagePreview?.length > 0 ? (
                 <div className="grid lg:grid-cols-3 grid-cols-2 gap-4">
-                  {imagePreviews.map((preview, index) => (
-                    <div
-                      key={index}
-                      className="relative rounded-lg overflow-hidden h-[180px]"
+                  <div className="relative rounded-lg overflow-hidden h-[180px]">
+                    <img
+                      src={imagePreview}
+                      className="w-full h-full object-cover"
+                    />
+                    <button
+                      className="absolute top-2 shadow-lg right-2 bg-moonstone text-white rounded-full cursor-pointer"
+                      onClick={() => handleDeleteImage()}
                     >
-                      <img
-                        src={preview}
-                        alt={`Image ${index}`}
-                        className="w-full h-full object-cover"
-                      />
-                      <button
-                        className="absolute top-2 shadow-lg right-2 bg-moonstone text-white rounded-full cursor-pointer"
-                        onClick={() => handleDeleteImage(index)}
-                      >
-                        <RxCrossCircled size={30} />
-                      </button>
-                    </div>
-                  ))}
+                      <RxCrossCircled size={30} />
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <div id="gallery" className="flex flex-1 flex-wrap my-3">
@@ -408,6 +414,10 @@ const UploadForm = () => {
               <span>upload now</span>
             </Button>
           </form>
+          <p className="mt-6 text-base">
+            <b>Note :</b> We recommend using an image compressor to reduce the
+            size of your photo before uploading.
+          </p>
         </Card>
       </div>
 
@@ -418,91 +428,31 @@ const UploadForm = () => {
           </Typography>
         </div>
         <div className="grid gap-4 xl:gap-6">
-          <div className="flex flex-col text-center text-gray-900 bg-white rounded-lg">
-            <h3 className="text-sm text-start font-bold text-indigo opacity-80 uppercase">
-              Half Body Portrait
-            </h3>
-            <ul role="list" className="mt-2 text-left text-sm text-slategray">
-              <li className="flex items-start gap-x-4 my-1">
-                <span className="min-w-[10px] w-[10px] pt-[2px]">
-                  <FaCheck size={12} className="text-slategray" />
-                </span>
-                <span>
-                  Generally, anything under 2MB is accepted. We do accept larger
-                  images but they can sometimes cause issues.
-                </span>
-              </li>
-              <li className="flex items-start gap-x-4 my-1">
-                <span className="min-w-[10px] w-[10px] pt-[2px]">
-                  <FaCheck size={12} className="text-slategray" />
-                </span>
-                <span>
-                  We limit image resolution to 4000x4000px. Anything larger will
-                  prompt an image upload error.{" "}
-                </span>
-              </li>
-              <li className="flex items-start gap-x-4 my-1">
-                <span className="min-w-[10px] w-[10px] pt-[2px]">
-                  <FaCheck size={12} className="text-slategray" />
-                </span>
-                <span>
-                  You can upload the following formats: JPEG, JPG & PNG.
-                </span>
-              </li>
-            </ul>
-          </div>
-
-          <div className="flex flex-col text-center text-gray-900 bg-white rounded-lg">
-            <h3 className="text-sm text-start font-bold text-indigo opacity-80 uppercase">
-              Full Body Portrait
-            </h3>
-            <ul role="list" className="mt-2 text-left text-sm text-gray-600">
-              <li className="flex items-start gap-x-4 my-1">
-                <span className="min-w-[10px] w-[10px] pt-[2px]">
-                  <FaCheck size={12} className="text-slategray" />
-                </span>
-                <span>The size must be between 0.5 MB and 80 MB.</span>
-              </li>
-              <li className="flex items-start gap-x-4 my-1">
-                <span className="min-w-[10px] w-[10px] pt-[2px]">
-                  <FaCheck size={12} className="text-slategray" />
-                </span>
-                <span>The accepted photo format are JPEG, PNG & JPG.</span>
-              </li>
-              <li className="flex items-start gap-x-4 my-1">
-                <span className="min-w-[10px] w-[10px] pt-[2px]">
-                  <FaCheck size={12} className="text-slategray" />
-                </span>
-                <span>The dimensions for the photo is: 50x50.</span>
-              </li>
-            </ul>
-          </div>
-
-          <div className="flex flex-col text-center text-gray-900 bg-white rounded-lg">
-            <h3 className="text-sm text-start font-bold text-indigo opacity-80 uppercase">
-              Landscape
-            </h3>
-            <ul role="list" className="mt-2 text-left text-sm text-gray-600">
-              <li className="flex items-start gap-x-4 my-1">
-                <span className="min-w-[10px] w-[10px] pt-[2px]">
-                  <FaCheck size={12} className="text-slategray" />
-                </span>
-                <span>The size must be between 0.5 MB and 80 MB.</span>
-              </li>
-              <li className="flex items-start gap-x-4 my-1">
-                <span className="min-w-[10px] w-[10px] pt-[2px]">
-                  <FaCheck size={12} className="text-slategray" />
-                </span>
-                <span>The accepted photo format are JPEG, PNG & JPG.</span>
-              </li>
-              <li className="flex items-start gap-x-4 my-1">
-                <span className="min-w-[10px] w-[10px] pt-[2px]">
-                  <FaCheck size={12} className="text-slategray" />
-                </span>
-                <span>The dimensions for the photo is: 50x50.</span>
-              </li>
-            </ul>
-          </div>
+          {guidelinesData?.map((guidelineItem) => {
+            return (
+              <div
+                key={guidelineItem?.id}
+                className="flex flex-col text-center text-gray-900 bg-white rounded-lg"
+              >
+                <h3 className="text-sm text-start font-bold text-indigo opacity-80 uppercase">
+                  {guidelineItem?.title}
+                </h3>
+                <ul
+                  role="list"
+                  className="mt-2 text-left text-sm text-gray-600"
+                >
+                  {guidelineItem?.guidelines?.map((guideItem, index) => (
+                    <li key={index} className="flex items-start gap-x-4 my-1">
+                      <span className="min-w-[10px] w-[10px] pt-[2px]">
+                        <FaCheck size={12} className="text-slategray" />
+                      </span>
+                      <span>{guideItem?.desc}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
         </div>
 
         <div className="mt-4 px-8 py-4 rounded-md border-[1px] border-blue-gray-50 inline-flex flex-col">

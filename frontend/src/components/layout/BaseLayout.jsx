@@ -29,20 +29,33 @@ export const BaseLayout = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (isModalOpen && location.pathname === "/") {
+      document.body.classList.add("modal-open");
+    } else {
+      document.body.classList.remove("modal-open");
+    }
+  }, [isModalOpen, location.pathname]);
+
   return (
     <>
       <Header />
       <main
+        className="overflow-hidden"
         style={{
-          minHeight: "calc(100vh - 236px)",
+          minHeight: "calc(100vh - 150px)",
         }}
       >
         <Outlet />
       </main>
       <Footer />
-      <ScrollTopButton showScrollTop={showScrollTop} />
       {location.pathname === "/" && isModalOpen && <Modal />}
-      <ScrollPopup />
+      {!isModalOpen && (
+        <>
+          <ScrollTopButton showScrollTop={showScrollTop} />
+          <ScrollPopup />
+        </>
+      )}
     </>
   );
 };

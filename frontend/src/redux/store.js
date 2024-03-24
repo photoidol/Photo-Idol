@@ -12,6 +12,7 @@ import homeSliderReducer from "./slices/settings/homeSliderSlice";
 import userReducer from "./slices/userSlice";
 import aboutReducer from "./slices/aboutSlice";
 import esewaReducer from "./slices/emailSlice";
+import navbarReducer from "./slices/navbarSlice";
 
 export const store = configureStore({
   reducer: {
@@ -28,5 +29,6 @@ export const store = configureStore({
     user: userReducer,
     about: aboutReducer,
     esewa: esewaReducer,
+    navbar: navbarReducer,
   },
 });

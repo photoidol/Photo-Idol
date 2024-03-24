@@ -34,7 +34,6 @@ export const PasswordInput = ({
             onChange={onChange}
             onPaste={onPaste}
             autoComplete={autoComplete}
-            // placeholder={placeholder}
             className="border"
             label={label}
           />

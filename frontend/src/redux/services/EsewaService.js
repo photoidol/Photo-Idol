@@ -1,10 +1,9 @@
 import axios from "axios";
-const BACKEND_URL = "https://api.fotoidol.com";
+import { BACKEND_URL } from "../../utils/helper";
 export const API_URL = `${BACKEND_URL}/api/v1/payment/`;
 
 const initiatePayment = async () => {
   const response = await axios.post(API_URL + "initiate-payment");
-  console.log("Service Response:", response.data);
   return response.data;
 };
 

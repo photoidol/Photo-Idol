@@ -84,12 +84,6 @@ export const UpdateLocation = ({
     }
   };
 
-  // useEffect(() => {
-  //   if (isUpdateSuccess) {
-  //     navigate("/admin/about");
-  //   }
-  // }, [dispatch, navigate, isUpdateSuccess]);
-
   return (
     <div>
       <Dialog open={openLocationUpdate} onClose={onLocationUpdateClose}>

@@ -140,13 +140,13 @@ export const PostDataTable = (props) => {
     <>
       {modalOpen && <ImageViewer src={imageSrc} onClose={closeModal} />}
       <div className="datatable">
-        <Card className="h-full w-full rounded-md shadow-lg">
+        <Card className="h-full w-full rounded-md shadow-lg lg:p-1">
           <CardHeader
             floated={false}
             shadow={false}
-            className="rounded-none p-1"
+            className="rounded-none p-0"
           >
-            <div className="mb-8 flex items-center justify-between gap-8">
+            <div className="lg:mb-8 md:mb-6 mb-4 flex items-center justify-between gap-8">
               <div>
                 <Typography variant="h4" className="text-indigo font-bold">
                   Uploaded Photos
@@ -173,8 +173,8 @@ export const PostDataTable = (props) => {
                 />
               </div>
               <div className="text-base">
-                <span className="font-semibold text-slategray">
-                  Upload Reached:
+                <span className="font-semibold text-slategray px-1">
+                  Photo Uploaded :
                 </span>
                 <span className="text-slategray font-medium">
                   <span
@@ -185,8 +185,8 @@ export const PostDataTable = (props) => {
                     }`}
                   >
                     {userPosts?.length}
-                  </span>
-                  out of
+                  </span>{" "}
+                  out of{" "}
                   <span
                     className={`font-bold ${
                       userPosts?.length < postLimit?.assetLimit
@@ -203,8 +203,8 @@ export const PostDataTable = (props) => {
           <CardBody className="overflow-x-scroll scrollbar-x-dir p-0">
             {isLoading && <Loader />}
             {!userPosts?.length && (
-              <div>
-                <p className="py-6 px-4 font-semibold text-indigo">
+              <div className="mx-1">
+                <p className="lg:p-3 py-2 m-3 rounded-md border-[1px] border-moonstone/10 font-semibold text-indigo text-center bg-moonstone/5">
                   No images uploaded yet!
                 </p>
               </div>
@@ -249,21 +249,13 @@ export const PostDataTable = (props) => {
                           <td className={classes}>
                             <div className="flex flex-col items-start gap-3">
                               <div className="flex flex-wrap items-start">
-                                {/*  {post?.assets?.map((image, index) => (
-                                  <div
-                                    onClick={() => openModal(image?.filePath)}
-                                    key={image?.publicId + index}
-                                    className="w-[50px] h-[50px] overflow-hidden rounded me-1 cursor-pointer hover:scale-95 default-transition"
-                                  >
-                                    <img
-                                      src={image?.filePath}
-                                      alt={post?.title}
-                                      className="w-full h-full object-cover"
-                                    />
-                                  </div>
-                                ))} */}
-
-                                <div className="w-[50px] h-[50px] overflow-hidden rounded me-1 cursor-pointer hover:scale-95 default-transition">
+                                <div
+                                  onClick={() =>
+                                    openModal(post?.assets?.filePath)
+                                  }
+                                  key={post?.assets?.publicId + index}
+                                  className="w-[50px] h-[50px] overflow-hidden rounded me-1 cursor-pointer hover:scale-95 default-transition"
+                                >
                                   <img
                                     src={post?.assets?.filePath}
                                     alt={post?.title}
@@ -340,8 +332,8 @@ export const PostDataTable = (props) => {
                                 color="green"
                                 onClick={() =>
                                   handleImageDownload(
-                                    post?.assets && post?.assets?.[0].filePath,
-                                    post?.assets && post?.assets?.[0].fileName
+                                    post?.assets?.filePath,
+                                    post?.assets?.fileName
                                   )
                                 }
                               >
@@ -363,7 +355,7 @@ export const PostDataTable = (props) => {
           {filteredPosts?.length > 0 && (
             <CardFooter className="flex items-center justify-between py-4 px-6">
               <Typography variant="small" className="font-semibold text-indigo">
-                Page {currentPage} of
+                Page {currentPage} of{" "}
                 {Math.ceil(filteredPosts?.length / postsPerPage)}
               </Typography>
               <div className="flex gap-2">

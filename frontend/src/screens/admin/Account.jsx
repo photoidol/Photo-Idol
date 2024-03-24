@@ -15,6 +15,7 @@ import { UpdateProfile } from "../../components/common/users/UpdateProfile";
 import { UpdatePassword } from "../../components/common/users/UpdatePassword";
 import { FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import { Notification } from "../../components/common/Notification";
+import { scrollToTop } from "../../utils/scrollToTop";
 
 export function Account() {
   useRedirectLoggedOutUser("/auth/login");
@@ -25,6 +26,8 @@ export function Account() {
     dispatch(getUserProfile());
   }, [dispatch]);
 
+  useEffect(() => scrollToTop(), []);
+
   return (
     <div className="my-4">
       <div className="px-4 pt-1">
@@ -33,7 +36,7 @@ export function Account() {
 
       <div className="max-w-[1400px] mx-auto w-full my-6 account-tab">
         <Tabs value="profile">
-          <TabsHeader className="flex-col bg-white md:flex-row px-4 py-3 max-w-[720px] w-full account-tab-head">
+          <TabsHeader className="flex-col bg-white sm:flex-row lg:px-4 px-3 py-3 max-w-[720px] w-full account-tab-head">
             <Tab className="py-2.5" value="profile">
               <div className="flex items-center gap-2 font-medium opacity-90 text-indigo tab-head-item">
                 {React.createElement(UserCircleIcon, {
@@ -61,13 +64,13 @@ export function Account() {
           </TabsHeader>
           {user && (
             <TabsBody>
-              <TabPanel className="p-0" value="profile">
-                <div className="mx-4 my-8">
-                  <section className="relative pt-16 rounded-md pb-2 px-2">
+              <TabPanel value="profile" className="pt-6 px-0">
+                <div>
+                  <section className="relative lg:pt-6 rounded-md">
                     <div className="container mx-auto bg-white rounded-md shadow-xl max-w-[720px]">
                       <div className="relative flex flex-col min-w-0 break-words bg-white w-full shadow-default rounded-lg lg:mt-10">
                         <div className="px-4 py-4">
-                          <div className="flex flex-wrap justify-center items-center mt-10 lg:-mt-24">
+                          <div className="flex flex-wrap justify-center items-center lg:-mt-24">
                             <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
                               <div className="relative mt-4 border-1 border-white">
                                 <img
@@ -83,8 +86,11 @@ export function Account() {
                             </div>
                           </div>
                           <div className="text-center pb-4 pt-2">
-                            <div className="flex items-center justify-center mb-2 gap-x-2">
-                              <h3 className="text-2xl capitalize font-semibold leading-normal text-indigo">
+                            <p className="text-indigo font-semibold py-3 border-b-[1px] border-moonstone">
+                              User ID : {user?._id}
+                            </p>
+                            <div className="flex items-center justify-center mb-2 gap-x-2 mt-3">
+                              <h3 className="lg:text-2xl md:text-xl text-lg capitalize font-semibold leading-normal text-indigo">
                                 {user?.name || "Unknown"}
                               </h3>
                               <div>
@@ -100,7 +106,7 @@ export function Account() {
                               <div className="text-sm leading-normal text-slategray mt-0 font-normal capitalize flex items-center justify-center">
                                 <FaMapMarkerAlt className="me-2" />
                                 {(user?.address && user?.address + ", ") ||
-                                  ""}{" "}
+                                  ""}
                                 {user?.country || ""}
                               </div>
                               <div className="text-sm leading-normal text-slategray mt-0 font-normal flex items-center justify-center">
@@ -141,7 +147,7 @@ export function Account() {
                                 <p className="text-indigo font-semibold">
                                   Your Bio or Status{" "}
                                 </p>
-                                <p className="mb-4 text-base">
+                                <p className="text-base">
                                   <span className="text-slategray text-sm font-medium">
                                     {user?.bio || "Nothing to show."}
                                   </span>
@@ -155,10 +161,10 @@ export function Account() {
                   </section>
                 </div>
               </TabPanel>
-              <TabPanel value="edit" className="pt-8">
+              <TabPanel value="edit" className="pt-6 px-0">
                 <UpdateProfile />
               </TabPanel>
-              <TabPanel value="settings">
+              <TabPanel value="settings" className="pt-6 px-0">
                 <UpdatePassword />
               </TabPanel>
             </TabsBody>

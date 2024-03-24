@@ -22,13 +22,13 @@ export const DashboardHeader = () => {
 
   return (
     <>
-      <div className="bg-white z-50 shadow-xl rounded-md px-3 py-3 w-full min-h-[56px] flex items-center ">
+      <div className="bg-white z-50 shadow-xl rounded-md px-2 sm:px-3 py-2 sm:py-3 w-full min-h-[56px] flex items-center ">
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-10">
             <div className="logo flex gap-1 items-center">
               <button
                 type="button"
-                className="text-slategray me-4 lg:hidden"
+                className="text-slategray md:me-4 sm:me-3 me-2 lg:hidden"
                 onClick={() => dispatch(toggleSidebar())}
               >
                 <HiMenuAlt2 size={22} />

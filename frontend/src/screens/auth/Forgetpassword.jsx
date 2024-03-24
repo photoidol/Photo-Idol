@@ -94,7 +94,7 @@ export const Forgetpassword = () => {
 
               <div className="border-t-[1px] border-blue-gray-50 pt-4">
                 <p className="font-bold text-lg text-moonstone-gradient text-center mt-auto">
-                  <Link to="/">FotoIdol Studio.</Link>
+                  <Link to="/">FotoIdol.</Link>
                 </p>
               </div>
             </div>

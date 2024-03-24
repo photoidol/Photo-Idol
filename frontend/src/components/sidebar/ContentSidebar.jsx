@@ -15,6 +15,7 @@ import {
 import { BsFillImageFill } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import { FaListCheck } from "react-icons/fa6";
+import { RiGuideLine } from "react-icons/ri";
 
 export const ContentSidebar = () => {
   const [sidebarClass, setSidebarClass] = useState("");
@@ -74,7 +75,7 @@ export const ContentSidebar = () => {
                 to="/admin"
                 className={`flex p-4 w-full ${
                   location.pathname === "/admin" ? "active-link" : "inactive-link"
-                }`}
+                }`} onClick={() => dispatch(toggleSidebar())}
               >
                 <ListItemPrefix className="w-[20px] flex items-center justify-start">
                   <AiOutlineDashboard size={20} />
@@ -87,7 +88,7 @@ export const ContentSidebar = () => {
                 to="/admin/images"
                 className={`flex p-4 w-full ${
                   location.pathname === "/admin/images" ? "active-link" : "inactive-link"
-                }`}
+                }`} onClick={() => dispatch(toggleSidebar())}
               >
                 <ListItemPrefix className="w-[20px] flex items-center justify-start">
                   <BsFillImageFill size={16} />
@@ -100,7 +101,7 @@ export const ContentSidebar = () => {
                 to="/admin/account"
                 className={`flex p-4 w-full ${
                   location.pathname === "/admin/account" ? "active-link" : "inactive-link"
-                }`}
+                }`} onClick={() => dispatch(toggleSidebar())}
               >
                 <ListItemPrefix className="w-[20px] flex items-center justify-start">
                   <AiOutlineUser size={20} />
@@ -116,7 +117,7 @@ export const ContentSidebar = () => {
                   location.pathname === "/admin/social_links"
                     ? "active-link"
                     : "inactive-link"
-                }`}
+                }`} onClick={() => dispatch(toggleSidebar())}
               >
                 <ListItemPrefix className="w-[20px] flex items-center justify-start">
                   <AiOutlineShareAlt size={20} />
@@ -130,12 +131,26 @@ export const ContentSidebar = () => {
                 to="/admin/guideline"
                 className={`flex p-4 w-full ${
                   location.pathname === "/admin/guideline" ? "active-link" : "inactive-link"
-                }`}
+                }`} onClick={() => dispatch(toggleSidebar())}
               >
                 <ListItemPrefix className="w-[20px] flex items-center justify-start">
                   <FaListCheck size={18} />
                 </ListItemPrefix>
                 Upload Guidelines
+              </Link>
+            </ListItem>
+
+            <ListItem className="p-0">
+              <Link
+                to="/admin/steps"
+                className={`flex p-4 w-full ${
+                  location.pathname === "/admin/steps" ? "active-link" : "inactive-link"
+                }`} onClick={() => dispatch(toggleSidebar())}
+              >
+                <ListItemPrefix className="w-[20px] flex items-center justify-start">
+                <RiGuideLine size = {18} />
+                </ListItemPrefix>
+                Step-by-Step Guide
               </Link>
             </ListItem>
           </List>

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategory } from "../../redux/slices/categorySlice";
 import useRedirectLoggedOutUser from "../../utils/useRedirectLoggedOutUser";
+import { scrollToTop } from "../../utils/scrollToTop";
 
 export function CategoryEdit() {
   useRedirectLoggedOutUser("/auth/login");
@@ -14,6 +15,8 @@ export function CategoryEdit() {
   useEffect(() => {
     dispatch(getCategory(categoryId));
   }, [dispatch, categoryId]);
+
+  useEffect(() => scrollToTop(), []);
 
   return (
     <div className="my-6 shadow bg-white rounded-lg">

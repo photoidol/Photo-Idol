@@ -28,7 +28,7 @@ export const DashboardContent = () => {
           >
             <Typography
               variant="h4"
-              className="text capitalize font-semibold text-white"
+              className="capitalize font-semibold text-white"
             >
               Dear Admin, You Own The Control to Photol Idol Site!
             </Typography>

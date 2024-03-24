@@ -18,11 +18,19 @@
 }
 
 .custom-next-arrow {
-  right: 8px;
+  right: 20px;
+
+  @media(max-width: 768px){
+    right: 12px;
+  }
 }
 
 .custom-prev-arrow {
-  left: 8px;
+  left: 20px;
+
+  @media(max-width: 768px){
+    left: 12px;
+  }
 }
 
 .view-slider-sc {

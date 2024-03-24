@@ -18,6 +18,7 @@ import {
   DialogBody,
   DialogFooter,
   Textarea,
+  Switch,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,6 +29,7 @@ import useRedirectLoggedOutUser from "../../../utils/useRedirectLoggedOutUser";
 import {
   deleteUserByAdmin,
   getAllUserByAdmin,
+  updateUserStatus,
 } from "../../../redux/slices/authSlice";
 import { UpdateRole } from "../../../components/users/UpdateRole";
 import {
@@ -47,8 +49,8 @@ const TABLE_HEAD = [
   "Address",
   "Verified",
   "Payment",
+  "Payment Approval",
   "Phone",
-  // "Social Links",
   "Created At",
   "Change Role",
   "Action",
@@ -100,9 +102,16 @@ export const UserTable = () => {
   const usersPerPage = 10;
 
   // ### POST SEARCHING & FILTER
-  const filteredUsers = usersList?.filter((user) =>
-    user.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredUsers = usersList?.filter((user) => {
+    const nameMatch = user.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const idMatch = user._id.toLowerCase().includes(searchQuery.toLowerCase());
+    const emailMatch = user.email
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    return nameMatch || idMatch || emailMatch;
+  });
 
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
@@ -126,6 +135,11 @@ export const UserTable = () => {
     setCurrentPage(1);
   };
 
+  const handlePaymentApproval = async (userId, paidStatus) => {
+    await dispatch(updateUserStatus({ id: userId, paid: !paidStatus }));
+    await dispatch(getAllUserByAdmin());
+  };
+
   return (
     <>
       <Card className="w-full rounded-md shadow-lg mt-8">
@@ -140,7 +154,7 @@ export const UserTable = () => {
             </Tabs>
             <div className="w-full md:w-80 py-1 font-inter">
               <Input
-                label="Search by Username"
+                label="Search by Username or ID"
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                 value={searchQuery}
                 onChange={handleSearchInputChange}
@@ -307,6 +321,16 @@ export const UserTable = () => {
                         )}
                       </td>
                       <td className={classes}>
+                        <Switch
+                          onChange={() => handlePaymentApproval(_id, paid)}
+                          checked={paid ? true : false}
+                          className={` checked:bg-moonstone`}
+                          circleProps={{
+                            className: "border-none",
+                          }}
+                        />
+                      </td>
+                      <td className={classes}>
                         <Typography
                           variant="small"
                           color="blue-gray"
@@ -383,7 +407,7 @@ export const UserTable = () => {
               color="blue-gray"
               className="font-normal font-inter"
             >
-              Page {currentPage} of{" "}
+              Page {currentPage} of&nbsp;
               {Math.ceil(filteredUsers?.length / usersPerPage)}
             </Typography>
             <div className="flex gap-2">
@@ -421,7 +445,7 @@ export const UserTable = () => {
         </DialogHeader>
         <DialogBody className="pt-2">
           <h3 className="text-center font-medium text-base mb-3">
-            The details are show below:{" "}
+            The details are show below:&nbsp;
           </h3>
           {selectedUser && (
             <>

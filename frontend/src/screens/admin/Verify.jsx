@@ -4,6 +4,8 @@ import { Button, Typography } from "@material-tailwind/react";
 import { RESET, verifyUser } from "../../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/common/Loader";
+import { scrollToTop } from "../../utils/scrollToTop";
+import { useEffect } from "react";
 
 export const Verify = () => {
   const dispatch = useDispatch();
@@ -19,15 +21,23 @@ export const Verify = () => {
     }
   };
 
+  useEffect(() => scrollToTop(), []);
+
   return (
     <>
       {isLoading && <Loader />}
-      <div className="w-1/2 m-auto flex items-center justify-center text-center h-full flex-col gap-4 pt-8">
-        <Typography variant="h2" color="blue-gray" className="mb-2 capitalize">
+      <div className="mx-auto max-w-[480px] flex items-center justify-center text-center h-full flex-col gap-4 pt-8">
+        <Typography variant="h2" className="mb-2 capitalize text-white">
           verify profile
         </Typography>
-        <Typography className="font-medium text-dark-blue">Your profile verification is necessary for you to upload photos. Please click on the below link to complete verification.</Typography>
-        <Button onClick={verifyAccount} className="font-medium capitalize bg-blue-gradient text-base tracking-[1px]">
+        <Typography className="font-medium text-white">
+          Your profile verification is necessary for you to upload photos.
+          Please click on the below link to complete verification.
+        </Typography>
+        <Button
+          onClick={verifyAccount}
+          className="font-medium rounded-md capitalize bg-blue-gradient text-base tracking-[1px]"
+        >
           Verify Now
         </Button>
       </div>

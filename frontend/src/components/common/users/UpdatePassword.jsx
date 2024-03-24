@@ -84,9 +84,9 @@ export const UpdatePassword = () => {
 
   return (
     <>
-      <section className="max-w-[500px] mx-auto mt-4 py-6 bg-white px-8 rounded-md shadow-lg mb-6">
+      <section className="max-w-[500px] mx-auto py-6 bg-white px-4 md:px-6 lg:px-8 rounded-md shadow-lg">
         <div className="flex justify-between items-center">
-          <h6 className="text-indigo text-sm mt-3 font-bold uppercase">
+          <h6 className="text-indigo text-sm font-bold uppercase">
             change account password
           </h6>
         </div>
@@ -129,7 +129,7 @@ export const UpdatePassword = () => {
           <Button type="submit" className="bg-moonstone-gradient2 rounded text-sm w-full">
             Change Password
           </Button>
-          <ul className="box my-8 border border-blue-gray-50 p-3 rounded-lg">
+          <ul className="box mt-6 border border-blue-gray-50 lg:p-3 p-2 rounded-lg">
             <li
               className={`text-[13px] py-0.5  ${
                 upperCase ? "text-green-500" : "text-slategray font-normal"

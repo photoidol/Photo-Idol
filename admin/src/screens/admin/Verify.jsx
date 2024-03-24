@@ -26,9 +26,18 @@ export const Verify = () => {
         <Typography variant="h2" color="blue-gray" className="mb-2 capitalize">
           verify profile
         </Typography>
-        <Typography>The place is close to Barceloneta Beach and bus stop just 2 min by walk and near to &quot;Naviglio&quot; where you can enjoy the main night life in Barcelona.</Typography>
-        <Button onClick={verifyAccount} color="indigo" size="lg" className="font-medium capitalize">
-          Verifie Profile
+        <Typography>
+          The place is close to Barceloneta Beach and bus stop just 2 min by
+          walk and near to &quot;Naviglio&quot; where you can enjoy the main
+          night life in Barcelona.
+        </Typography>
+        <Button
+          onClick={verifyAccount}
+          color="indigo"
+          size="lg"
+          className="font-medium capitalize"
+        >
+          Verify Profile
         </Button>
       </div>
     </>

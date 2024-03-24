@@ -1,10 +1,8 @@
-import { AiOutlineLike, AiOutlineSearch, AiOutlineStar } from "react-icons/ai";
-import { BsArrowRepeat } from "react-icons/bs";
+import { AiOutlineStar } from "react-icons/ai";
 import PropTypes from "prop-types";
 import CustomNextArrow from "../common/arrow/CustomNextArrow";
 import CustomPrevArrow from "../common/arrow/CustomPrevArrow";
 import Slider from "react-slick";
-import Masonry from "react-masonry-css";
 import { Link } from "react-router-dom";
 import { staticImages } from "../../images";
 import { CardSlanted } from "../common/CardSlanted";
@@ -27,11 +25,17 @@ import {
 } from "../../utils/constants";
 import { getAllhomeSlider } from "../../redux/slices/settings/homeSliderSlice";
 import Masonary from "../common/Masonary";
+import { FaDollarSign } from "react-icons/fa";
+import { CiStar } from "react-icons/ci";
+import { MdOutlineSecurity } from "react-icons/md";
+import { IoCameraOutline } from "react-icons/io5";
 
 export const Explore = () => {
   const dispatch = useDispatch();
   const posts = useSelector(selectAllPosts);
-  const categories = useSelector((state) => state.category.categorys?.categorys);
+  const categories = useSelector(
+    (state) => state.category.categorys?.categorys
+  );
   const featuredCategories = useSelector(
     (state) => state.setting.featuredCategories
   );
@@ -56,11 +60,11 @@ export const Explore = () => {
 
   return (
     <>
-      <section className="py-12" id="top-picks">
+      <section className="lg:py-12 md:py-10 py-8" id="top-picks">
         <div className="containers">
-          <div className="section-title">
+          <div className="section-title" data-aos="fade-up">
             <h2 className="text-center font-bold text-dark">
-              <span className="text-new-blue font-bold leading-loose text-moonstone-gradient">
+              <span className="text-new-blue font-bold text-moonstone-gradient">
                 Explore
               </span>{" "}
               our Studio&apos;s services archives
@@ -71,40 +75,42 @@ export const Explore = () => {
             </p>
           </div>
 
-          {featuredCategories &&
-          featuredCategories[0]?.itemCount === FEATURED_CATEGORY_REQ_LIMIT ? (
-            <div className="grid explore-grid-one grid-cols-4 grid-rows-3 xxl:gap-4 md:gap-2 gap-1  mt-12">
-              {featuredCategories[0].items?.map((category, index) => {
-                return (
-                  <Card
-                    key={category?._id}
-                    title={category?.title}
-                    image={category?.cover?.filePath}
-                    categoryId={category?._id}
-                    gridClass={`${exploreGridOneCardClasses[index]}`}
-                  />
-                );
-              })}
-            </div>
-          ) : (
-            <>
-              {categories?.length > 0 && (
-                <div className="grid explore-grid-one grid-cols-4 grid-rows-3 xxl:gap-4 md:gap-2 gap-1  mt-12">
-                  {categories?.slice(0, 9)?.map((category, index) => {
-                    return (
-                      <Card
-                        key={category?._id}
-                        title={category?.title}
-                        image={category?.cover?.filePath}
-                        categoryId={category?._id}
-                        gridClass={`${exploreGridOneCardClasses[index]}`}
-                      />
-                    );
-                  })}
-                </div>
-              )}
-            </>
-          )}
+          <div data-aos="fade-up">
+            {featuredCategories &&
+            featuredCategories[0]?.itemCount === FEATURED_CATEGORY_REQ_LIMIT ? (
+              <div className="grid explore-grid-one grid-cols-4 grid-rows-3 xxl:gap-4 md:gap-2 gap-1 mt-8 md:mt-10 lg:mt-12">
+                {featuredCategories[0].items?.map((category, index) => {
+                  return (
+                    <Card
+                      key={category?._id}
+                      title={category?.title}
+                      image={category?.cover?.filePath}
+                      categoryId={category?._id}
+                      gridClass={`${exploreGridOneCardClasses[index]}`}
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              <>
+                {categories?.length > 0 && (
+                  <div className="grid explore-grid-one grid-cols-4 grid-rows-3 xxl:gap-4 md:gap-2 gap-1 mt-8 md:mt-10 lg:mt-12">
+                    {categories?.slice(0, 9)?.map((category, index) => {
+                      return (
+                        <Card
+                          key={category?._id}
+                          title={category?.title}
+                          image={category?.cover?.filePath}
+                          categoryId={category?._id}
+                          gridClass={`${exploreGridOneCardClasses[index]}`}
+                        />
+                      );
+                    })}
+                  </div>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </section>
       {/* <ExploreOne categories={categories} /> */}
@@ -131,34 +137,34 @@ export const ExploreOne = ({ posts }) => {
   };
 
   return (
-    <section className="py-12" id="categories">
+    <section className="py-8 md:py-10 lg:py-12" id="categories">
       <div className="containers pb-6">
-        <div className="section-title text-start">
+        <div className="section-title text-center" data-aos="fade-up">
           <h2 className="font-bold text-dark">
             <span className="text-new-blue font-bold leading-loose text-moonstone-gradient">
               Colorful
-            </span>{" "}
-            photos of your pick
+            </span>
+            &nbsp; photos of your pick
           </h2>
           <p className="text-base text-slategray opacity-70">
             Featuring the most exceptional photos with most popularity.
           </p>
         </div>
 
-        {posts?.length > 0 && (
-          <div className="mt-8">
+        {posts?.length > 0 ? (
+          <div className="lg:mt-8 mt-6" data-aos="fade-up">
             <Slider
               nextArrow={<CustomNextArrow />}
               prevArrow={<CustomPrevArrow />}
               {...settings}
             >
               {posts?.slice(0, PHOTO_FEATURING_LIMIT)?.map((post) => {
-                if (post?.assets && post?.assets[0]?.filePath) {
+                if (post?.assets && post?.assets?.filePath) {
                   return (
                     <CardSlanted
                       key={post?._id}
                       title={post?.title}
-                      image={post?.assets[0]?.filePath}
+                      image={post?.assets?.filePath}
                       styles="rounded-xl"
                       postSlug={post?.slug}
                     />
@@ -167,6 +173,8 @@ export const ExploreOne = ({ posts }) => {
               })}
             </Slider>
           </div>
+        ) : (
+          <p className="text-gray font-semibold">No photos to show right now</p>
         )}
       </div>
     </section>
@@ -193,28 +201,28 @@ export const Features = () => {
   }, [dispatch]);
 
   const cardIcons = [
-    <AiOutlineStar size={30} key={"ai-star"} />,
-    <AiOutlineLike size={30} key={"ai-like"} />,
-    <AiOutlineSearch size={30} key={"ai-search"} />,
-    <BsArrowRepeat size={30} key={"bs-arrow"} />,
+    <FaDollarSign size={30} key={"dollar-icon"} />,
+    <CiStar size={30} key={"star-icon"} />,
+    <MdOutlineSecurity size={30} key={"security-icon"} />,
+    <IoCameraOutline size={30} key={"camera-icon"} />,
   ];
 
   return (
     <section
-      className="py-16"
+      className="lg:py-12 md:py-10 py-8"
       id="pricing"
       style={{
         background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("${staticImages.blue_banner}") center/cover no-repeat fixed`,
       }}
     >
       <div className="containers">
-        <div className="section-title text-center">
+        <div className="section-title text-center" data-aos="fade-up">
           <h2 className="font-bold text-white">
-            Your one-stop{" "}
-            <span className="text-new-blue font-bold leading-loose text-moonstone-gradient">
+            Your one-stop &nbsp;
+            <span className="text-new-blue font-bold text-moonstone-gradient">
               platform
-            </span>{" "}
-            for photographers and creative enthusiasts like you.
+            </span>
+            &nbsp; for photographers and creative enthusiasts like you.
           </h2>
           <p className="text-base text-white opacity-90">
             We keep the perfect collection the photos that you upload.
@@ -222,7 +230,10 @@ export const Features = () => {
         </div>
 
         {filteredCreatives?.length > 0 && (
-          <div className="grid lg:grid-cols-2 lg:gap-10 gap-6 pt-14 pb-6">
+          <div
+            className="grid lg:grid-cols-2 lg:gap-10 gap-6 pt-8 md:pt-10 lg:pt-14 pb-6"
+            data-aos="fade-up"
+          >
             {filteredCreatives.map((creative, index) => {
               return (
                 <Card1
@@ -251,7 +262,7 @@ export const Card = ({ title, image, styles, show, gridClass, categoryId }) => {
         alt="title"
         className={`w-full h-full object-cover block group-hover:scale-110 group-hover:rotate-6 default-transition`}
       />
-      <h2 className="capitalize font-medium mt-5 text-white absolute bottom-0 lg:m-5 m-3 z-30 ">
+      <h2 className="capitalize font-medium mt-5 text-white absolute bottom-0 text-sm lg:text-base lg:m-4 md:m-3 m-2.5 z-30 ">
         {title}
       </h2>
       {show && (
@@ -274,16 +285,18 @@ Card.propTypes = {
 
 export const Card1 = ({ title, icon, desc }) => {
   return (
-    <div className="box flex gap-7">
-      <div className="icon flex items-center justify-center text-white bg-moonstone-gradient2 default-shadow rounded-full w-[68px] min-w-[68px] h-[68px]">
-        {icon}
+    <div
+      className="box flex flex-col xs:flex-row lg:gap-7 md:gap-6 sm:gap-5 xs:gap-4 gap-3"
+      data-aos="fade-up"
+    >
+      <div className="icon flex items-center justify-center text-white bg-moonstone-gradient2 default-shadow rounded-full w-[52px] h-[52px] min-w-[52px] lg:w-[68px] lg:min-w-[68px] lg:h-[68px]">
+        {icon || <AiOutlineStar size = {30} />}
       </div>
       <div className="details">
-        <h3 className="text-xl font-semibold mb-2 text-white drop-shadow-lg">
-          {" "}
+        <h3 className="text-base md:text-lg lg:text-xl font-semibold mb-2 text-white drop-shadow-lg">
           {title}
         </h3>
-        <p className="text-base text-slategray border-[1px] border-moonstone/20 bg-white/95 py-5 px-6 rounded-lg default-shadow hover:-mt-1 default-transition">
+        <p className="text-base text-slategray border-[1px] border-moonstone/20 bg-white/95 lg:py-5 lg:px-6 md:py-4 md:px-5 py-3 px-3 rounded-lg default-shadow hover:-mt-1 default-transition">
           {desc}{" "}
         </p>
       </div>
@@ -308,11 +321,18 @@ export const ExploreTwo = () => {
 
   return (
     <>
-      <section className="bg-gray-50 py-12">
+      <section
+        className="bg-gray-50 py-8 md:py-10 lg:py-12"
+        id="recent-uploads"
+      >
         <div className="containers">
-          <div className="section-title">
+          <div className="section-title" data-aos="fade-up">
             <h2 className="text-center text-dark font-bold mb-3">
-              View <span className="font-bold text-moonstone-gradient"> Recent uploads </span> from our community
+              View
+              <span className="font-bold text-moonstone-gradient px-2">
+                Recent uploads
+              </span>
+              from our community
             </h2>
             <p className="text-center text-base text-slategray opacity-70">
               See the recent pictures that reflect the memories of our community
@@ -320,25 +340,32 @@ export const ExploreTwo = () => {
             </p>
           </div>
           {isLoading && <Loader />}
-          <div className="mt-6 masonry-wrapper">
-            {posts?.length > 0 && <Masonary dataArr={posts?.slice(0, 18)} />}
-          </div>
-          {posts?.length === 0 && (
-            <Typography
-              variant="h6"
-              color="blue-gray"
-              className="mb-6 text-center"
-            >
-              No any images found!
-            </Typography>
-          )}
-          <div className="flex items-center justify-center">
-            <Link
-              className="text-center h-[52px] min-w-[180px] flex items-center justify-center font-semibold text-lg  bg-moonstone-gradient2 text-white default-transition shadow-lg rounded"
-              to="/search"
-            >
-              Explore All
-            </Link>
+          <div data-aos="fade-up">
+            {posts?.length > 0 && (
+              <div className="mt-4 masonry-wrapper">
+                <Masonary dataArr={posts?.slice(0, 18)} />
+              </div>
+            )}
+
+            {posts?.length === 0 && (
+              <Typography
+                variant="h6"
+                color="blue-gray"
+                className="mb-6 text-center"
+              >
+                No any images found!
+              </Typography>
+            )}
+            {posts?.length > 0 && (
+              <div className="flex items-center justify-center">
+                <Link
+                  className="text-center h-[52px] min-w-[180px] flex items-center justify-center font-semibold text-lg  bg-moonstone-gradient2 text-white default-transition shadow-lg rounded"
+                  to="/search"
+                >
+                  Explore All
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -377,46 +404,53 @@ export const ViewSlider = () => {
   }, [dispatch]);
 
   return (
-    <section className="py-12 view-slider-sc px-4" id="best-picture">
-      <div className="containers">
-        <div className="border-3 overflow-hidden xl:h-[580px] lg:h-[540px] md:h-[480px] h-[400px] relative">
-          <Slider
-            nextArrow={<CustomNextArrow />}
-            prevArrow={<CustomPrevArrow />}
-            {...settings}
-          >
-            {features &&
-              features[0]?.items?.map((feature) => {
-                return (
-                  <div
-                    key={feature?._id}
-                    className="xl:h-[580px] lg:h-[540px] md:h-[480px] h-[400px] overflow-hidden relative outline-none"
-                  >
-                    <img
-                      src={feature?.assets && feature?.assets[0]?.filePath}
-                      className="object-fit-cover"
-                      alt=""
-                    />
-                    <div className="absolute top-5 lg:max-w-[360px] max-w-[260px] px-4 py-5 left-5 bg-white right-5 shadow-lg rounded">
-                      <p className="text-sm opacity-60 text-slategray font-medium">
-                        By{" "}
-                        <span className="capitalize break-all">
-                          {feature?.user?.name}
-                        </span>{" "}
-                        -{" "}
-                        {feature?.createdAt &&
-                          format(new Date(feature?.createdAt), "do MMMM, yyyy")}
-                      </p>
-                      <p className="mt-1 font-semibold text-indigo uppercase break-all">
-                        {feature?.title}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
-          </Slider>
-        </div>
-      </div>
-    </section>
+    <>
+      {features && features[0]?.items?.length > 0 && (
+        <section className="py-12 view-slider-sc px-4" id="best-picture">
+          <div className="containers">
+            <div className="border-3 overflow-hidden xl:h-[580px] lg:h-[540px] md:h-[480px] h-[400px] relative">
+              <Slider
+                nextArrow={<CustomNextArrow />}
+                prevArrow={<CustomPrevArrow />}
+                {...settings}
+              >
+                {features &&
+                  features[0]?.items?.map((feature) => {
+                    return (
+                      <div
+                        key={feature?._id}
+                        className="xl:h-[580px] lg:h-[540px] md:h-[480px] h-[400px] overflow-hidden relative outline-none"
+                      >
+                        <img
+                          src={feature?.assets?.filePath}
+                          className="object-fit-cover"
+                          alt=""
+                        />
+                        <div className="absolute top-5 lg:max-w-[360px] max-w-[260px] px-4 py-5 left-5 bg-white right-5 shadow-lg rounded">
+                          <p className="text-sm opacity-60 text-slategray font-medium">
+                            By{" "}
+                            <span className="capitalize break-all">
+                              {feature?.user?.name}
+                            </span>{" "}
+                            -{" "}
+                            {feature?.createdAt &&
+                              format(
+                                new Date(feature?.createdAt),
+                                "do MMMM, yyyy"
+                              )}
+                          </p>
+                          <p className="mt-1 font-semibold text-indigo uppercase break-all">
+                            {feature?.title}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
+              </Slider>
+            </div>
+          </div>
+        </section>
+      )}
+    </>
   );
 };

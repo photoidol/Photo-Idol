@@ -111,7 +111,9 @@ export const LocationDataTable = ({ tableHead, datalist, handleDelete }) => {
                           onClick={() => handleDelete(item._id)}
                         >
                           <AiOutlineDelete size={16} />
-                          <div className="tooltip-custom-container ">Delete</div>
+                          <div className="tooltip-custom-container ">
+                            Delete
+                          </div>
                         </IconButton>
                         <IconButton
                           size="sm"

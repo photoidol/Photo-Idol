@@ -8,7 +8,9 @@ const headers = {
 
 // Validate email
 export const validateEmail = (email) => {
-  return email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+  return email.match(
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  );
 };
 
 //Register user
@@ -48,7 +50,9 @@ const sendVerificationEmail = async () => {
 };
 
 const verifyUser = async (verificationToken) => {
-  const response = await axios.patch(`${API_URL}verify-account/${verificationToken}`);
+  const response = await axios.patch(
+    `${API_URL}verify-account/${verificationToken}`
+  );
   return response.data.message;
 };
 
@@ -65,7 +69,10 @@ const forgotPassword = async (userData) => {
 };
 
 const resetPassword = async (userData, resetToken) => {
-  const response = await axios.patch(`${API_URL}reset-password/${resetToken}`, userData);
+  const response = await axios.patch(
+    `${API_URL}reset-password/${resetToken}`,
+    userData
+  );
   return response.data.message;
 };
 

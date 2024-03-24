@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { AiOutlineEdit, AiOutlineEye } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineEdit, AiOutlineEye } from "react-icons/ai";
 import {
   Avatar,
   Button,
@@ -11,6 +11,7 @@ import {
   CREATIVES_NO_LIMIT,
   HOME_SETTING_OPT_THREE,
 } from "../../utils/constants";
+import { routeConstants } from "../../constants/routeConstants";
 
 export const PricingDataTable = ({
   tableHead,
@@ -37,14 +38,21 @@ export const PricingDataTable = ({
                 All home page pricing content can be managed from here.
               </Typography>
             </div>
-            {onlyPricingList?.length < CREATIVES_NO_LIMIT && (
+            {onlyPricingList?.length < CREATIVES_NO_LIMIT ? (
               <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-                <NavLink to="/admin/pricing/addpricing">
+                <NavLink to={routeConstants.SECTION_PRICING_ADD}>
                   <Button className="py-2.5 rounded bg-moonstone">
                     Create
                   </Button>
                 </NavLink>
               </div>
+            ) : (
+              <p className="text-sm text-right">
+                Only 4 pricing information can be added. <br />
+                <span className="text-red-500">
+                  You can&apos;t add any more.
+                </span>
+              </p>
             )}
           </div>
         </div>
@@ -89,11 +97,9 @@ export const PricingDataTable = ({
                           <div className="flex flex-col">
                             <div className="pl-3">
                               <div className="text-sm font-semibold uppercase">
-                                {" "}
                                 {item?.user?.name}
                               </div>
                               <div className="font-normal text-gray-500">
-                                {" "}
                                 {item?.user?.email}
                               </div>
                             </div>
@@ -111,14 +117,6 @@ export const PricingDataTable = ({
                           <td className="px-6 py-4 capitalize text-gray-700">
                             {item?.description?.slice(0, 40) + "..."}
                           </td>
-                          {/* <td className="px-6 py-4 capitalize text-gray-700">
-                            <Avatar
-                              src={item.cover?.filePath}
-                              alt={item?.title}
-                              size="sm"
-                              onClick={() => openModal(item?.cover?.filePath)}
-                            />
-                          </td> */}
                           <td className="px-6 py-4 capitalize text-gray-700">
                             <span className="whitespace-nowrap">
                               {item?.category}
@@ -132,17 +130,17 @@ export const PricingDataTable = ({
                             <IconButton className="w-[32px] h-[32px] rounded bg-moonstone tooltip-custom group">
                               <AiOutlineEye size={16} />
                               <div className="tooltip-custom-container ">
-                              View
-                            </div>
+                                View
+                              </div>
                             </IconButton>
                           </NavLink>
-                          {/* <IconButton
+                          <IconButton
                             className="w-[32px] h-[32px] rounded"
                             color="red"
                             onClick={() => handleDelete(item._id)}
                           >
                             <AiOutlineDelete size={16} />
-                          </IconButton> */}
+                          </IconButton>
                           <NavLink to={`/pricing/update/${item._id}`}>
                             <IconButton
                               className="w-[32px] h-[32px] rounded tooltip-custom group"
@@ -150,8 +148,8 @@ export const PricingDataTable = ({
                             >
                               <AiOutlineEdit size={16} />
                               <div className="tooltip-custom-container ">
-                              Edit
-                            </div>
+                                Edit
+                              </div>
                             </IconButton>
                           </NavLink>
                         </div>

@@ -54,13 +54,13 @@ export const PostLimit = () => {
             />
             <br />
             <Button type="submit" className="bg-moonstone w-full rounded">
-              Submit{" "}
+              Submit
             </Button>
           </form>
         </div>
         <div className="mt-8 flex items-center gap-3">
           <Typography variant="h1" className="text-2xl capitalize">
-            Post limit number :{" "}
+            Post limit number : &nbsp;
           </Typography>
           <Typography variant="h1" className="text-5xl text-moonstone">
             {postLimit?.assetLimit || 0}

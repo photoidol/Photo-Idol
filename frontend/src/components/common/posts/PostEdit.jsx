@@ -2,7 +2,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { Button } from "@material-tailwind/react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import SpinLoader from "../SpinLoader";
 import { Dialog, DialogHeader, DialogBody } from "@material-tailwind/react";
@@ -17,6 +17,7 @@ import {
 } from "../../../redux/slices/resourceSlice";
 import { getallCategory } from "../../../redux/slices/categorySlice";
 import { MdClose } from "react-icons/md";
+import { RxCrossCircled } from "react-icons/rx";
 
 const PostEdit = ({ open, handleEditDialog, postSlug }) => {
   const dispatch = useDispatch();
@@ -26,15 +27,16 @@ const PostEdit = ({ open, handleEditDialog, postSlug }) => {
     title: "",
     description: "",
     category: "",
-    updatedAssetsCount: 0,
+    image: "",
   });
 
   const [singlePost, setSinglePost] = useState({});
-  const [resourceImages, setResourceImages] = useState([]);
-  const [imagePreviews, setImagePreviews] = useState([]);
+  const [resourceImage, setResourceImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const { isSuccess, isUpdateLoading } = useSelector((state) => state.resource);
   const post = useSelector(selectSinglePost);
   const categories = useSelector((state) => state.category.categorys.categorys);
+  const fileInputRef = useRef(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -54,16 +56,18 @@ const PostEdit = ({ open, handleEditDialog, postSlug }) => {
   };
 
   const handleImageChange = (e) => {
-    const selectedImages = Array.from(e.target.files);
-    if (selectedImages.length === formData.updatedAssetsCount) {
-      setResourceImages(selectedImages);
-      const previews = selectedImages.map((image) =>
-        URL.createObjectURL(image)
-      );
-      setImagePreviews(previews);
+    e.preventDefault();
+    const selectedImage = e.target.files[0] || e.dataTransfer.files[0];
+    const allowedFormats = ["image/jpeg", "image/png", "image/jpg"];
+
+    if (selectedImage && allowedFormats.includes(selectedImage.type)) {
+      setResourceImage(selectedImage);
+      const preview = URL.createObjectURL(selectedImage);
+      setImagePreview(preview);
     } else {
+      setResourceImage(null);
       toast.error(
-        `Number of images didn't match as before. It must be ${formData.updatedAssetsCount} image(s).`
+        `Invalid file formats. Please upload only JPEG, PNG, or JPG images`
       );
     }
   };
@@ -75,29 +79,33 @@ const PostEdit = ({ open, handleEditDialog, postSlug }) => {
         title: post?.title || "",
         description: post?.description || "",
         category: post?.category?._id,
-        updatedAssetsCount: post?.assets?.length || 0,
+        image: post?.assets || "",
       });
     }
   }, [post]);
 
+  const handleDeleteImage = () => {
+    resetFileInput();
+  };
+
+  const resetFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+    setResourceImage(null);
+    setImagePreview(null);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { title, description, category, updatedAssetsCount } = formData;
+    const { title, description, category } = formData;
     const formDataToSubmit = new FormData();
-
     formDataToSubmit.append("title", title);
     formDataToSubmit.append("description", description);
     formDataToSubmit.append("category", category);
+    formDataToSubmit.append("assets", resourceImage);
 
-    resourceImages.forEach((image) => {
-      formDataToSubmit.append("assets", image);
-    });
-
-    for (let i = 0; i < updatedAssetsCount; i++) {
-      formDataToSubmit.append("updatedAssets", i);
-    }
-
-    if (resourceImages.length === formData.updatedAssetsCount) {
+    if (resourceImage) {
       try {
         await dispatch(
           updateResource({ formData: formDataToSubmit, id: singlePost?._id })
@@ -108,24 +116,26 @@ const PostEdit = ({ open, handleEditDialog, postSlug }) => {
             title: "",
             description: "",
             category: "",
-            updatedAssetsCount: 0,
+            image: "",
           });
-          setResourceImages([]);
-          setImagePreviews([]);
-          // navigate("/admin/images");
+          setResourceImage(null);
+          setImagePreview(null);
           await dispatch(getallResource());
         }
-        // await dispatch(getSinglePost(postSlug));
+        await dispatch(getSinglePost(postSlug));
+        handleEditModalClose();
       } catch (error) {
         toast.error(error);
       }
+    } else {
+      toast.error("Please select an image");
     }
   };
 
   const handleEditModalClose = () => {
     handleEditDialog(false);
-    setResourceImages([]);
-    setImagePreviews([]);
+    setResourceImage(null);
+    setImagePreview(null);
   };
 
   useEffect(() => {
@@ -185,18 +195,10 @@ const PostEdit = ({ open, handleEditDialog, postSlug }) => {
                   borderColor: "hsl(0, 0%, 80%)",
                 }}
               />
-              <div className="font-medium mt-3">
-                You can change{" "}
-                <span className="bg-moonstone text-white text-sm w-[24px] h-[24px] inline-flex items-center justify-center rounded-full mx-1">
-                  {formData.updatedAssetsCount}
-                </span>{" "}
-                image.
-              </div>
               <input
-                key={imagePreviews.length}
-                multiple
                 type="file"
                 name="assets"
+                ref={fileInputRef}
                 onChange={handleImageChange}
                 className="input-theme"
                 style={{
@@ -205,18 +207,20 @@ const PostEdit = ({ open, handleEditDialog, postSlug }) => {
                 }}
               />
 
-              {imagePreviews.length > 0 &&
-              imagePreviews.length === formData.updatedAssetsCount ? (
-                <div className="grid grid-cols-3 gap-4">
-                  {imagePreviews.map((preview, index) => (
-                    <div key={index} className="relative">
-                      <img
-                        src={preview}
-                        alt={`Image ${index}`}
-                        className="w-full h-auto rounded-lg"
-                      />
-                    </div>
-                  ))}
+              {imagePreview?.length > 0 ? (
+                <div className="grid grid-cols-1 gap-4">
+                  <div className="relative rounded-lg overflow-hidden h-[180px]">
+                    <img
+                      src={imagePreview}
+                      className="w-full h-full object-cover"
+                    />
+                    <button
+                      className="absolute top-2 shadow-lg right-2 bg-moonstone text-white rounded-full cursor-pointer"
+                      onClick={() => handleDeleteImage()}
+                    >
+                      <RxCrossCircled size={30} />
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <p className="font-medium text-slategray mt-2">
@@ -224,9 +228,7 @@ const PostEdit = ({ open, handleEditDialog, postSlug }) => {
                 </p>
               )}
             </div>
-
             <div>{isUpdateLoading && <SpinLoader />}</div>
-
             <Button
               type="submit"
               className="mt-6 text-base rounded-md bg-moonstone-gradient2 font-semibold tracking-[2px]"

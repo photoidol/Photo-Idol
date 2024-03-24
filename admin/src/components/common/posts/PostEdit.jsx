@@ -1,11 +1,15 @@
 import { AiFillCloseCircle } from "react-icons/ai";
-import { Button } from "@material-tailwind/react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import SpinLoader from "../SpinLoader";
-import { Dialog, DialogHeader, DialogBody } from "@material-tailwind/react";
+import {
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  Button,
+} from "@material-tailwind/react";
 import { toast } from "react-toastify";
 import {
   getSinglePost,
@@ -16,24 +20,35 @@ import {
   updateResource,
 } from "../../../redux/slices/resourceSlice";
 import { getallCategory } from "../../../redux/slices/categorySlice";
+import { RxCrossCircled } from "react-icons/rx";
 
 const PostEdit = ({ open, handleEditDialog, postSlug }) => {
   const dispatch = useDispatch();
+  const fileInputRef = useRef(null);
 
   // ### POST UPDATION
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     category: "",
-    updatedAssetsCount: 0,
+    image: "",
   });
 
-  const [singlePost, setSinglePost] = useState({});
-  const [resourceImages, setResourceImages] = useState([]);
-  const [imagePreviews, setImagePreviews] = useState([]);
+  const [imagePreview, setImagePreview] = useState(null);
   const { isSuccess, isLoading } = useSelector((state) => state.resource);
   const post = useSelector(selectSinglePost);
   const categories = useSelector((state) => state.category.categorys.categorys);
+
+  useEffect(() => {
+    if (post) {
+      setFormData({
+        title: post.title || "",
+        description: post.description || "",
+        category: post.category?._id || "",
+        image: null,
+      });
+    }
+  }, [post]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -53,86 +68,90 @@ const PostEdit = ({ open, handleEditDialog, postSlug }) => {
   };
 
   const handleImageChange = (e) => {
-    const selectedImages = Array.from(e.target.files);
+    const selectedImage = e.target.files[0];
     const allowedFormats = ["image/jpeg", "image/png", "image/jpg"];
-    const invalidFiles = selectedImages.filter(
-      (file) => !allowedFormats.includes(file.type)
-    );
 
-    if (invalidFiles.length === 0) {
-      setResourceImages(selectedImages);
-      const previews = selectedImages.map((image) =>
-        URL.createObjectURL(image)
-      );
-      setImagePreviews(previews);
+    if (selectedImage && allowedFormats.includes(selectedImage.type)) {
+      setFormData((prevData) => ({
+        ...prevData,
+        image: selectedImage,
+      }));
+      setImagePreview(URL.createObjectURL(selectedImage));
     } else {
-      setResourceImages([]);
+      setFormData((prevData) => ({
+        ...prevData,
+        image: null,
+      }));
+      setImagePreview(null);
       toast.error(
-        `Invalid file formats. Please upload only JPEG, PNG, or JPG images. Invalid files: ${invalidFiles
-          .map((file) => file.name)
-          .join(", ")}`
+        `Invalid file formats. Please upload only JPEG, PNG, or JPG images`
       );
     }
   };
 
-  useEffect(() => {
-    if (post) {
-      setSinglePost(post);
-      setFormData({
-        title: post?.title || "",
-        description: post?.description || "",
-        category: post?.category?._id,
-        updatedAssetsCount: post?.assets?.length || 0,
-      });
+  const handlePreviewDelete = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
-  }, [post]);
+    setFormData((prevData) => ({
+      ...prevData,
+      image: null,
+    }));
+    setImagePreview(null);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { title, description, category, updatedAssetsCount } = formData;
-    const formDataToSubmit = new FormData();
 
-    formDataToSubmit.append("title", title);
-    formDataToSubmit.append("description", description);
-    formDataToSubmit.append("category", category);
-    formDataToSubmit.append("updatedAssets", updatedAssetsCount);
-
-    resourceImages.forEach((image) => {
-      formDataToSubmit.append("assets", image);
-    });
-
-    if (resourceImages.length === 1) {
-      try {
-        await dispatch(
-          updateResource({ formData: formDataToSubmit, id: singlePost?._id })
-        );
-
-        if (isSuccess) {
-          setFormData({
-            title: "",
-            description: "",
-            category: "",
-            updatedAssetsCount: 0,
-          });
-          handleEditModalClose();
-          await dispatch(getallResource());
-        }
-      } catch (error) {
-        toast.error(error);
-      }
-    } else {
+    if (!formData.image) {
       toast.error("Please select an image!");
+      return;
+    }
+
+    const formDataToSubmit = new FormData();
+    formDataToSubmit.append("title", formData.title);
+    formDataToSubmit.append("description", formData.description);
+    formDataToSubmit.append("category", formData.category);
+    formDataToSubmit.append("assets", formData.image);
+
+    try {
+      await dispatch(
+        updateResource({ formData: formDataToSubmit, id: post?._id })
+      );
+
+      if (isSuccess) {
+        setFormData({
+          title: "",
+          description: "",
+          category: "",
+          image: "",
+        });
+
+        setImagePreview(null);
+        await dispatch(getallResource());
+      }
+      await dispatch(getSinglePost(postSlug));
+      handleEditModalClose();
+    } catch (error) {
+      toast.error(error);
     }
   };
 
   const handleEditModalClose = () => {
     handleEditDialog(false);
-    setResourceImages([]);
-    setImagePreviews([]);
+    setImagePreview(null);
+    setFormData({
+      title: "",
+      description: "",
+      category: "",
+      image: "",
+    });
   };
 
   useEffect(() => {
-    if (postSlug) dispatch(getSinglePost(postSlug));
+    if (postSlug) {
+      dispatch(getSinglePost(postSlug));
+    }
     dispatch(getallCategory());
   }, [postSlug, dispatch]);
 
@@ -147,9 +166,9 @@ const PostEdit = ({ open, handleEditDialog, postSlug }) => {
         </DialogHeader>
         <DialogBody
           divider
-          className="h-[540px] sm:px-6 lg:px-8 py-8 overflow-x-hidden scrollbar-y-dir rounded-lg"
+          className="h-[540px] sm:px-6 lg:px-8 py-6 overflow-x-hidden scrollbar-y-dir rounded-lg"
         >
-          <form onSubmit={handleSubmit} className="mt-5 font-inter">
+          <form onSubmit={handleSubmit}>
             <div className="mb-4 flex flex-col gap-3">
               <input
                 type="text"
@@ -188,16 +207,7 @@ const PostEdit = ({ open, handleEditDialog, postSlug }) => {
                   borderColor: "hsl(0, 0%, 80%)",
                 }}
               />
-              {/* <div className="font-medium mt-3">
-                You can change{" "}
-                <span className="bg-dark text-white text-sm w-[24px] h-[24px] inline-flex items-center justify-center rounded-full mx-1">
-                  {formData.updatedAssetsCount}
-                </span>{" "}
-                image(s).
-              </div> */}
               <input
-                key={imagePreviews.length}
-                multiple
                 type="file"
                 name="assets"
                 onChange={handleImageChange}
@@ -207,22 +217,40 @@ const PostEdit = ({ open, handleEditDialog, postSlug }) => {
                 }}
               />
 
-              {imagePreviews.length > 0 &&
-              imagePreviews.length === formData.updatedAssetsCount ? (
-                <div className="grid grid-cols-3 gap-4">
-                  {imagePreviews.map((preview, index) => (
-                    <div key={index} className="relative">
-                      <img
-                        src={preview}
-                        alt={`Image ${index}`}
-                        className="w-full h-auto rounded-lg"
-                      />
-                    </div>
-                  ))}
+              {post?.assets?.filePath ? (
+                <div className="grid grid-cols-1 gap-4">
+                  <p>Current image :</p>
+                  <div className="relative rounded-lg overflow-hidden h-[180px]">
+                    <img
+                      src={post?.assets?.filePath}
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
                 </div>
               ) : (
-                <p className="font-inter text-moonstone mt-2">
-                  No Images selected right now!
+                <p>No any old image found.</p>
+              )}
+
+              {imagePreview ? (
+                <div className="grid grid-cols-1 gap-4">
+                  <p>New Image :</p>
+                  <div className="relative rounded-lg overflow-hidden h-[180px]">
+                    <img
+                      src={imagePreview}
+                      className="w-full h-full object-contain"
+                    />
+                    <button
+                      type="button"
+                      className="absolute top-2 shadow-lg right-2 bg-moonstone text-white rounded-full cursor-pointer"
+                      onClick={() => handlePreviewDelete()}
+                    >
+                      <RxCrossCircled size={30} />
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <p className="font-medium text-slategray mt-2 text-center">
+                  No any new images selected right now!
                 </p>
               )}
             </div>

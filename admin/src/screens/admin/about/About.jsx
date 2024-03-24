@@ -8,14 +8,7 @@ import {
 } from "../../../redux/slices/aboutSlice";
 import useRedirectLoggedOutUser from "../../../utils/useRedirectLoggedOutUser";
 
-const TABLE_HEAD = [
-  "S.N.",
-  // "Title",
-  // "Description",
-  "About Image",
-  "Created On",
-  "Action",
-];
+const TABLE_HEAD = ["S.N.", "About Image", "Created On", "Action"];
 
 const About = () => {
   useRedirectLoggedOutUser("/login");

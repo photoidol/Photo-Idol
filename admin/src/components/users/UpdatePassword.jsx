@@ -128,10 +128,10 @@ export const UpdatePassword = () => {
             }}
           />
           <br />
-          {
-            isLoading && <SpinLoader />
-          }
-          <Button type="submit" className="bg-moonstone rounded">Change Password</Button>
+          {isLoading && <SpinLoader />}
+          <Button type="submit" className="bg-moonstone rounded">
+            Change Password
+          </Button>
           <ul className="box mt-6 mb-4 border border-gray-300 p-3 rounded-lg">
             <li
               className={`text-[13px] py-0.5 font-inter ${

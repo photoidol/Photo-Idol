@@ -94,6 +94,10 @@ const updateUserByAdmin = async (userData) => {
   const response = await axios.patch(API_URL + "admin/user", userData);
   return response.data.message;
 };
+const updateUserStatus = async(userData) => {
+  const response = await axios.patch(API_URL + "admin/update-status", userData);
+  return response.data.message;
+}
 
 const authService = {
   register,
@@ -114,6 +118,7 @@ const authService = {
   loginWithCode,
   loginWithGoogle,
   getUserByAdmin,
+  updateUserStatus
 };
 
 export default authService;

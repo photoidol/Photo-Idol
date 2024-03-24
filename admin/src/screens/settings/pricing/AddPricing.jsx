@@ -134,7 +134,7 @@ export const AddPricing = () => {
                   onChange={handleInputChange}
                   required
                 />
-                {/* <div>
+                <div>
                   <Input
                     size="lg"
                     type="file"
@@ -153,7 +153,7 @@ export const AddPricing = () => {
                     alt="profileImg"
                     className="h-40 object-contain rounded-xl border p-3"
                   />
-                )} */}
+                )}
               </div>
               <Button type="submit" className="bg-moonstone rounded">
                 Create

@@ -8,6 +8,7 @@ export const Notification = () => {
     await dispatch(sendVerificationEmail());
     await dispatch(RESET());
   };
+  
   return (
     <>
       <Alert

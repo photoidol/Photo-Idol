@@ -22,7 +22,7 @@ html {
   h3,
   h4,
   h5 {
-    @apply text-2xl lg:text-3xl xxl:text-[32px] leading-[1];
+    @apply text-[20px] sm:text-2xl lg:text-3xl xxl:text-[32px];
   }
 
   p {
@@ -72,7 +72,7 @@ html {
 }
 
 .glass-effect {
-  backdrop-filter: blur(4px);
+  // backdrop-filter: blur(4px);
 }
 
 .scroll-popup {
@@ -172,11 +172,11 @@ html {
   z-index: 10000 !important;
 }
 
-.Toastify__toast-body{
-  color: #677489!important;
-  font-family: "Open Sans", sans-serif!important;
-  svg{
-    color: green!important;
+.Toastify__toast-body {
+  color: #677489 !important;
+  font-family: "Open Sans", sans-serif !important;
+  svg {
+    color: green !important;
   }
 }
 
@@ -264,11 +264,112 @@ html {
   @apply rounded-md border-none hover:shadow-lg shadow-md;
 }
 
-
 // custom tooltip
 .tooltip-custom {
   @apply relative;
 }
 .tooltip-custom-container {
   @apply absolute bg-dark bottom-full mb-3 z-30 left-1/2 -translate-x-1/2 py-1 px-2 rounded-[4px] text-xs invisible opacity-0 default-transition group-hover:visible group-hover:opacity-100 font-medium capitalize shadow-md min-w-[48px] text-center;
+}
+
+.modal-open {
+  overflow: hidden;
+}
+
+// top navbar
+.top-navbar {
+  @media (max-width: 1200px) {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 280px;
+    height: 100%;
+    z-index: 10000;
+    flex-direction: column;
+    padding: 16px;
+    @apply bg-moonstone default-transition;
+    transform: translateX(100%);
+
+    &.show {
+      transform: translateX(0);
+    }
+
+    .header-search {
+      min-width: 100% !important;
+      width: 100% !important;
+      padding-left: 10px;
+      width: 100%;
+      height: 40px;
+
+      input {
+        &::placeholder {
+          font-size: 13px;
+        }
+      }
+    }
+
+    form {
+      position: relative !important;
+      top: auto !important;
+      padding: 0 !important;
+      width: 100%;
+
+      button {
+        padding-left: 6px;
+        padding-right: 6px;
+        font-size: 20px;
+        width: auto !important;
+      }
+    }
+
+    .navbar-links {
+      flex-direction: column;
+      margin-top: 24px;
+
+      .navbar-link,
+      .navbar-link-dropdown {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.5) !important;
+        padding-top: 16px;
+        padding-bottom: 16px;
+
+        button {
+          height: auto !important;
+        }
+
+        &:last-child {
+          border-bottom: 0 !important;
+        }
+
+        &.hidden{
+          display: none!important;
+        }
+      }
+
+      .header-search-btn {
+        column-gap: 6px;
+      }
+    }
+  }
+
+  @media(max-width: 480px){
+    width: 100%;
+  }
+}
+
+
+.customized-select{
+  & > div{
+    min-width: 180px!important;
+  }
+  label{
+    @apply text-indigo;
+    display: none;
+    &::after, &::before{
+      display: none;
+    }
+  }
 }

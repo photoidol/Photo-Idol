@@ -115,14 +115,16 @@ export const UploadBox = () => {
     <div className="relative">
       <button
         onClick={openUploadForm}
-        className="md:px-5 px-3 md:py-2.5 py-1.5 rounded-[4px] flex items-center gap-2 text-white default-transition ms-auto min-w-[160px] upload-btn wobble-hor-bottom"
+        className="md:px-5 px-3 md:py-2.5 py-1.5 min-h-[36px] rounded-[4px] flex items-center gap-2 text-white default-transition ms-auto min-w-[160px] upload-btn wobble-hor-bottom"
       >
         <AiOutlineCloudUpload size={18} />
-        <span className=" font-semibold">Upload Photo</span>
+        <span className=" font-semibold text-sm md:text-base">
+          Upload Photo
+        </span>
       </button>
 
       <div
-        className={`z-[999] grid w-[28rem] overflow-hidden p-0 absolute left-0 top-full bg-white shadow-xl rounded-md mt-4 default-transition ${
+        className={`z-[999] grid sm:w-[28rem] overflow-hidden p-0 fixed sm:absolute top-20 sm:top-full sm:left-0 left-3 sm:right-auto right-3 bg-white shadow-xl rounded-md mt-4 default-transition ${
           msgPopup.isVisible ? "visible opacity-100" : "opacity-0 invisible"
         }`}
         ref={popupRef}
@@ -134,17 +136,17 @@ export const UploadBox = () => {
         >
           <MdOutlineClose size={20} />
         </button>
-        <div className="p-4">
-          <Typography className="mb-2 text-lg font-semibold title-theme">
+        <div className="sm:p-4 p-3">
+          <Typography className="mb-2 text-base sm:text-lg font-semibold title-theme mt-4 xs:mt-0">
             {msgPopup.msgTitle || ""}
           </Typography>
-          <div className="flex items-center gap-y-3 gap-x-1 flex-wrap md:flex-nowrap">
-            <div className="w-[80px] h-[80px] min-w-[80px]">
-              <img src={msgPopup.msgImg} alt="" />
-            </div>
+          <div className="flex items-center gap-y-3 gap-x-1 flex-wrap xs:flex-nowrap">
             <Typography className="font-normal text-sm text-slategray inline-block">
               {msgPopup.msgText || ""}
             </Typography>
+            <div className="sm:w-[80px] sm:h-[80px] sm:min-w-[80px] w-[60px] h-[60px] min-w-[60px] mx-auto hidden xs:block">
+              <img src={msgPopup.msgImg} alt="" />
+            </div>
           </div>
         </div>
       </div>

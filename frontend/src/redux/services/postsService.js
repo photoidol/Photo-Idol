@@ -1,7 +1,6 @@
 import axios from "axios";
+import { BACKEND_URL } from "../../utils/helper";
 
-// const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const BACKEND_URL = "https://api.fotoidol.com";
 export const API_URL = `${BACKEND_URL}/api/v1/posts/`;
 
 const createPost = async (postData) => {
@@ -25,7 +24,9 @@ const getUserPosts = async () => {
 };
 
 const searchUserPosts = async (userId, email) => {
-  const response = await axios.get(API_URL + `search/posts?userId=${userId}&email=${email}`);
+  const response = await axios.get(
+    API_URL + `search/posts?userId=${userId}&email=${email}`
+  );
   return response.data;
 };
 

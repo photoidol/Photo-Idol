@@ -8,7 +8,11 @@ import { staticImages } from "../../images";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BsCheckAll } from "react-icons/bs";
-import { RESET, register, sendVerificationEmail } from "../../redux/slices/authSlice";
+import {
+  RESET,
+  register,
+  sendVerificationEmail,
+} from "../../redux/slices/authSlice";
 import CountrySelect from "../../components/common/CountrySelect";
 import AuthHeader from "../../components/header/AuthHeader";
 import SpinLoader from "../../components/common/SpinLoader";
@@ -24,7 +28,10 @@ const initialValues = {
 
 const RegistrationSchema = Yup.object().shape({
   name: Yup.string()
-    .notOneOf(["admin", "superadmin", "superuser", "root"], "Username is not allowed")
+    .notOneOf(
+      ["admin", "superadmin", "superuser", "root"],
+      "Username is not allowed"
+    )
     .matches(/^[a-zA-Z]+(?: [a-zA-Z]+)*$/, "Invalid username format")
     .matches(/^[^\d!@#$%^&*(),.?":{}|<>]*$/, {
       excludeEmptyString: true,
@@ -35,13 +42,22 @@ const RegistrationSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email address")
     .required("Email is required")
-    .matches(/@(gmail\.com|hotmail\.com|outlook\.com|yahoo\.com)$/, "Invalid email domain"),
+    .matches(
+      /@(gmail\.com|hotmail\.com|outlook\.com|yahoo\.com)$/,
+      "Invalid email domain"
+    ),
   password: Yup.string()
     .required("Password is required")
     .min(8, "Password must be at least 8 characters")
-    .matches(/([a-z].*[A-Z])|([A-Z].*[a-z])/, "Password must contain both uppercase and lowercase letters")
+    .matches(
+      /([a-z].*[A-Z])|([A-Z].*[a-z])/,
+      "Password must contain both uppercase and lowercase letters"
+    )
     .matches(/([0-9])/, "Password must contain at least one number")
-    .matches(/([!,%,&,@,#,$,^,*,?,_,~])/, "Password must contain at least one special character"),
+    .matches(
+      /([!,%,&,@,#,$,^,*,?,_,~])/,
+      "Password must contain at least one special character"
+    ),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), null], "Passwords must match")
     .required("Confirm Password is required"),
@@ -50,7 +66,9 @@ const RegistrationSchema = Yup.object().shape({
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isSuccess, isLoggedIn, isLoading } = useSelector((state) => state.auth);
+  const { isSuccess, isLoggedIn, isLoading } = useSelector(
+    (state) => state.auth
+  );
   // for validation checklist
   const [upperCase, setUpperCase] = useState(false);
   const [number, setNumber] = useState(false);
@@ -184,9 +202,15 @@ const Register = () => {
         <div className="items-stretch rounded-2xl shadow-auth overflow-hidden border-[1px] border-white/10 max-w-[520px] mx-auto">
           <div className="relative flex flex-col justify-between px-4 py-8 sm:px-7 sm:py-10 bg-white">
             <div>
-              <h3 className="lg:text-2xl text-xl text-center font-bold text-dark-moonstone mb-4">Register Here!</h3>
-              <Formik initialValues={initialValues} validationSchema={RegistrationSchema} onSubmit={handleSubmit}>
-                {({ errors, touched }) => (
+              <h3 className="lg:text-2xl text-xl text-center font-bold text-dark-moonstone mb-4">
+                Register Here!
+              </h3>
+              <Formik
+                initialValues={initialValues}
+                validationSchema={RegistrationSchema}
+                onSubmit={handleSubmit}
+              >
+                {() => (
                   <Form className="flex flex-col gap-2 mb-5 mt-2">
                     <div className="border-b-[1px] border-blue-gray-50 text-base flex items-stretch form-element mb-3">
                       <Field
@@ -199,7 +223,11 @@ const Register = () => {
                         <FaUserAlt />
                       </span>
                     </div>
-                    <ErrorMessage className="error-msg" name="name" component="div" />
+                    <ErrorMessage
+                      className="error-msg"
+                      name="name"
+                      component="div"
+                    />
                     <div className="border-b-[1px] border-blue-gray-50 text-base flex items-stretch form-element mb-3">
                       <Field
                         type="text"
@@ -211,7 +239,11 @@ const Register = () => {
                         <FaEnvelope />
                       </span>
                     </div>
-                    <ErrorMessage className="error-msg" name="email" component="div" />
+                    <ErrorMessage
+                      className="error-msg"
+                      name="email"
+                      component="div"
+                    />
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-3 lg:gap-y-0">
                       <div>
                         <div className="border-b-[1px] border-blue-gray-50 text-base flex items-stretch form-element mb-3">
@@ -224,11 +256,18 @@ const Register = () => {
                               handlePasswordKeyPress(e);
                             }}
                           />
-                          <span className="w-[48px] md:h-[48px] h-[42px] flex items-center justify-center text-indigo" onClick={togglePasswordVisibility}>
+                          <span
+                            className="w-[48px] md:h-[48px] h-[42px] flex items-center justify-center text-indigo"
+                            onClick={togglePasswordVisibility}
+                          >
                             {showPassword ? <FaEye /> : <FaEyeSlash />}
                           </span>
                         </div>
-                        <ErrorMessage className="error-msg" name="password" component="div" />
+                        <ErrorMessage
+                          className="error-msg"
+                          name="password"
+                          component="div"
+                        />
                       </div>
                       <div>
                         <div className="border-b-[1px] border-blue-gray-50 text-base flex items-stretch form-element mb-3">
@@ -243,27 +282,50 @@ const Register = () => {
                               return false;
                             }}
                           />
-                          <span className="w-[48px] md:h-[48px] h-[42px] flex items-center justify-center text-indigo cursor-pointer" onClick={toggleConfirmPasswordVisibility}>
+                          <span
+                            className="w-[48px] md:h-[48px] h-[42px] flex items-center justify-center text-indigo cursor-pointer"
+                            onClick={toggleConfirmPasswordVisibility}
+                          >
                             {showConfirmPassword ? <FaEye /> : <FaEyeSlash />}
                           </span>
                         </div>
-                        <ErrorMessage className="error-msg" name="confirmPassword" component="div" />
+                        <ErrorMessage
+                          className="error-msg"
+                          name="confirmPassword"
+                          component="div"
+                        />
                       </div>
                     </div>
                     <ul className="box border border-blue-gray-100 p-3 rounded-lg  grid grid-cols-2 gap-x-2">
-                      <li className={`text-[13px] ${upperCase ? "text-green-500" : "text-slategray"} flex items-center gap-2`}>
+                      <li
+                        className={`text-[13px] ${
+                          upperCase ? "text-green-500" : "text-slategray"
+                        } flex items-center gap-2`}
+                      >
                         {switchIcon(upperCase)}
                         Lowercase & Uppercase
                       </li>
-                      <li className={`text-[13px] ${number ? "text-green-500" : "text-slategray"} flex items-center gap-2`}>
+                      <li
+                        className={`text-[13px] ${
+                          number ? "text-green-500" : "text-slategray"
+                        } flex items-center gap-2`}
+                      >
                         {switchIcon(number)}
                         Number (0-9)
                       </li>
-                      <li className={`text-[13px] ${specialChar ? "text-green-500" : "text-slategray"} flex items-center gap-2`}>
+                      <li
+                        className={`text-[13px] ${
+                          specialChar ? "text-green-500" : "text-slategray"
+                        } flex items-center gap-2`}
+                      >
                         {switchIcon(specialChar)}
                         Special Character (!@#$%^&*)
                       </li>
-                      <li className={`text-[13px] ${passwordLength ? "text-green-500" : "text-slategray"} flex items-center gap-2`}>
+                      <li
+                        className={`text-[13px] ${
+                          passwordLength ? "text-green-500" : "text-slategray"
+                        } flex items-center gap-2`}
+                      >
                         {switchIcon(passwordLength)}
                         At least 8 Characters
                       </li>
@@ -271,15 +333,30 @@ const Register = () => {
 
                     <div className="mt-3">
                       <div className="text-base flex items-stretch form-element">
-                        <CountrySelect countryData={countryData} getSelectedCountry={getSelectedCountry} />
+                        <CountrySelect
+                          countryData={countryData}
+                          getSelectedCountry={getSelectedCountry}
+                        />
                       </div>
                     </div>
 
                     <div className="flex items-center gap-3 agree-checkbox">
-                      <div className="h-[18px] w-[19px] border-[1px] border-moonstone relative cursor-pointer" onClick={handleAgreement}>
-                        {agreeTerms ? <FaCheck size={13} className="absolute ps-[1px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 check-icon text-moonstone" /> : ""}
+                      <div
+                        className="h-[18px] w-[19px] border-[1px] border-moonstone relative cursor-pointer"
+                        onClick={handleAgreement}
+                      >
+                        {agreeTerms ? (
+                          <FaCheck
+                            size={13}
+                            className="absolute ps-[1px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 check-icon text-moonstone"
+                          />
+                        ) : (
+                          ""
+                        )}
                       </div>
-                      <span className="text-slategray font-medium">I agree to the terms & conditions.</span>
+                      <span className="text-slategray font-medium">
+                        I agree to the terms & conditions.
+                      </span>
                     </div>
                     {isLoading && <SpinLoader />}
                     <button
@@ -293,8 +370,13 @@ const Register = () => {
               </Formik>
 
               <div className="text-center  mt-5 mb-6">
-                <p className="inline text-slategray font-medium sm:text-base text-sm">Already have an account?</p>
-                <Link to="/auth/login" className="text-moonstone-gradient2 font-semibold mx-2 sm:text-base text-sm">
+                <p className="inline text-slategray font-medium sm:text-base text-sm">
+                  Already have an account?
+                </p>
+                <Link
+                  to="/auth/login"
+                  className="text-moonstone-gradient2 font-semibold mx-2 sm:text-base text-sm"
+                >
                   Log in
                 </Link>
               </div>
@@ -302,7 +384,7 @@ const Register = () => {
 
             <div className="border-t-[1px] border-blue-gray-50 pt-4">
               <p className=" text-moonstone-gradient2 font-bold text-lg text-center mt-auto">
-                <Link to="/">FotoIdol Studio.</Link>
+                <Link to="/">FotoIdol</Link>
               </p>
             </div>
           </div>

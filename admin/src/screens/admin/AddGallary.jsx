@@ -7,7 +7,7 @@ import {
 } from "@material-tailwind/react";
 import { CategoryDropDown } from "../../components/common/DropDown";
 import useRedirectLoggedOutUser from "../../utils/useRedirectLoggedOutUser";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { RxCrossCircled } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -26,8 +26,9 @@ export const AddGallary = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [resource, setResource] = useState(initialState);
-  const [resourceImages, setResourceImages] = useState([]);
-  const [imagePreviews, setImagePreviews] = useState([]);
+  const [resourceImage, setResourceImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const fileInputRef = useRef(null);
 
   const { title, description, category } = resource;
   const { isSuccess, isLoading } = useSelector((state) => state.resource);
@@ -38,54 +39,47 @@ export const AddGallary = () => {
   };
 
   const handleImageChange = (e) => {
-    const selectedImages = Array.from(e.target.files);
+    e.preventDefault();
+    const selectedImage = e.target.files[0];
     const allowedFormats = ["image/jpeg", "image/png", "image/jpg"];
-    const invalidFiles = selectedImages.filter(
-      (file) => !allowedFormats.includes(file.type)
-    );
 
-    if (invalidFiles.length === 0) {
-      setResourceImages(selectedImages);
-      const previews = selectedImages.map((image) =>
-        URL.createObjectURL(image)
-      );
-      setImagePreviews(previews);
+    if (selectedImage && allowedFormats.includes(selectedImage.type)) {
+      setResourceImage(selectedImage);
+      const preview = URL.createObjectURL(selectedImage);
+      setImagePreview(preview);
     } else {
-      setResourceImages([]);
+      setResourceImage(null);
+      setImagePreview(null);
       toast.error(
-        `Invalid file formats. Please upload only JPEG, PNG, or JPG images. Invalid files: ${invalidFiles
-          .map((file) => file.name)
-          .join(", ")}`
+        "Invalid file formats. Please uplaod only JPEG, PNG, or JPG images."
       );
     }
   };
 
-  const handleDeleteImage = (indexToDelete) => {
-    const updatedImages = [...resourceImages];
-    updatedImages.splice(indexToDelete, 1);
-    setResourceImages(updatedImages);
+  const handleDeleteImage = () => {
+    resetFileInput();
+  };
 
-    const updatedPreviews = [...imagePreviews];
-    updatedPreviews.splice(indexToDelete, 1);
-    setImagePreviews(updatedPreviews);
+  const resetFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+      setResourceImage(null);
+      setImagePreview(null);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
-
-    resourceImages.forEach((image) => {
-      formData.append("assets", image);
-    });
+    formData.append("assets", resourceImage);
 
     if (category) {
       formData.append("category", category.value);
     }
 
-    if(resourceImages.length > 0){
+    if (resourceImage) {
       try {
         await dispatch(createResource(formData));
         if (isSuccess) {
@@ -132,33 +126,32 @@ export const AddGallary = () => {
             />
             <Input
               size="lg"
-              multiple
               type="file"
               name="assets"
               onChange={handleImageChange}
               label="Select Photo"
               className="pt-2.5"
+              ref={fileInputRef}
             />
-            {imagePreviews.length > 0 ? (
+            {imagePreview?.length > 0 ? (
               <div className="grid grid-cols-3 gap-4">
-                {imagePreviews.map((preview, index) => (
-                  <div key={index} className="relative h-[120px]">
-                    <img
-                      src={preview}
-                      alt={`Image ${index}`}
-                      className="w-full h-full object-cover rounded-lg"
-                    />
-                    <button
-                      className="absolute top-2 right-2 bg-red-500  text-white rounded-full cursor-pointer"
-                      onClick={() => handleDeleteImage(index)}
-                    >
-                      <RxCrossCircled size={24} />
-                    </button>
-                  </div>
-                ))}
+                <div className="relative h-[120px]">
+                  <img
+                    src={imagePreview}
+                    className="w-full h-full object-cover rounded-lg"
+                  />
+                  <button
+                    className="absolute top-2 right-2 bg-red-500  text-white rounded-full cursor-pointer"
+                    onClick={() => handleDeleteImage()}
+                  >
+                    <RxCrossCircled size={24} />
+                  </button>
+                </div>
               </div>
             ) : (
-              <p className="text-moonstone text-sm font-normal">No Images selected!</p>
+              <p className="text-moonstone text-sm font-normal">
+                No Images selected!
+              </p>
             )}
           </div>
 

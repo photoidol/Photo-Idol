@@ -5,6 +5,7 @@ import Loader from "../../components/common/Loader";
 import { getallCategory } from "../../redux/slices/categorySlice";
 import { Typography } from "@material-tailwind/react";
 import useRedirectLoggedOutUser from "../../utils/useRedirectLoggedOutUser";
+import { scrollToTop } from "../../utils/scrollToTop";
 
 export function Category() {
   useRedirectLoggedOutUser("/auth/login");
@@ -16,6 +17,8 @@ export function Category() {
   }, [dispatch]);
 
   const isLoading = useSelector((state) => state.category.isLoading);
+
+  useEffect(() => scrollToTop(), []);
 
   return (
     <div className="flex flex-col py-5">

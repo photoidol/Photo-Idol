@@ -35,11 +35,6 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { UpdateCategory } from "../../screens/category/UpdateCategory";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import {
-  getFeaturedCategoriesLists,
-  toggleCategoryFeature,
-} from "../../redux/slices/settings/SettingSlice";
-import { toast } from "react-toastify";
-import {
   CATEGORY_ADMIN,
   CATEGORY_GUEST,
   CATEGORY_NO_LIMIT,
@@ -49,7 +44,6 @@ const TABLE_HEAD = [
   "S.N.",
   "Title",
   "Type",
-  // "Featured on home",
   "Created At",
   "Creator",
   "Cover Image",
@@ -146,20 +140,6 @@ export const CategoryDataTable = (props) => {
   // ### IMAGE PREVIEW MODAL
   const { modalOpen, imageSrc, openModal, closeModal } = useModal();
 
-  // ### CATEGORY FEATURE TOGGLE
-  const handleCategoryToggle = async (resourceId, toggleState) => {
-    if (
-      props.FEATURED_DATA.length < 9 ||
-      (props.FEATURED_DATA.length === 9 && toggleState === true)
-    ) {
-      await dispatch(toggleCategoryFeature(resourceId));
-      await dispatch(getallCategory());
-      await dispatch(getFeaturedCategoriesLists());
-    } else {
-      toast.error("You can't featured more than 9 categories on home page.");
-    }
-  };
-
   const handleSearchInputChange = (e) => {
     setSearchQuery(e.target.value);
     setCurrentPage(1);
@@ -199,19 +179,6 @@ export const CategoryDataTable = (props) => {
               />
             </div>
           </div>
-          {/* <div className="mt-3">
-            <p
-              className={`font-inter text-sm ${
-                props?.FEATURED_DATA?.length === 9
-                  ? "text-red-500"
-                  : "text-green-500"
-              }`}
-            >
-              <span className="font-semibold">Note:</span> Your{" "}
-              {props?.FEATURED_DATA?.length || 0} categorie(s) has been
-              featured in the home page.
-            </p>
-          </div> */}
         </CardHeader>
         <CardBody className="p-0 w-[90vw] lg:w-[calc(100vw-350px)] overflow-x-scroll scrollbar-x-dir">
           <Tabs value={activeTab} className="px-4 mt-6">
@@ -306,26 +273,7 @@ export const CategoryDataTable = (props) => {
                                 {category?.subcategory}
                               </Typography>
                             </td>
-                            {/* <td className={classes}>
-                        <div className="flex items-center gap-x-3 font-inter">
-                          <Switch
-                            onChange={() =>
-                              handleCategoryToggle(
-                                category?._id,
-                                category?.isFeatured
-                              )
-                            }
-                            checked={category?.isFeatured ? true : false}
-                            className={` checked:bg-moonstone`}
-                            circleProps={{
-                              className: "border-none",
-                            }}
-                          />
-                          <span className="capitalize text-sm text-dark">
-                            {category?.isFeatured ? "Yes" : "No"}
-                          </span>
-                        </div>
-                      </td> */}
+
                             <td className={classes}>
                               <Typography
                                 variant="small"

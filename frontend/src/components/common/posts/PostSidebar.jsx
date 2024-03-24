@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { scrollToTop } from "../../../utils/scrollToTop";
 
 const PostSidebar = ({ posts }) => {
   const [sortedPosts, setSortedPosts] = useState();
@@ -16,8 +17,10 @@ const PostSidebar = ({ posts }) => {
   }, [posts]);
 
   return (
-    <div className="p-4 bg-white shadow-lg rounded-md">
-      <h3 className="text-lg font-semibold border-b-[1px] border-blue-gray-50 pb-2">Latest Photos</h3>
+    <div className="px-4 py-3 bg-white shadow-lg rounded-md">
+      <h3 className="text-lg font-semibold border-b-[1px] border-blue-gray-50 pb-2">
+        Latest Photos
+      </h3>
       <div className="grid gap-2.5 mt-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-2">
         {sortedPosts?.length > 0 &&
           sortedPosts.slice(0, 10).map((post) => {
@@ -33,19 +36,19 @@ PostSidebar.propTypes = {
     PropTypes.shape({
       _id: PropTypes.string,
       updatedAt: PropTypes.string,
-      // Define other properties as needed
     })
   ),
 };
 export default PostSidebar;
 
 export const RelatedItem = (props) => {
+  const handleScrollTop = () => scrollToTop();
   return (
     <article className="rounded-xl shadow-md hover:transform hover:scale-105 duration-300 ">
-      <Link to={`/search/${props?.data?.slug}`}>
+      <Link onClick={handleScrollTop} to={`/search/${props?.data?.slug}`}>
         <div className="relative flex items-end overflow-hidden rounded h-[100px]">
           <img
-            src={props?.data?.assets[0]?.filePath}
+            src={props?.data?.assets?.filePath}
             className="w-full h-full object-cover"
           />
         </div>
@@ -57,11 +60,6 @@ export const RelatedItem = (props) => {
 RelatedItem.propTypes = {
   data: PropTypes.shape({
     slug: PropTypes.string,
-    assets: PropTypes.arrayOf(
-      PropTypes.shape({
-        filePath: PropTypes.string,
-      })
-    ),
-    // Define other properties as needed
+    assets: PropTypes.object,
   }),
 };

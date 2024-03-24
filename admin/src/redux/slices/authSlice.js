@@ -16,164 +16,313 @@ const initialState = {
   suspendedUsers: 0,
 };
 // register
-export const register = createAsyncThunk("auth/register", async (userData, thunkAPI) => {
-  try {
-    return await authService.register(userData);
-  } catch (error) {
-    // const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString() || error;
-    const errorMessage = (error.response && error.response.data && error.response.data.error) || "An error occurred";
+export const register = createAsyncThunk(
+  "auth/register",
+  async (userData, thunkAPI) => {
+    try {
+      return await authService.register(userData);
+    } catch (error) {
+      // const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString() || error;
+      const errorMessage =
+        (error.response && error.response.data && error.response.data.error) ||
+        "An error occurred";
 
-    return thunkAPI.rejectWithValue(errorMessage);
+      return thunkAPI.rejectWithValue(errorMessage);
+    }
   }
-});
-export const login = createAsyncThunk("auth/login", async (userData, thunkAPI) => {
-  try {
-    return await authService.login(userData);
-  } catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-    return thunkAPI.rejectWithValue(message);
+);
+export const login = createAsyncThunk(
+  "auth/login",
+  async (userData, thunkAPI) => {
+    try {
+      return await authService.login(userData);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
+);
 export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
     return await authService.logout();
   } catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
     return thunkAPI.rejectWithValue(message);
   }
 });
-export const getLogInStatus = createAsyncThunk("auth/getLogInStatus", async (_, thunkAPI) => {
-  try {
-    return await authService.getLogInStatus();
-  } catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-    return thunkAPI.rejectWithValue(message);
-  }
-});
-export const getUserProfile = createAsyncThunk("auth/get-user", async (_, thunkAPI) => {
-  try {
-    return await authService.getUserProfile();
-  } catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-    return thunkAPI.rejectWithValue(message);
-  }
-});
-export const updateUserProfile = createAsyncThunk("auth/update-user", async (userData, thunkAPI) => {
-  try {
-    return await authService.updateUserProfile(userData);
-  } catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-    return thunkAPI.rejectWithValue(message);
-  }
-});
-export const sendVerificationEmail = createAsyncThunk("auth/user-verification-email", async (_, thunkAPI) => {
-  try {
-    return await authService.sendVerificationEmail();
-  } catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-    return thunkAPI.rejectWithValue(message);
-  }
-});
-export const verifyUser = createAsyncThunk("auth/user-verification-email/verificationToken", async (verificationToken, thunkAPI) => {
-  try {
-    return await authService.verifyUser(verificationToken);
-  } catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error || error.message || error.toString();
-    return thunkAPI.rejectWithValue(message);
-  }
-});
-export const changePassword = createAsyncThunk("auth/change-password", async (userData, thunkAPI) => {
-  try {
-    return await authService.changePassword(userData);
-  } catch (error) {
-    if (error.response) {
-      if (error.response.status === 400) {
-        const errorMessage = error.response.data.message;
-        return thunkAPI.rejectWithValue(errorMessage);
-      } else if (error.response.status === 422) {
-        const errorMessage = error.response.data.message;
-        return thunkAPI.rejectWithValue(errorMessage);
-      } else {
-        return thunkAPI.rejectWithValue(error.response);
-      }
-    } else {
-      return thunkAPI.rejectWithValue(error);
+export const getLogInStatus = createAsyncThunk(
+  "auth/getLogInStatus",
+  async (_, thunkAPI) => {
+    try {
+      return await authService.getLogInStatus();
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   }
-});
-export const forgotPassword = createAsyncThunk("auth/forgot-password", async (userData, thunkAPI) => {
-  try {
-    return await authService.forgotPassword(userData);
-  } catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-    return thunkAPI.rejectWithValue(message);
+);
+export const getUserProfile = createAsyncThunk(
+  "auth/get-user",
+  async (_, thunkAPI) => {
+    try {
+      return await authService.getUserProfile();
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
-export const resetPassword = createAsyncThunk("auth/reset-password", async ({ userData, resetToken }, thunkAPI) => {
-  try {
-    return await authService.resetPassword(userData, resetToken);
-  } catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-    return thunkAPI.rejectWithValue(message);
+);
+export const updateUserProfile = createAsyncThunk(
+  "auth/update-user",
+  async (userData, thunkAPI) => {
+    try {
+      return await authService.updateUserProfile(userData);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
-export const getAllUserByAdmin = createAsyncThunk("admin/get-all-user", async (_, thunkAPI) => {
-  try {
-    return await authService.getAllUserByAdmin();
-  } catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-    return thunkAPI.rejectWithValue(message);
+);
+export const sendVerificationEmail = createAsyncThunk(
+  "auth/user-verification-email",
+  async (_, thunkAPI) => {
+    try {
+      return await authService.sendVerificationEmail();
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
-export const deleteUserByAdmin = createAsyncThunk("admin/delete-user", async (id, thunkAPI) => {
-  try {
-    return await authService.deleteUserByAdmin(id);
-  } catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-    return thunkAPI.rejectWithValue(message);
+);
+export const verifyUser = createAsyncThunk(
+  "auth/user-verification-email/verificationToken",
+  async (verificationToken, thunkAPI) => {
+    try {
+      return await authService.verifyUser(verificationToken);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
-export const getUserByAdmin = createAsyncThunk("admin/get-user", async (id, thunkAPI) => {
-  try {
-    return await authService.getUserByAdmin(id);
-  } catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-    return thunkAPI.rejectWithValue(message);
+);
+export const changePassword = createAsyncThunk(
+  "auth/change-password",
+  async (userData, thunkAPI) => {
+    try {
+      return await authService.changePassword(userData);
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 400) {
+          const errorMessage = error.response.data.message;
+          return thunkAPI.rejectWithValue(errorMessage);
+        } else if (error.response.status === 422) {
+          const errorMessage = error.response.data.message;
+          return thunkAPI.rejectWithValue(errorMessage);
+        } else {
+          return thunkAPI.rejectWithValue(error.response);
+        }
+      } else {
+        return thunkAPI.rejectWithValue(error);
+      }
+    }
   }
-});
+);
+export const forgotPassword = createAsyncThunk(
+  "auth/forgot-password",
+  async (userData, thunkAPI) => {
+    try {
+      return await authService.forgotPassword(userData);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+export const resetPassword = createAsyncThunk(
+  "auth/reset-password",
+  async ({ userData, resetToken }, thunkAPI) => {
+    try {
+      return await authService.resetPassword(userData, resetToken);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+export const getAllUserByAdmin = createAsyncThunk(
+  "admin/get-all-user",
+  async (_, thunkAPI) => {
+    try {
+      return await authService.getAllUserByAdmin();
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+export const deleteUserByAdmin = createAsyncThunk(
+  "admin/delete-user",
+  async (id, thunkAPI) => {
+    try {
+      return await authService.deleteUserByAdmin(id);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+export const getUserByAdmin = createAsyncThunk(
+  "admin/get-user",
+  async (id, thunkAPI) => {
+    try {
+      return await authService.getUserByAdmin(id);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
-export const updateUserByAdmin = createAsyncThunk("admin/update-user", async (userData, thunkAPI) => {
-  try {
-    return await authService.updateUserByAdmin(userData);
-  } catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-    return thunkAPI.rejectWithValue(message);
+export const updateUserByAdmin = createAsyncThunk(
+  "admin/update-user",
+  async (userData, thunkAPI) => {
+    try {
+      return await authService.updateUserByAdmin(userData);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
-export const sendLoginCode = createAsyncThunk("admin/send-otp", async (email, thunkAPI) => {
-  try {
-    return await authService.sendLoginCode(email);
-  } catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-    return thunkAPI.rejectWithValue(message);
+);
+export const sendLoginCode = createAsyncThunk(
+  "admin/send-otp",
+  async (email, thunkAPI) => {
+    try {
+      return await authService.sendLoginCode(email);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
-export const loginWithCode = createAsyncThunk("admin/login-with-otp", async ({ code, email }, thunkAPI) => {
-  try {
-    return await authService.loginWithCode(code, email);
-  } catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-    return thunkAPI.rejectWithValue(message);
+);
+export const loginWithCode = createAsyncThunk(
+  "admin/login-with-otp",
+  async ({ code, email }, thunkAPI) => {
+    try {
+      return await authService.loginWithCode(code, email);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
-export const loginWithGoogle = createAsyncThunk("admin/login-with-google", async (userToken, thunkAPI) => {
-  try {
-    return await authService.loginWithGoogle(userToken);
-  } catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-    return thunkAPI.rejectWithValue(message);
+);
+export const loginWithGoogle = createAsyncThunk(
+  "admin/login-with-google",
+  async (userToken, thunkAPI) => {
+    try {
+      return await authService.loginWithGoogle(userToken);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
+);
+
+export const updateUserStatus = createAsyncThunk(
+  "admin/user-status",
+  async (userData, thunkAPI) => {
+    try {
+      return await authService.updateUserStatus(userData);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
 const authSlice = createSlice({
   name: "auth",
@@ -250,7 +399,11 @@ const authSlice = createSlice({
         state.message = action.payload;
         state.user = null;
         toast.error(action.payload);
-        if (action.payload.includes("A new or unrecognized browser/device has been detected for your account. For security reasons, please verify your identity to continue.")) {
+        if (
+          action.payload.includes(
+            "A new or unrecognized browser/device has been detected for your account. For security reasons, please verify your identity to continue."
+          )
+        ) {
           state.twoFactor = true;
         }
       })
@@ -313,6 +466,19 @@ const authSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
         toast.error(action.payload);
+      })
+      .addCase(updateUserStatus.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateUserStatus.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.message = action.payload;
+      })
+      .addCase(updateUserStatus.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
       })
       .addCase(sendVerificationEmail.pending, (state) => {
         state.isLoading = true;
@@ -502,7 +668,8 @@ const authSlice = createSlice({
   },
 });
 
-export const { RESET, CALC_SUSPENDED_USER, CALC_VERIFIED_USER } = authSlice.actions;
+export const { RESET, CALC_SUSPENDED_USER, CALC_VERIFIED_USER } =
+  authSlice.actions;
 
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const selectUser = (state) => state.auth.user;

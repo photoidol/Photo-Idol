@@ -108,14 +108,14 @@ export const Gallery = () => {
 
 export const GalleryItem = (props) => {
   const onOpenClick = () => {
-    props?.openModal(props?.post?.assets && props?.post?.assets[0]?.filePath);
+    props?.openModal(props?.post?.assets?.filePath);
   };
   return (
     <article className="bg-white rounded-md p-1.5 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300 cursor-pointer">
       <div onClick={onOpenClick}>
         <div className="relative flex items-end overflow-hidden h-[200px] rounded">
           <img
-            src={props?.post?.assets && props?.post?.assets[0]?.filePath}
+            src={props?.post?.assets?.filePath}
             className="w-full h-full object-cover"
           />
         </div>

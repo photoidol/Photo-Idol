@@ -13,6 +13,31 @@
     rgba(239, 71, 111, 1) 100%
   );
 }
+.bg-pinkstone {
+  background: linear-gradient(150deg, #ff007e 0%, #00bcd4 100%);
+}
+
+.bg-moonstone-gradient {
+  background-color: #00bcd4;
+  background-image: linear-gradient(160deg, #00bcd4 0%, #80d0c7 100%);
+}
+
+.bg-moonstone-gradient2 {
+  background-color: #00bcd4;
+  background-image: linear-gradient(160deg, #00bcd4 0%, #2bbda9 100%);
+}
+
+.text-moonstone-gradient {
+  background: -webkit-linear-gradient(160deg, #00bcd4 0%, #80d0c7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-moonstone-gradient2 {
+  background: -webkit-linear-gradient(160deg, #00bcd4 0%, #2bbda9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
 .text-blue-gradient {
   background: -webkit-linear-gradient(
@@ -56,12 +81,15 @@
 
 .gradient-pink-to-indigo {
   background: rgb(109, 230, 246);
-background: linear-gradient(90deg, rgb(109, 230, 246) 0%, rgba(249,168,212,1) 100%);
+  background: linear-gradient(
+    90deg,
+    rgb(109, 230, 246) 0%,
+    rgba(249, 168, 212, 1) 100%
+  );
 }
 
-
 // typography
-.text{
+.text {
   @apply text-blue-gray-500 leading-normal;
 }
 

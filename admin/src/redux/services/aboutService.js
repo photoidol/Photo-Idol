@@ -37,12 +37,12 @@ const deleteAbout = async (aboutId) => {
 const createLocation = async (formdata) => {
   const response = await axios.post(API_URL_LOCATION, formdata);
   return response.data.message;
-};
+}
 
-const getAllLocation = async () => {
-  const response = await axios.get(API_URL_LOCATION);
+const getAllLocation = async() => {
+  const response = await axios.get(API_URL_LOCATION)
   return response.data;
-};
+}
 
 const deleteLocation = async (deleteId) => {
   const response = await axios.delete(API_URL_LOCATION, {
@@ -66,7 +66,7 @@ const aboutService = {
   createLocation,
   getAllLocation,
   deleteLocation,
-  updateLocation,
+  updateLocation
 };
 
 export default aboutService;

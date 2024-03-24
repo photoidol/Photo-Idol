@@ -16,9 +16,19 @@ import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import SpinLoader from "../../components/common/SpinLoader";
 
 const SignupSchema = Yup.object().shape({
-  email: Yup.string().notOneOf(["admin", "superadmin", "superuser", "root"], "Username is not allowed").email("Invalid email address").trim().required("Email is required"),
+  email: Yup.string()
+    .notOneOf(
+      ["admin", "superadmin", "superuser", "root"],
+      "Username is not allowed"
+    )
+    .email("Invalid email address")
+    .trim()
+    .required("Email is required"),
   password: Yup.string()
-    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%^*#&])[A-Za-z\d@$!%^*#&]{8,}$/, "Password must meet criteria")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%^*#&])[A-Za-z\d@$!%^*#&]{8,}$/,
+      "Password must meet criteria"
+    )
     .required("Password is required"),
 });
 
@@ -33,7 +43,9 @@ export default function Login() {
     password: "",
   };
 
-  const { isSuccess, isError, isLoggedIn, twoFactor, isLoading } = useSelector((state) => state.auth);
+  const { isSuccess, isError, isLoggedIn, twoFactor, isLoading } = useSelector(
+    (state) => state.auth
+  );
 
   const handleSubmit = async (values, { resetForm, setSubmitting }) => {
     try {
@@ -85,9 +97,15 @@ export default function Login() {
           <div className="items-stretch bg-blue-gradient rounded-2xl shadow-auth overflow-hidden max-w-[520px] mx-auto">
             <div className="bg-white relative flex flex-col justify-between px-4 py-8 sm:px-7 sm:py-10">
               <div>
-                <h3 className="lg:text-2xl text-xl text-center font-bold text-dark-moonstone mb-4">Login</h3>
-                <Formik initialValues={initialValues} validationSchema={SignupSchema} onSubmit={handleSubmit}>
-                  {({ errors, touched }) => (
+                <h3 className="lg:text-2xl text-xl text-center font-bold text-dark-moonstone mb-4">
+                  Login
+                </h3>
+                <Formik
+                  initialValues={initialValues}
+                  validationSchema={SignupSchema}
+                  onSubmit={handleSubmit}
+                >
+                  {() => (
                     <Form className="flex flex-col md:gap-4 gap-3 my-5">
                       <div className="border-b-[1px] border-blue-gray-50 text-base flex items-stretch form-element">
                         <Field
@@ -100,7 +118,11 @@ export default function Login() {
                           <FaEnvelope />
                         </span>
                       </div>
-                      <ErrorMessage className="error-msg" name="email" component="div" />
+                      <ErrorMessage
+                        className="error-msg"
+                        name="email"
+                        component="div"
+                      />
                       <div className="border-b-[1px] border-blue-gray-50 text-base flex items-stretch form-element">
                         <Field
                           type={showPassword ? "text" : "password"}
@@ -108,14 +130,21 @@ export default function Login() {
                           className="w-full md:h-[48px] h-[42px] text-slategray placeholder:text-slategray outline-none opacity-90 text-sm sm:text-base"
                           name="password"
                         />
-                        <span className="w-[48px] md:h-[48px] h-[42px] flex items-center justify-center text-indigo" onClick={togglePasswordVisibility}>
+                        <span
+                          className="w-[48px] md:h-[48px] h-[42px] flex items-center justify-center text-indigo"
+                          onClick={togglePasswordVisibility}
+                        >
                           {showPassword ? <FaEye /> : <FaEyeSlash />}
                         </span>
                         <span className="w-[48px] md:h-[48px] h-[42px] flex items-center justify-center text-indigo">
                           <FaKey />
                         </span>
                       </div>
-                      <ErrorMessage className="error-msg" name="password" component="div" />
+                      <ErrorMessage
+                        className="error-msg"
+                        name="password"
+                        component="div"
+                      />
                       {isLoading && <SpinLoader />}
                       <button
                         type="submit"
@@ -128,14 +157,22 @@ export default function Login() {
                 </Formik>
 
                 <div className="text-center mt-10">
-                  <p className="inline opacity-70 text-indigo font-medium sm:text-base text-sm">Don’t you have an account?</p>
-                  <Link to="/auth/register" className="text-moonstone-gradient font-semibold mx-2 sm:text-base text-sm">
+                  <p className="inline opacity-70 text-indigo font-medium sm:text-base text-sm">
+                    Don’t you have an account?
+                  </p>
+                  <Link
+                    to="/auth/register"
+                    className="text-moonstone-gradient font-semibold mx-2 sm:text-base text-sm"
+                  >
                     Sign up
                   </Link>
                 </div>
                 <div className="text-center mt-3 flex items-center justify-center mb-6">
                   <PiSmileySad className="text-indigo" size={24} />
-                  <Link to="/auth/forgot-password" className="text-indigo font-semibold  sm:text-base text-sm ms-2">
+                  <Link
+                    to="/auth/forgot-password"
+                    className="text-indigo font-semibold  sm:text-base text-sm ms-2"
+                  >
                     Forgot Password?
                   </Link>
                 </div>
@@ -143,7 +180,7 @@ export default function Login() {
 
               <div className="border-t-[1px] border-blue-gray-50 pt-4">
                 <p className="font-bold text-lg text-moonstone-gradient text-center mt-auto">
-                  <Link to="/">FotoIdol Studio.</Link>
+                  <Link to="/">FotoIdol.</Link>
                 </p>
               </div>
             </div>

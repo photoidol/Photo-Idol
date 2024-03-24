@@ -54,7 +54,7 @@ export const CommentsForm = ({ postId }) => {
               name="content"
               onChange={commentContentHandler}
               value={commentContent}
-              className="textarea-theme max-w-[700px] mb-4"
+              className="textarea-theme max-w-[700px] mb-3.5 lg:mb-4"
               placeholder="Write your comment"
               rows="3"
               onKeyDown={handleKeyDown}
@@ -62,7 +62,7 @@ export const CommentsForm = ({ postId }) => {
             {isLoading && <SpinLoader />}
             <button
               type="submit"
-              className=" text-white px-4 py-2 bg-moonstone-gradient2 font-medium  rounded cursor-pointer flex items-center"
+              className=" text-white px-3 lg:px-4 py-1.5 lg:py-2 bg-moonstone-gradient2 font-medium  rounded cursor-pointer flex items-center"
             >
               Send Your Comment
             </button>

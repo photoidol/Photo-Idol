@@ -9,7 +9,7 @@ import { scrollToTop } from "../../utils/scrollToTop";
 import PropTypes from "prop-types";
 import LazyImage from "../../utils/LazyImage";
 import { getSingleCategory } from "../../redux/slices/categorySlice";
-import SpinLoader from "../../components/common/SpinLoader";
+import BackButton from "../../components/common/BackButton";
 
 export const CategoryImagesScreen = () => {
   const { categoryId } = useParams();
@@ -43,10 +43,7 @@ export const CategoryImagesScreen = () => {
   );
 };
 
-export const CategoryImagesContent = ({
-  posts,
-  categorySingle,
-}) => {
+export const CategoryImagesContent = ({ posts, categorySingle }) => {
   const breakpointColumnsObj = {
     default: 6,
     1100: 4,
@@ -73,34 +70,30 @@ export const CategoryImagesContent = ({
           </div>
         </div>
         <div className="max-w-[1440px] mx-auto px-4">
+          <BackButton backLink={"/"} />
           {posts?.length > 0 ? (
             <div className="mt-10 px-3">
               <h3 className=" text-dark text-2xl font-semibold">
-                Photos related to{" "}
+                Photos related to
                 <span className="font-bold text-[1.6rem] text-moonstone">
-                  {" "}
-                  {categorySingle?.title}{" "}
+                  {categorySingle?.title}
                 </span>
               </h3>
             </div>
           ) : (
-            <div className="mt-10 px-3">
-              <h3 className=" text-dark text-2xl font-semibold mb-6">
-                We couldn’t find anything for{" "}
-                <span className="font-bold text-[1.6rem] text-moonstone">
-                  {categorySingle?.title}{" "}
-                </span>
-                .
+            <div className="mt-6 md:mt-8 lg:mt-10">
+              <h3 className=" text-dark text-base sm:text-lg md:text-xl lg:text-2xl font-semibold mb-3 md:mb-4 lg:mb-6 text-center">
+                We couldn’t find anything for you.
               </h3>
-              <div className="flex gap-4 flex-wrap">
+              <div className="flex gap-3 flex-wrap justify-center">
                 <Link
-                  className="text-center px-4 h-[50px] min-w-[200px] items-center justify-center  font-medium text-lg border-dark border-[2px] bg-dark text-white default-transition shadow rounded inline-flex tracking-[0.5px]"
+                  className="text-center px-3 h-[40px] md:h-[44px] lg:h-[50px] min-w-[100px] md:min-w-[120px] lg:min-w-[160px] items-center justify-center  font-medium text-sm lg:text-base border-dark border-[2px] bg-dark text-white default-transition shadow rounded inline-flex tracking-[0.5px]"
                   to="/"
                 >
                   Go To Home Page
                 </Link>
                 <Link
-                  className="text-center px-4 h-[50px] min-w-[200px] items-center justify-center  font-semibold text-lg border-dark border-[2px] bg-white text-dark default-transition shadow rounded inline-flex tracking-[0.5px]"
+                  className="text-center px-3 h-[40px] md:h-[44px] lg:h-[50px] min-w-[100px] md:min-w-[120px] lg:min-w-[160px] items-center justify-center font-semibold text-sm lg:text-base border-dark border-[2px] bg-white text-dark default-transition shadow rounded inline-flex tracking-[0.5px]"
                   to="/search"
                 >
                   Search Page
@@ -109,14 +102,14 @@ export const CategoryImagesContent = ({
             </div>
           )}
 
-          {isCategoryLoading && <SpinLoader />}
+          {isCategoryLoading && <Loader />}
 
           <Masonry
             breakpointCols={breakpointColumnsObj}
             className="my-masonry-grid"
             columnClassName="my-masonry-grid_column sm:my-9 my-5"
           >
-            {posts?.length > 0 ? (
+            {posts?.length > 0 &&
               posts.map((item) => (
                 <Link
                   to={`/search/${item?.slug}`}
@@ -146,10 +139,7 @@ export const CategoryImagesContent = ({
                     </p>
                   </div>
                 </Link>
-              ))
-            ) : (
-              <p className=""></p>
-            )}
+              ))}
           </Masonry>
         </div>
       </div>

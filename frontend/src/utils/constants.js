@@ -15,26 +15,44 @@ export const CATEGORY_LANDSCAPE = "landscape";
 export const guidelinesData = [
   {
     id: CATEGORY_HALF_BODY_PORTRAIT,
+    title: "Half Body Portrait",
     guidelines: [
-      { desc: "The size must be between 0.5 MB and 80 MB." },
-      { desc: "The accepted photo format are JPEG, PNG & JPG." },
-      { desc: "The dimensions for the photo is: 50x50." },
+      { desc: "Image size must not exceed 3 MB." },
+      { desc: "Accepted formats include JPEG, JPG, and PNG." },
+      {
+        desc: "Dimensions: Please ensure the photo dimensions are suitable for half body portraits.",
+      },
+      {
+        desc: "Resolution: Please ensure the resolution is appropriate for clear viewing.",
+      },
     ],
   },
   {
     id: CATEGORY_FULL_BODY_PORTRAIT,
+    title: "Full Body Portrait",
     guidelines: [
-      { desc: "The size must be between 3 MB and 12 MB." },
-      { desc: "The accepted photo format are JPEG, PNG & JPG." },
-      { desc: "The dimensions for the photo is: 50x50." },
+      { desc: "Image size must not exceed 3 MB." },
+      { desc: "Accepted formats: JPEG, PNG, JPG." },
+      {
+        desc: "Dimensions: Please ensure the photo dimensions are appropriate for full body portraits.",
+      },
+      {
+        desc: "Resolution: Provide the highest quality possible without exceeding file size limits.",
+      },
     ],
   },
   {
     id: CATEGORY_LANDSCAPE,
+    title: "Landscape",
     guidelines: [
-      { desc: "The size must be between 1 MB and 12 MB." },
-      { desc: "The accepted photo format are JPEG, PNG & JPG." },
-      { desc: "The dimensions for the photo is: 50x50." },
+      { desc: "Image size must not exceed 3 MB." },
+      { desc: "Accepted formats include JPEG, JPG, and PNG." },
+      {
+        desc: "Dimensions: Please ensure the photo dimensions are suitable for landscape orientation.",
+      },
+      {
+        desc: "Resolution: Provide the highest quality possible without exceeding file size limits.",
+      },
     ],
   },
 ];

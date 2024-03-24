@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { staticImages } from "../../images";
 import { FaCircleCheck } from "react-icons/fa6";
 import { MdError } from "react-icons/md";
+import { scrollToTop } from "../../utils/scrollToTop";
 
 const PaymentStatus = () => {
   const { queryString } = useParams();
@@ -17,6 +18,8 @@ const PaymentStatus = () => {
       console.error("Error decoding or parsing the data:", error);
     }
   }, [queryString]);
+
+  useEffect(() => scrollToTop(), []);
 
   return (
     <div className="py-10">

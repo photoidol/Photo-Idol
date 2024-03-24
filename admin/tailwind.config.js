@@ -2,7 +2,12 @@
 const withMT = require("@material-tailwind/react/utils/withMT");
 
 module.exports = withMT({
-  content: ["./src/pages/**/*.{js,ts,jsx,tsx,mdx}", "./src/components/**/*.{js,ts,jsx,tsx,mdx}", "./src/screens/**/*.{js,ts,jsx,tsx,mdx}", "./src/app/**/*.{js,ts,jsx,tsx,mdx}"],
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/screens/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
   theme: {
     fontFamily: {
       sans: ["Inter", "sans-serif"],
@@ -14,10 +19,13 @@ module.exports = withMT({
         dark: "#222",
         "dark-blue": "#607D8B",
         "dark-moonstone": "#0E3338",
-        pink: "#EF476F",
+        pink: "#ff007e",
         "rich-black": "#001011",
         whitesmoke: "#F8F8F8",
         ghostwhite: "#f5f5f5",
+        indigo: "#344767",
+        seasalt: "#f8f9fa",
+        slategray: "#677489",
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],

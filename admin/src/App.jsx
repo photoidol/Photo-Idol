@@ -86,7 +86,7 @@ function App() {
           />
 
           <Route
-            path="/admin"
+            path="/"
             element={
               <AdminLayout>
                 <Dashboard />

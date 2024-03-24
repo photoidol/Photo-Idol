@@ -28,7 +28,8 @@ export const Hero = () => {
   const user = useSelector(selectUser);
   const { contents } = useSelector((state) => state.homeSlider);
   const filteredBanner = useMemo(
-    () => contents?.filter((content) => content.category === HOME_SETTING_OPT_ONE),
+    () =>
+      contents?.filter((content) => content.category === HOME_SETTING_OPT_ONE),
     [contents]
   );
 
@@ -59,6 +60,8 @@ export const Hero = () => {
     },
   ];
 
+  console.log(user);
+
   return (
     <div className="hero-banner-slider">
       <Slider
@@ -76,39 +79,41 @@ export const Hero = () => {
                       background: `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.2)), url(${banner?.cover?.filePath}) center/cover no-repeat`,
                     }}
                   >
-                    <div className="md:max-w-[1000px] mx-auto py-12 text-white text-center px-3">
-                      <h2 className="xl:text-5xl sm:text-3xl text-2xl max-w-[280px] sm:max-w-[350px] md:max-w-[1000px] mx-auto font-bold  mb-4 hero-text">
-                        {banner?.title}
-                      </h2>
-                      <h4 className="md:text-xl sm:text-base text-sm mt-5 lg:mt-0 text-white">
-                        {banner?.subtitle}
-                      </h4>
+                    <div className="min-h-[720px] flex flex-col justify-center">
+                      <div className="md:max-w-[1000px] mx-auto py-8 text-white text-center px-6">
+                        <h2 className="xl:text-5xl sm:text-3xl text-2xl max-w-[280px] sm:max-w-[350px] md:max-w-[1000px] mx-auto font-bold  mb-4 hero-text">
+                          {banner?.title}
+                        </h2>
+                        <h4 className="md:text-xl sm:text-base text-sm mt-5 lg:mt-0 text-white">
+                          {banner?.subtitle}
+                        </h4>
+                      </div>
+                      {user ? (
+                        <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 py-4 border-b-[1px] border-dark/10 pb-12">
+                          <p className="text-white opacity-90 text-base text-center font-medium">
+                            Explore every picture within our image archive.
+                          </p>
+                          <Link
+                            to="/search"
+                            className="bg-transparent rounded text-white  tracking-[1px] border-white border-[1px] hover:bg-white hover:text-dark py-2.5 px-4 uppercase shadow default-transition font-medium"
+                          >
+                            Explore all
+                          </Link>
+                        </div>
+                      ) : (
+                        <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 py-4 border-b-[1px] border-dark/10 pb-12">
+                          <p className="text-white opacity-90 text-base  font-medium">
+                            Create an account to upload photos.
+                          </p>
+                          <Link
+                            to="/auth/register"
+                            className="bg-transparent rounded text-white  tracking-[1px] border-white border-[1px] hover:bg-white hover:text-dark py-2.5 px-4 uppercase shadow default-transition font-medium"
+                          >
+                            Sign up to upload
+                          </Link>
+                        </div>
+                      )}
                     </div>
-                    {user?.isVerified ? (
-                      <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 py-4 border-b-[1px] border-dark/10 pb-12">
-                        <p className="text-white opacity-90 text-base  font-medium">
-                          Explore every picture within our image archive.
-                        </p>
-                        <Link
-                          to="/search"
-                          className="bg-transparent rounded text-white  tracking-[1px] border-white border-[1px] hover:bg-white hover:text-dark py-2.5 px-4 uppercase shadow default-transition font-medium"
-                        >
-                          Explore all
-                        </Link>
-                      </div>
-                    ) : (
-                      <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 py-4 border-b-[1px] border-dark/10 pb-12">
-                        <p className="text-white opacity-90 text-base  font-medium">
-                          Create an account to upload photos.
-                        </p>
-                        <Link
-                          to="/auth/register"
-                          className="bg-transparent rounded text-white  tracking-[1px] border-white border-[1px] hover:bg-white hover:text-dark py-2.5 px-4 uppercase shadow default-transition font-medium"
-                        >
-                          Sign up to upload
-                        </Link>
-                      </div>
-                    )}
                   </section>
                 </div>
               );
@@ -122,26 +127,42 @@ export const Hero = () => {
                       background: `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.2)), url(${banner.image}) center/cover no-repeat`,
                     }}
                   >
-                    <div className="md:max-w-[1000px] mx-auto py-12 text-white text-center px-3">
-                      <h2 className="xl:text-5xl sm:text-3xl text-2xl max-w-[280px] sm:max-w-[350px] md:max-w-[1000px] mx-auto font-bold  mb-4 hero-text">
-                        {banner.text}
-                      </h2>
-                      <h4 className="md:text-xl sm:text-base text-sm mt-5 lg:mt-0">
-                        Explore your high-quality{" "}
-                        <BsImageFill className="inline-flex ms-2" /> photos, all
-                        in one place
-                      </h4>
-                    </div>
-                    <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 py-4 border-b-[1px] border-dark/10 pb-12">
-                      <p className="text-white opacity-90 text-base  font-medium">
-                        Create an account to upload photos.
-                      </p>
-                      <Link
-                        to="/auth/register"
-                        className="bg-transparent rounded text-white  tracking-[1px] border-white border-[1px] hover:bg-white hover:text-dark py-2.5 px-4 uppercase shadow default-transition font-medium"
-                      >
-                        Sign up to upload
-                      </Link>
+                    <div className="min-h-[720px] flex flex-col justify-center">
+                      <div className="md:max-w-[1000px] mx-auto py-8 text-white text-center px-6">
+                        <h2 className="xl:text-5xl sm:text-3xl text-2xl max-w-[280px] sm:max-w-[350px] md:max-w-[1000px] mx-auto font-bold mb-4 hero-text">
+                          {banner.text}
+                        </h2>
+                        <h4 className="md:text-xl sm:text-base text-sm mt-5 lg:mt-0">
+                          Explore your high-quality{" "}
+                          <BsImageFill className="inline-flex ms-2" /> photos,
+                          all in one place
+                        </h4>
+                      </div>
+                      {user ? (
+                        <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 py-4 border-b-[1px] border-dark/10 pb-12">
+                          <p className="text-white opacity-90 text-base text-center font-medium">
+                            Explore every picture within our image archive.
+                          </p>
+                          <Link
+                            to="/search"
+                            className="bg-transparent rounded text-white  tracking-[1px] border-white border-[1px] hover:bg-white hover:text-dark py-2.5 px-4 uppercase shadow default-transition font-medium"
+                          >
+                            Explore all
+                          </Link>
+                        </div>
+                      ) : (
+                        <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 py-4 border-b-[1px] border-dark/10 pb-12">
+                          <p className="text-white opacity-90 text-base  font-medium">
+                            Create an account to upload photos.
+                          </p>
+                          <Link
+                            to="/auth/register"
+                            className="bg-transparent rounded text-white  tracking-[1px] border-white border-[1px] hover:bg-white hover:text-dark py-2.5 px-4 uppercase shadow default-transition font-medium"
+                          >
+                            Sign up to upload
+                          </Link>
+                        </div>
+                      )}
                     </div>
                   </section>
                 </div>

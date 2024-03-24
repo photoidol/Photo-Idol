@@ -18,7 +18,6 @@ import { FaChevronDown } from "react-icons/fa";
 
 export const UserProfileAfterLogin = ({ logoutUser, photo, user }) => {
   const location = useLocation();
-  const editTabValue = "edit";
 
   return (
     <Menu placement="bottom-end">

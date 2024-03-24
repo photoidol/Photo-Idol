@@ -62,12 +62,6 @@ export const AddLocation = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (isCreateSuccess) {
-  //     navigate("/admin/location");
-  //   }
-  // }, [dispatch, navigate, isCreateSuccess]);
-
   return (
     <>
       {isLoading && <Loader />}

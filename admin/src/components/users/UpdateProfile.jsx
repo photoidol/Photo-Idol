@@ -118,9 +118,6 @@ export const UpdateProfile = () => {
               onClick={handleCameraIconClick}
             >
               <AiFillCamera size={48} className="mx-auto text-moonstone" />
-              {/* <span className="font-medium whitespace-nowrap inline-block mt-1 text-white">
-                Choose Photo
-              </span> */}
             </button>
           </label>
           <input

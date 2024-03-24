@@ -2,7 +2,6 @@ import { HiMenuAlt2 } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "../../redux/slices/sidebarSlice";
 import { UserProfileAfterLogin } from "./UserProfileAterLogin";
-import { UploadBox } from "../common/UploadBox";
 import { useNavigate } from "react-router-dom";
 import { selectUser } from "../../redux/slices/authSlice";
 import { RESET, logout } from "../../redux/slices/authSlice";
@@ -37,7 +36,6 @@ export const DashboardHeader = () => {
               >
                 <HiMenuAlt2 size={22} />
               </button>
-              <UploadBox />
             </div>
           </div>
           <div className="items-center gap-3 flex">

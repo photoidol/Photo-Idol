@@ -7,13 +7,14 @@ import {
 } from "@material-tailwind/react";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-import { AiFillCheckCircle, AiFillEye } from "react-icons/ai";
+import { AiFillCheckCircle, AiFillHeart } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { SocialIcon } from "react-social-icons";
 import { getAllPost } from "../../redux/slices/postsSlice";
 import FsLightbox from "fslightbox-react";
 import { FaEye, FaMapMarkerAlt } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
+import { BsEyeFill } from "react-icons/bs";
 
 const ProfileModal = ({
   profileOpen,
@@ -39,8 +40,8 @@ const ProfileModal = ({
     if (userPosts) {
       let tempPhotos = [];
       userPosts.forEach((post) => {
-        if (post.assets && post.assets[0]?.filePath) {
-          tempPhotos.push(post.assets[0].filePath);
+        if (post.assets && post.assets.filePath) {
+          tempPhotos.push(post.assets.filePath);
         }
       });
       setPostPhotos(tempPhotos);
@@ -61,24 +62,27 @@ const ProfileModal = ({
         size="xl"
         open={profileOpen}
         handler={() => handleProfileView()}
-        className="profile-modal-dialog bg-moonstone-gradient2 shadow-xl"
+        className="profile-modal-dialog bg-moonstone-gradient2 shadow-xl max-h-[95vh] overflow-y-scroll scrollbar-y-dir"
       >
         <DialogHeader className="py-2">
           <IconButton
             variant="text"
             size="sm"
-            className="rounded-full border-none outline-none text-white w-[26px] h-[26px] hover:bg-transparent active:bg-transparent active:border-none focus:bg-transparent ms-auto focus:border-none"
+            className="rounded-full border-none outline-none text-white w-[26px] h-[26px] hover:bg-transparent active:bg-transparent active:border-none focus:bg-transparent ms-auto focus:border-none mt-1 md:mt-2 lg:mt-3 z-50"
             onClick={handleProfileView}
           >
-            <MdClose size={28} />
+            <MdClose className="text-xl sm:text-2xl lg:text-3xl" />
           </IconButton>
         </DialogHeader>
-        <DialogBody divider={true} className="ps-5 pe-3 relative border-0">
-          <section className="relative pt-10 -mt-1 rounded-md">
+        <DialogBody
+          divider={true}
+          className="ps-3.5 pe-2.5 relative border-0 py-2 md:py-3 lg:py-4"
+        >
+          <section className="relative lg:pt-10 md:pt-6 sm:pt-4 pt-0 -mt-1 rounded-md">
             <div className="container mx-auto bg-white rounded-md shadow-lg">
               <div className="relative flex flex-col min-w-0 break-words bg-white w-full shadow-default rounded-lg lg:mt-4">
                 <div className="lg:px-6">
-                  <div className="flex flex-wrap justify-center items-center mt-10 lg:-mt-24">
+                  <div className="flex flex-wrap justify-center items-center -mt-14 lg:-mt-24">
                     <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
                       <div className="relative mt-4 after:absolute after:content-[''] after:-top-[2px] after:-left-[2px] after:-right-[2px] after:-bottom-[2px] after:shadow-lg after:bg-white after:rounded-full">
                         <img
@@ -88,11 +92,11 @@ const ProfileModal = ({
                               : singlePost?.user?.avatar
                           }
                           alt="profile image"
-                          className="shadow-xl rounded-full h-auto align-middle border-none max-w-[120px] relative z-10"
+                          className="shadow-xl rounded-full h-auto align-middle border-none max-w-[80px] sm:max-w-[100px] lg:max-w-[120px] relative z-10"
                         />
                       </div>
                     </div>
-                    <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center flex items-end lg:mt-20 min-h-[75px]">
+                    <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center flex items-end lg:mt-20 min-h-[56px] lg:min-h-[75px]">
                       <div className="py-1 w-full px-3 flex lg:justify-start justify-center">
                         <div className="flex gap-2">
                           {userLinks?.links?.length > 0 &&
@@ -120,9 +124,9 @@ const ProfileModal = ({
                     </div>
                     <div className="w-full lg:w-4/12 px-4 lg:order-1 lg:mt-24">
                       <div className="flex lg:justify-end justify-center">
-                        <div className="p-3 text-center">
-                          <div className="flex gap-1 items-center border-[1px] border-indigo/30 px-2 py-0.5 rounded-md text-indigo text-sm mt-3">
-                            <FaEye />
+                        <div className="p-0 md:p-2 lg:p-3 text-center">
+                          <div className="flex gap-2 items-center py-1 text-indigo text-sm mt-1 lg:mt-3">
+                            <FaEye className="text-lg" />
                             <span className="font-semibold">
                               {totalViews || 0}
                             </span>
@@ -132,8 +136,8 @@ const ProfileModal = ({
                     </div>
                   </div>
                   <div className="text-center mx-4 pb-4 pt-2">
-                    <div className="flex items-center justify-center mb-2 gap-x-2">
-                      <h3 className="text-2xl capitalize font-semibold leading-normal text-indigo">
+                    <div className="flex items-center justify-center mb-1 lg:mb-2 gap-x-2">
+                      <h3 className="text-lg md:text-xl lg:text-2xl capitalize font-semibold leading-normal text-indigo">
                         {singlePost?.user?.name || "Unknown"}
                       </h3>
                       <div>
@@ -161,7 +165,7 @@ const ProfileModal = ({
                         <p className="text-indigo font-semibold">
                           Author Bio or Status{" "}
                         </p>
-                        <p className="mb-4 text-base">
+                        <p className="mb-1 sm:mb-2 md:mb-3 lg:mb-4 text-base">
                           <span className="text-slategray text-sm font-medium">
                             {singlePost?.user?.bio || "Nothing to show."}
                           </span>
@@ -184,14 +188,42 @@ const ProfileModal = ({
                             alt=""
                             className="rounded-lg object-cover w-full h-full"
                           />
-                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-sm px-4 py-0.5 rounded z-10 opacity-0 group-hover:opacity-100 default-transition">
-                            <AiFillEye size={22} />
+
+                          <div className="absolute hidden sm:flex opacity-0 group-hover:opacity-100 default-transition top-2 right-3 z-10 items-center gap-x-4">
+                            <div className="text-white flex items-center gap-x-1.5">
+                              <BsEyeFill size={14} />
+                              <span className="text-xs">
+                                {userPosts && userPosts[index]?.numOfViews}
+                              </span>
+                            </div>
+                            <div className="text-white flex items-center gap-x-1.5">
+                              <AiFillHeart size={14} />
+                              <span className="text-xs">
+                                {userPosts && userPosts[index]?.likes?.length}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="absolute sm:hidden top-2 right-3 z-10 flex items-center gap-x-4">
+                            <div className="text-white flex items-center gap-x-1.5">
+                              <BsEyeFill size={14} />
+                              <span className="text-xs">
+                                {userPosts && userPosts[index]?.numOfViews}
+                              </span>
+                            </div>
+                            <div className="text-white flex items-center gap-x-1.5">
+                              <AiFillHeart size={14} />
+                              <span className="text-xs">
+                                {userPosts && userPosts[index]?.likes?.length}
+                              </span>
+                            </div>
                           </div>
                         </div>
                       );
                     })
                   ) : (
-                    <div className="font-medium text-indigo">No images to show.</div>
+                    <div className="font-medium text-indigo">
+                      No images to show.
+                    </div>
                   )}
                 </div>
               </div>

@@ -1,15 +1,16 @@
-import { Card, Typography } from "@material-tailwind/react";
 import { AiFillDelete, AiFillEdit, AiOutlineDownload } from "react-icons/ai";
-import { Button } from "@material-tailwind/react";
 import PropTypes from "prop-types";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import {
+  Card,
   CardHeader,
   Input,
   CardBody,
   CardFooter,
+  Typography,
   IconButton,
   Chip,
+  Button,
 } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
 import useRedirectLoggedOutUser from "../../utils/useRedirectLoggedOutUser";
@@ -121,15 +122,11 @@ export const PostDataTable = () => {
 
   // ### IMAGE DOWNLOAD
   const handleImageDownload = (imageUrl, fileName) => {
-    // const link = document.createElement("a");
-    // link.href = imageUrl;
-    // link.download = fileName || "downloaded_image";
-    // link.click();
     saveAs(imageUrl, fileName);
   };
 
   return (
-    <> 
+    <>
       {isLoading && <Loader />}
       {modalOpen && <ImageViewer src={imageSrc} onClose={closeModal} />}
       <Card className="h-full w-full rounded-md shadow-lg">
@@ -220,19 +217,17 @@ export const PostDataTable = () => {
                       <td className={classes}>
                         <div className="flex items-start gap-3">
                           <div className="flex flex-wrap items-start">
-                            {post?.assets?.map((image, index) => (
-                              <div
-                                onClick={() => openModal(image?.filePath)}
-                                key={image?.publicId + index}
-                                className="w-[40px] h-[40px] overflow-hidden rounded me-1 cursor-pointer hover:scale-95 default-transition"
-                              >
-                                <img
-                                  src={image?.filePath}
-                                  alt={post?.title}
-                                  className="w-full h-full object-cover"
-                                />
-                              </div>
-                            ))}
+                            <div
+                              onClick={() => openModal(post?.assets?.filePath)}
+                              key={post?.assets?.publicId + index}
+                              className="w-[40px] h-[40px] overflow-hidden rounded me-1 cursor-pointer hover:scale-95 default-transition"
+                            >
+                              <img
+                                src={post?.assets?.filePath}
+                                alt={post?.title}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
                           </div>
                           <div className="flex flex-col">
                             <Typography
@@ -333,8 +328,8 @@ export const PostDataTable = () => {
                             color="green"
                             onClick={() =>
                               handleImageDownload(
-                                post?.assets && post?.assets?.[0].filePath,
-                                post?.assets && post?.assets?.[0].fileName
+                                post?.assets?.filePath,
+                                post?.assets?.fileName
                               )
                             }
                           >

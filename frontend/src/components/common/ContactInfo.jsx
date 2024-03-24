@@ -5,21 +5,26 @@ import { getContactInfo } from "../../redux/slices/settings/SettingSlice";
 
 const ContactInfo = () => {
   const dispatch = useDispatch();
-  const contactInfo = useSelector(state => state.setting.contactinfo);
+  const contactInfo = useSelector((state) => state.setting.contactinfo);
 
   useEffect(() => {
     dispatch(getContactInfo());
   }, [dispatch]);
+
   return (
     <>
-      <section id="contact" className="relative z-10 overflow-hidden bg-moonstone py-14" style = {{
-        background: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)), url(${staticImages.contact_banner}) center/cover no-repeat`
-      }}>
+      <section
+        id="contact"
+        className="relative z-10 overflow-hidden bg-moonstone py-8 md:py-10 lg:py-12"
+        style={{
+          background: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)), url(${staticImages.contact_banner}) center/cover no-repeat`,
+        }}
+      >
         <div className="containers mx-auto">
           <div className="flex flex-wrap lg:justify-between">
-            <div className="w-full px-4 lg:w-1/2 xl:w-6/12">
+            <div className="w-full lg:w-1/2 xl:w-6/12" data-aos="fade-right">
               <div className="mb-12 max-w-[570px] lg:mb-0">
-                <h2 className="text-white mb-6 text-[32px] font-bold uppercase sm:text-[40px] lg:text-[36px]">
+                <h2 className="text-white mb-3 lg:mb-6 text-[20px] sm:text-[24px] font-bold uppercase md:text-[40px]">
                   GET IN TOUCH WITH US
                 </h2>
                 <p className="text-white mb-6 leading-relaxed text-base opacity-70">
@@ -27,7 +32,7 @@ const ContactInfo = () => {
                   hesitate to get in touch with us:
                 </p>
                 <div className="mb-6 items-center flex w-full max-w-[370px]">
-                  <div className="bg-white text-moonstone mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded bg-opacity-5 sm:h-[70px] sm:max-w-[70px]">
+                  <div className="bg-white text-moonstone mr-4 lg:mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded bg-opacity-5 sm:h-[70px] sm:max-w-[70px]">
                     <svg
                       width="24"
                       height="24"
@@ -38,16 +43,16 @@ const ContactInfo = () => {
                     </svg>
                   </div>
                   <div className="w-full ">
-                    <h4 className="text-white mb-1 text-xl font-bold">
+                    <h4 className="text-white mb-1 text-base md:text-lg font-bold">
                       Our Location
                     </h4>
-                    <p className="text-body-color text-base text-white opacity-70">
+                    <p className="text-sm lg:text-base text-white opacity-70">
                       {contactInfo?.address}
                     </p>
                   </div>
                 </div>
                 <div className="mb-6 items-center flex w-full max-w-[370px]">
-                  <div className="bg-moonstone text-moonstone mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded bg-opacity-5 sm:h-[70px] sm:max-w-[70px]">
+                  <div className="bg-moonstone text-moonstone mr-4 lg:mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded bg-opacity-5 sm:h-[70px] sm:max-w-[70px]">
                     <svg
                       width="24"
                       height="26"
@@ -59,19 +64,19 @@ const ContactInfo = () => {
                       <path d="M1.10265 7.85562C1.18684 9.70794 2.82868 10.4657 3.67064 10.4657H6.61752C6.65962 10.4657 6.65962 10.4657 6.65962 10.4657C7.92257 10.3815 9.18552 9.53955 9.18552 7.85562V6.84526C10.5748 6.84526 13.7742 6.84526 15.1635 6.84526V7.85562C15.1635 9.53955 16.4264 10.3815 17.6894 10.4657H17.7315H20.6363C21.4782 10.4657 23.1201 9.70794 23.2043 7.85562C23.2043 7.72932 23.2043 7.26624 23.2043 6.84526C23.2043 6.50847 23.2043 6.21378 23.2043 6.17169C23.2043 6.12959 23.2043 6.08749 23.2043 6.08749C23.078 4.90874 22.657 3.94047 21.9413 3.18271L21.8992 3.14061C20.8468 2.17235 19.5838 1.62507 18.6155 1.28828C15.795 0.193726 12.2587 0.193726 12.0903 0.193726C9.6065 0.235824 8.00677 0.446315 5.60716 1.28828C4.681 1.58297 3.41805 2.13025 2.36559 3.09851L2.3235 3.14061C1.60782 3.89838 1.18684 4.86664 1.06055 6.04539C1.06055 6.08749 1.06055 6.12959 1.06055 6.12959C1.06055 6.21378 1.06055 6.46637 1.06055 6.80316C1.10265 7.18204 1.10265 7.68722 1.10265 7.85562ZM3.37595 4.15097C4.21792 3.3932 5.27038 2.93012 6.15444 2.59333C8.34355 1.79346 9.7749 1.62507 12.1745 1.58297C12.3429 1.58297 15.6266 1.62507 18.1525 2.59333C19.0365 2.93012 20.089 3.3511 20.931 4.15097C21.394 4.65615 21.6887 5.32972 21.7729 6.12959C21.7729 6.25588 21.7729 6.46637 21.7729 6.80316C21.7729 7.22414 21.7729 7.68722 21.7729 7.81352C21.7308 8.78178 20.8047 8.99227 20.6784 8.99227H17.7736C17.3526 8.95017 16.679 8.78178 16.679 7.85562V6.12959C16.679 5.7928 16.4685 5.54021 16.1738 5.41392C15.9213 5.32972 8.55405 5.32972 8.30146 5.41392C8.00677 5.49811 7.79628 5.7928 7.79628 6.12959V7.85562C7.79628 8.78178 7.1227 8.95017 6.70172 8.99227H3.79694C3.67064 8.99227 2.74448 8.78178 2.70238 7.81352C2.70238 7.68722 2.70238 7.22414 2.70238 6.80316C2.70238 6.46637 2.70238 6.29798 2.70238 6.17169C2.61818 5.32972 2.91287 4.65615 3.37595 4.15097Z" />
                     </svg>
                   </div>
-                  <div className="w-full ">
-                    <h4 className="text-white mb-1 text-xl font-bold">
+                  <div className="w-full">
+                    <h4 className="text-white mb-1 text-base lg:text-lg font-bold">
                       Phone Number
                     </h4>
-                    <p className="text-body-color text-base text-white opacity-70">
+                    <p className="text-sm lg:text-base text-white opacity-70">
                       {contactInfo?.phone}
                     </p>
                   </div>
                 </div>
                 <div className="mb-6 items-center flex w-full max-w-[370px]">
-                  <div className="bg-moonstone text-moonstone mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded bg-opacity-5 sm:h-[70px] sm:max-w-[70px]">
+                  <div className="bg-moonstone text-moonstone mr-4 lg:mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded bg-opacity-5 sm:h-[70px] sm:max-w-[70px]">
                     <svg
-                      width="28"
+                      width="24"
                       height="19"
                       viewBox="0 0 28 19"
                       className="fill-current"
@@ -80,17 +85,17 @@ const ContactInfo = () => {
                     </svg>
                   </div>
                   <div className="w-full ">
-                    <h4 className="text-white mb-1 text-xl font-bold">
+                    <h4 className="text-white mb-1 text-base lg:text-lg font-bold">
                       Email Address
                     </h4>
-                    <p className="text-body-color text-base text-white">
+                    <p className="text-sm lg:text-base text-white">
                       {contactInfo?.email}
                     </p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="w-full px-4 lg:w-1/2 xl:w-6/12">
+            <div className="w-full lg:w-1/2 xl:w-6/12" data-aos="fade-left">
               <div className="relative rounded-lg bg-white shadow-lg">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7066.722710278776!2d85.29636809354672!3d27.67522430480365!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb183a241f8131%3A0x99801b681879417!2sDhobighat%2C%20Lalitpur%2044600!5e0!3m2!1sen!2snp!4v1695648896418!5m2!1sen!2snp"
@@ -101,22 +106,6 @@ const ContactInfo = () => {
                   referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
                 <div>
-                  {/* <span className="absolute -top-10 -right-9 z-[-1]">
-                    <svg
-                      width="100"
-                      height="100"
-                      viewBox="0 0 100 100"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M0 100C0 44.7715 0 0 0 0C55.2285 0 100 44.7715 100 100C100 100 100 100 0 100Z"
-                        fill="#ffffff"
-                      />
-                    </svg>
-                  </span> */}
                   <span className="absolute -right-10 top-[50px] z-[-1]">
                     <svg
                       width="34"

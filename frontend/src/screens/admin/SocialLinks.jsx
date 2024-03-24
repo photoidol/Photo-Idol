@@ -25,6 +25,7 @@ import {
   updateLink,
 } from "../../redux/slices/userSlice";
 import { BsPencilSquare } from "react-icons/bs";
+import { scrollToTop } from "../../utils/scrollToTop";
 const TABLE_HEAD = ["S.N.", "Social Media", "URL", "Visibility", "Action"];
 
 export const SocialLinks = () => {
@@ -159,11 +160,13 @@ export const SocialLinks = () => {
     dispatch(getAllLinks());
   }, [dispatch]);
 
+  useEffect(() => scrollToTop(), []);
+
   return (
     <>
       <div className="datatable">
         <Card className="h-full w-full mt-6 rounded-md shadow-lg overflow-hidden">
-          <div className="max-w-[500px] w-full p-6">
+          <div className="max-w-[500px] w-full p-4 lg:p-5">
             <Typography variant="h4" className="mb-4 text-indigo font-bold">
               Add Social Media Links
             </Typography>
@@ -260,7 +263,7 @@ export const SocialLinks = () => {
                         </td>
                         <td className={classes}>
                           <Popover placement="bottom-end">
-                            <div className="flex gap-x-2 justify-between max-w-[280px]">
+                            <div className="flex gap-x-4 justify-between">
                               <Typography
                                 variant="small"
                                 className="font-semibold text-slategray"

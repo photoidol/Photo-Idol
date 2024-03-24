@@ -38,7 +38,11 @@ import AboutScreen from "./screens/about/AboutScreen";
 import GuidelineScreen from "./screens/guideline/GuidelineScreen";
 import UploadForm from "./screens/admin/UploadForm";
 import PaymentStatus from "./screens/admin/PaymentStatus";
+import StudioScreen from "./screens/studio/StudioScreen";
 axios.defaults.withCredentials = true;
+import AOS from "aos";
+import "aos/dist/aos.css";
+import StepByStep from "./screens/admin/StepByStep";
 
 function App() {
   const dispatch = useDispatch();
@@ -52,6 +56,13 @@ function App() {
     }
   }, [dispatch, isLoggedIn, user]);
 
+  AOS.init({
+    delay: 0,
+    duration: 1000,
+    easing: "ease",
+    once: false,
+  });
+
   return (
     <Router>
       <Routes>
@@ -64,6 +75,7 @@ function App() {
           />
           <Route path="/results/:searchQuery" element={<HomeSearchScreen />} />
           <Route path="about" element={<AboutScreen />} />
+          <Route path="/studio" element={<StudioScreen />} />
           <Route path="/maintain" element={<MaintenanceScreen />} />
         </Route>
         <Route path="/auth/login" element={<Login />} />
@@ -147,6 +159,15 @@ function App() {
           element={
             <AdminLayout>
               <GuidelineScreen />
+            </AdminLayout>
+          }
+        />
+
+        <Route
+          path="/admin/steps"
+          element={
+            <AdminLayout>
+              <StepByStep />
             </AdminLayout>
           }
         />

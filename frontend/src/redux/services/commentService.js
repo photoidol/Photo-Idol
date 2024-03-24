@@ -1,5 +1,6 @@
 import axios from "axios";
-const BACKEND_URL = "https://api.fotoidol.com";
+import { BACKEND_URL } from "../../utils/helper";
+
 export const API_URL = `${BACKEND_URL}/api/v1/comment/`;
 
 const getAllComment = async () => {

@@ -16,25 +16,25 @@ import ImageViewer from "../common/ImageViewer";
 import { DateFormatter } from "./DateFormatter";
 import { useState } from "react";
 import { UpdateAbout } from "../../screens/admin/about/UpdateAbout";
+import { routeConstants } from "../../constants/routeConstants";
 
 export const AboutDataTable = ({ tableHead, datalist, handleDelete }) => {
   const [selectedAbout, setSelectedAbout] = useState(null);
   const [aboutViewOpen, setAboutViewOpen] = useState(false);
-  const handleAboutViewOpen = () => setAboutViewOpen(!aboutViewOpen);
   const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
+  const handleAboutViewOpen = () => setAboutViewOpen(!aboutViewOpen);
+  // ### IMAGE PREVIEW MODAL
+  const { modalOpen, imageSrc, openModal, closeModal } = useModal();
 
   const handleViewAbout = (about) => {
     setSelectedAbout(about);
-    handleAboutViewOpen();
+    handleAboutViewOpen(true);
   };
 
   const handleOpenUpdateDialog = (about) => {
     setSelectedAbout(about);
     setOpenUpdateDialog(true);
   };
-
-  // ### IMAGE PREVIEW MODAL
-  const { modalOpen, imageSrc, openModal, closeModal } = useModal();
 
   return (
     <>
@@ -48,7 +48,7 @@ export const AboutDataTable = ({ tableHead, datalist, handleDelete }) => {
               </Typography>
             </div>
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-              <NavLink to="/admin/about/addabout">
+              <NavLink to={routeConstants.ABOUT_ADD}>
                 <div className="flex items-center">
                   <Button className="py-2.5 rounded bg-moonstone">
                     Create
@@ -73,7 +73,7 @@ export const AboutDataTable = ({ tableHead, datalist, handleDelete }) => {
                         color="blue-gray"
                         className="font-medium text-dark text-[15px] whitespace-nowrap"
                       >
-                        {head}
+                        {head || ""}
                       </Typography>
                     </th>
                   ))}
@@ -86,19 +86,17 @@ export const AboutDataTable = ({ tableHead, datalist, handleDelete }) => {
                     key={item._id}
                   >
                     <td className="px-6 py-3">{index + 1}</td>
-                    {/* <td className="px-6 py-3 capitalize text-gray-700">
-                      {item?.title?.slice(0, 40) + "..."}
-                    </td>
                     <td className="px-6 py-3 capitalize text-gray-700">
-                      {item?.description?.slice(0, 80) + "..."}
-                    </td> */}
-                    <td className="px-6 py-3 capitalize text-gray-700">
-                      <Avatar
-                        src={item?.cover?.filePath}
-                        size="sm"
-                        onClick={() => openModal(item?.cover?.filePath)}
-                        className="cursor-pointer"
-                      />
+                      {item?.cover?.filePath ? (
+                        <Avatar
+                          src={item?.cover?.filePath}
+                          size="sm"
+                          onClick={() => openModal(item?.cover?.filePath)}
+                          className="cursor-pointer"
+                        />
+                      ) : (
+                        <p>Image not found! </p>
+                      )}
                     </td>
                     <td className="px-6 py-3 capitalize text-gray-700 whitespace-nowrap">
                       {<DateFormatter date={item?.createdAt} />}
@@ -112,9 +110,7 @@ export const AboutDataTable = ({ tableHead, datalist, handleDelete }) => {
                           color="blue"
                         >
                           <AiOutlineEye size={20} />
-                          <div className="tooltip-custom-container ">
-                              View
-                            </div>
+                          <div className="tooltip-custom-container ">View</div>
                         </IconButton>
                         <IconButton
                           className="w-[32px] h-[32px] rounded tooltip-custom group"
@@ -123,8 +119,8 @@ export const AboutDataTable = ({ tableHead, datalist, handleDelete }) => {
                         >
                           <AiOutlineDelete size={16} />
                           <div className="tooltip-custom-container ">
-                              Delete
-                            </div>
+                            Delete
+                          </div>
                         </IconButton>
                         <IconButton
                           size="sm"
@@ -133,9 +129,7 @@ export const AboutDataTable = ({ tableHead, datalist, handleDelete }) => {
                           onClick={() => handleOpenUpdateDialog(item)}
                         >
                           <AiOutlineEdit size={20} />
-                          <div className="tooltip-custom-container ">
-                              Edit
-                            </div>
+                          <div className="tooltip-custom-container ">Edit</div>
                         </IconButton>
                       </div>
                     </td>
@@ -155,7 +149,6 @@ export const AboutDataTable = ({ tableHead, datalist, handleDelete }) => {
         )}
       </div>
 
-      {/* view the catgeory details */}
       <Dialog
         open={aboutViewOpen}
         handler={handleAboutViewOpen}
@@ -171,36 +164,6 @@ export const AboutDataTable = ({ tableHead, datalist, handleDelete }) => {
           {selectedAbout && (
             <div className="flex flex-col gap-8">
               <div className="flex justify-start flex-col gap-5">
-                {/* <div className="flex flex-col gap-y-3 justify-between ">
-                  <Typography
-                    variant="h6"
-                    className="mt-1 md:w-1/3 text-gray-700"
-                  >
-                    Title
-                  </Typography>
-                  <Input
-                    className="w-full"
-                    value={selectedAbout?.title || "Unknown"}
-                    readOnly
-                    size="lg"
-                    label="Category Name"
-                  />
-                </div>
-                <div className="flex flex-col gap-y-3 justify-between ">
-                  <Typography
-                    variant="h6"
-                    className="mt-1 md:w-1/3 text-gray-700"
-                  >
-                    Description
-                  </Typography>
-                  <div className="border-[1px] border-dark-blue/50 rounded-lg p-3 text-[15px] quill-content">
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: selectedAbout?.description,
-                      }}
-                    />
-                  </div>
-                </div> */}
                 <div className="flex flex-col gap-y-3 justify-between">
                   <Typography
                     variant="h6"

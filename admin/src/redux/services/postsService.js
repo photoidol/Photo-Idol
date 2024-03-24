@@ -1,7 +1,5 @@
 import axios from "axios";
-
-// const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const BACKEND_URL = "https://api.fotoidol.com";
+import { BACKEND_URL } from "../../utils/helper";
 export const API_URL = `${BACKEND_URL}/api/v1/posts/`;
 
 const createPost = async (postData) => {
@@ -9,26 +7,26 @@ const createPost = async (postData) => {
   return response.data;
 };
 
-const getAllPost = async () => {
-  const response = await axios.get(API_URL + "/all");
-  return response.data;
+const getAllPost = async() => {
+    const response = await axios.get(API_URL + "/all");
+    return response.data
 };
 
-const getSinglePost = async (postSlug) => {
-  const response = await axios.get(API_URL + postSlug);
-  return response.data;
+const getSinglePost = async(postSlug) => {
+    const response = await axios.get(API_URL + postSlug);
+    return response.data
 };
 
-const getUserPosts = async () => {
+const getUserPosts = async() => {
   const response = await axios.get(API_URL + "/user/posts");
   return response.data;
-};
+}
 
 const postsService = {
   createPost,
   getSinglePost,
   getAllPost,
-  getUserPosts,
+  getUserPosts
 };
 
 export default postsService;

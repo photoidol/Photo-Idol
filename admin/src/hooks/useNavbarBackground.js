@@ -13,7 +13,6 @@ const useNavbarBackground = (scrollThreshold) => {
     };
 
     window.addEventListener("scroll", handleScroll);
-    // Clean up the event listener on component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };

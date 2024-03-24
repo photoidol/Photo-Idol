@@ -16,8 +16,8 @@ import useRedirectLoggedOutUser from "../../utils/useRedirectLoggedOutUser";
 export const Overview = () => {
   useRedirectLoggedOutUser("/login");
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.resource.resources?.posts);
   const user = useSelector(selectUser);
+  const resources = useSelector((state) => state.resource.resources);
   const categories = useSelector((state) => state.category.categorys);
   const [totalViews, setTotalViews] = useState(0);
   const { users } = useSelector((state) => state.auth);
@@ -31,32 +31,31 @@ export const Overview = () => {
       );
       setVerifiedUsers(verifiedUsers);
     }
-  }, [users?.usersList?.length, users.usersList]);
+  }, [users?.usersList]);
 
   useEffect(() => {
-    if (posts?.length > 0) {
-      const likesCount = posts.reduce(
+    if (resources?.posts?.length > 0) {
+      const likesCount = resources?.posts.reduce(
         (accumulator, currentPost) => accumulator + currentPost.likes.length,
         0
       );
       setTotalLikes(likesCount);
+
+      const tempViews = resources?.posts.reduce(
+        (accumulator, currentObject) => accumulator + currentObject.numOfViews,
+        0
+      );
+      setTotalViews(tempViews);
     }
-  }, [posts?.length, posts]);
+  }, [resources.posts]);
 
   useEffect(() => {
-    dispatch(getallResource()).then(() => {
-      if (posts?.length > 0) {
-        const tempViews = posts.reduce((accumulator, currentObject) => {
-          return accumulator + currentObject.numOfViews;
-        }, 0);
-        setTotalViews(tempViews);
-      }
-    });
+    dispatch(getallResource());
     dispatch(getallCategory());
     if (user?.role === "admin") {
       dispatch(getAllUserByAdmin());
     }
-  }, [dispatch, user, posts]);
+  }, [dispatch, user]);
 
   return (
     <>
@@ -65,39 +64,35 @@ export const Overview = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <OverviewCard
               title="Total Uploads"
-              currentData={posts?.length > 0 ? posts?.length : 0}
+              currentData={
+                resources?.posts?.length > 0 ? resources?.posts?.length : 0
+              }
               icon={<AiOutlineFileImage size={25} />}
-              description={"Photos Info"}
             />
             <OverviewCard
               title="Total Users"
               currentData={users?.totalUsers || 0}
               icon={<AiOutlineCloudUpload size={25} />}
-              description={"Registered Users"}
             />
             <OverviewCard
               title="Total Views"
               currentData={totalViews || 0}
               icon={<AiOutlineEye size={25} />}
-              description={"Photos views"}
             />
             <OverviewCard
               title="Categories"
               currentData={categories ? categories?.total : 0}
               icon={<BsImages size={25} />}
-              description={"Photo Categories"}
             />
             <OverviewCard
               title="Verified Users"
               currentData={verifiedUsers ? verifiedUsers?.length : 0}
               icon={<BsClipboardCheckFill size={25} />}
-              description={"Verified Users"}
             />
             <OverviewCard
               title="Total Likes"
               currentData={totalLikes ? totalLikes : 0}
               icon={<AiFillLike size={25} />}
-              description={"Post Likes"}
             />
           </div>
         </div>
@@ -110,20 +105,19 @@ export const OverviewCard = (props) => {
   return (
     <>
       <div className="w-full">
-        <div className="flex flex-col px-4 py-6 overflow-hidden bg-white rounded-lg shadow-lg duration-300 h-[210px]">
+        <div className="flex items-start justify-between px-4 py-5 overflow-hidden bg-white rounded-lg shadow-xl duration-300">
           <div className="flex flex-row justify-between items-center">
-            <div className="px-4 py-4 bg-gray-300 rounded-md bg-opacity-30">
+            <div className="px-2.5 py-2.5 bg-pinkstone text-white rounded-md bg-opacity-30 shadow-md">
               {props.icon}
             </div>
           </div>
-          <h1 className="text-3xl sm:text-4xl xl:text-5xl font-bold text-gray-700 mt-6">
-            {props.currentData}
-          </h1>
-          <div className="flex flex-row justify-between mt-1 flex-wrap">
-            <p className="text-gray-400 font-semibold">{props.title}</p>
-            <span className="text-xs text-white bg-moonstone rounded shadow-lg inline-flex justify-center items-center px-2">
-              {props.description}
-            </span>
+          <div className="flex flex-col items-end flex-wrap gap-y-1 gap-x-2">
+            <h1 className="text-3xl sm:text-4xl xl:text-5xl font-bold text-indigo">
+              {props.currentData}
+            </h1>
+            <div className="flex flex-row justify-between mt-1 flex-wrap">
+              <p className="text-indigo pt-1 font-semibold">{props.title}</p>
+            </div>
           </div>
         </div>
       </div>

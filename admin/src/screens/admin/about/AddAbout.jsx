@@ -5,30 +5,17 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Loader from "../../../components/common/Loader";
-// import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useEffect } from "react";
 import { createAbout } from "../../../redux/slices/aboutSlice";
-
-// const initialState = {
-//   title: "",
-// };
 
 export const AddAbout = () => {
   useRedirectLoggedOutUser("/login");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const [formData, setformData] = useState(initialState);
   const [imageAbout, setImageAbout] = useState(null);
   const [imagePreviews, setImagePreviews] = useState([]);
   const { isCreateSuccess, isLoading } = useSelector((state) => state.about);
-  // const [description, setDescription] = useState("");
-  // const { title } = formData;
-
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setformData({ ...formData, [name]: value });
-  // };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -53,8 +40,6 @@ export const AddAbout = () => {
     e.preventDefault();
     if (imageAbout) {
       const formData = new FormData();
-      // formData.append("title", title);
-      // formData.append("description", description);
       if (imageAbout) {
         formData.append("cover", imageAbout);
       }
@@ -92,27 +77,6 @@ export const AddAbout = () => {
 
             <form onSubmit={create}>
               <div className="mb-4 flex flex-col gap-5">
-                {/* <Input
-                  size="lg"
-                  label="Title"
-                  name="title"
-                  value={formData.title}
-                  onChange={handleInputChange}
-                  required
-                /> */}
-                {/* <Textarea
-                  size="lg"
-                  label="Description"
-                  name="description"
-                  value={formData.description}
-                  onChange={handleInputChange}
-                  required
-                /> */}
-                {/* <ReactQuill
-                  theme="snow"
-                  value={description}
-                  onChange={setDescription}
-                /> */}
                 <div>
                   <Input
                     size="lg"
@@ -121,7 +85,6 @@ export const AddAbout = () => {
                     onChange={handleImageChange}
                   />
                   <span className="text-[13px] text-moonstone block mt-2">
-                    {" "}
                     * Cover image must be in PNG, JPEG, or JPG format. *
                   </span>
                 </div>

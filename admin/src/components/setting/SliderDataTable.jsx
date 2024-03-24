@@ -18,6 +18,7 @@ import {
   HOME_SETTING_OPT_ONE,
   HOME_SETTING_OPT_ONE_LIMIT,
 } from "../../utils/constants";
+import { routeConstants } from "../../constants/routeConstants";
 
 export const SliderDataTable = ({
   tableHead,
@@ -64,7 +65,7 @@ export const SliderDataTable = ({
             </div>
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
               {onlySliderList?.length < HOME_SETTING_OPT_ONE_LIMIT ? (
-                <NavLink to="/admin/homeslider/addhomeslider">
+                <NavLink to={routeConstants.SECTION_BANNER_ADD}>
                   <Button className="py-2.5 rounded bg-moonstone">
                     Create
                   </Button>
@@ -118,11 +119,9 @@ export const SliderDataTable = ({
                           <div className="flex flex-col">
                             <div className="pl-3">
                               <div className="text-sm font-semibold uppercase">
-                                {" "}
                                 {item?.user?.name}
                               </div>
                               <div className="font-normal text-gray-500">
-                                {" "}
                                 {item?.user?.email}
                               </div>
                             </div>

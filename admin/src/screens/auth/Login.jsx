@@ -65,7 +65,7 @@ export const Login = () => {
 
   useEffect(() => {
     if (isSuccess && isLoggedIn) {
-      navigate("/admin");
+      navigate("/");
     }
 
     // login with otp

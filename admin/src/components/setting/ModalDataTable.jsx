@@ -9,7 +9,11 @@ import {
 import PropTypes from "prop-types";
 import useModal from "../../hooks/useModal";
 import ImageViewer from "../common/ImageViewer";
-import { HOME_SETTING_OPT_TWO } from "../../utils/constants";
+import {
+  HOME_SETTING_OPT_TWO,
+  HOME_SETTING_OPT_TWO_LIMIT,
+} from "../../utils/constants";
+import { routeConstants } from "../../constants/routeConstants";
 
 export const ModalDataTable = ({
   tableHead,
@@ -43,9 +47,9 @@ export const ModalDataTable = ({
                 one popup modal.
               </p>
             </div>
-            {onlyModalList?.length < HOME_SETTING_OPT_TWO && (
+            {onlyModalList?.length < HOME_SETTING_OPT_TWO_LIMIT && (
               <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-                <NavLink to="/admin/modal/addmodal">
+                <NavLink to={routeConstants.SECTION_MODAL_ADD}>
                   <Button className="py-2.5 rounded bg-moonstone">
                     Create
                   </Button>
@@ -95,11 +99,9 @@ export const ModalDataTable = ({
                           <div className="flex flex-col">
                             <div className="pl-3">
                               <div className="text-sm font-semibold uppercase">
-                                {" "}
                                 {item?.user?.name}
                               </div>
                               <div className="font-normal text-gray-500">
-                                {" "}
                                 {item?.user?.email}
                               </div>
                             </div>
@@ -138,8 +140,8 @@ export const ModalDataTable = ({
                             <IconButton className="w-[32px] h-[32px] rounded tooltip-custom group bg-moonstone">
                               <AiOutlineEye size={16} />
                               <div className="tooltip-custom-container ">
-                              view
-                            </div>
+                                view
+                              </div>
                             </IconButton>
                           </NavLink>
                           <IconButton
@@ -159,8 +161,8 @@ export const ModalDataTable = ({
                             >
                               <AiOutlineEdit size={16} />
                               <div className="tooltip-custom-container ">
-                              Edit
-                            </div>
+                                Edit
+                              </div>
                             </IconButton>
                           </NavLink>
                         </div>

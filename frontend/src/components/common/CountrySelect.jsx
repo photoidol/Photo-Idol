@@ -67,8 +67,6 @@ const CountrySelect = ({ getSelectedCountry, countryData }) => {
     )
     .sort((a, b) => a.name.common.localeCompare(b.name.common));
 
-  // console.log(filteredAndSortedCountries);
-
   return (
     <div
       className="w-full country-select relative"

@@ -116,6 +116,8 @@ const CommentTable = () => {
     setCurrentPage(1);
   };
 
+  console.log(filteredComments);
+
   return (
     <div>
       {isLoading && <Loader />}
@@ -181,7 +183,6 @@ const CommentTable = () => {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {""}
                               {currentPage > 1
                                 ? index + 1 + (currentPage - 1) * 10
                                 : index + 1}

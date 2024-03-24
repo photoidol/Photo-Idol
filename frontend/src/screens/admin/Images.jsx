@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { PostDataTable } from "../../components/common/posts/PostDataTable";
 import Loader from "../../components/common/Loader";
 import useRedirectLoggedOutUser from "../../utils/useRedirectLoggedOutUser";
+import { scrollToTop } from "../../utils/scrollToTop";
 
 export const Images = () => {
   useRedirectLoggedOutUser("/auth/login");
@@ -14,6 +15,8 @@ export const Images = () => {
   }, [dispatch]);
 
   const isLoading = useSelector((state) => state.posts.isLoading);
+
+  useEffect(() => scrollToTop(), []);
 
   return (
     <div className="flex flex-col py-5">

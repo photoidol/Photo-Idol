@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getSinglePost, selectSinglePost } from "../../redux/slices/postsSlice";
 import useRedirectLoggedOutUser from "../../utils/useRedirectLoggedOutUser";
+import { scrollToTop } from "../../utils/scrollToTop";
 
 export function ImagesEdit() {
   useRedirectLoggedOutUser("/auth/login");
@@ -24,6 +25,8 @@ export function ImagesEdit() {
       setFileList(singlePost?.assets);
     }
   }, [dispatch, postSlug]);
+
+  useEffect(() => scrollToTop(), []);
 
   return (
     <div className="my-6 shadow bg-white rounded-lg">
@@ -188,8 +191,7 @@ export function ImagesEdit() {
             </div>
             <hr className="mt-6 border-b-1 border-blueGray-300" />
             <Button
-              variant="outlined"
-              s
+              variant="outlined"s
               className="px-8 text-sm  text-moonstone border-moonstone hover:bg-moonstone-gradient2 mt-8"
             >
               update post
