@@ -13,7 +13,7 @@ const generateMailTransporter = () => {
       pass: NODE_MAILER_PASS,
     },
     tls: {
-      rejectUnauthorized: false,
+      rejectUnauthorized: true,
     },
     debug: true,
   });
@@ -97,7 +97,7 @@ const sendPasswordResetSuccessEmail = (name, email) => {
   try {
     const transport = generateMailTransporter();
 
-    const message = `Hello <code>${name}</code> We're writing to confirm that your password has been successfully updated. You can now log in to your account using your new password.`;
+    const message = `Hello <code>${name}</code>. We're writing to confirm that your password has been successfully updated. You can now log in to your account using your new password.`;
 
     transport.sendMail({
       to: email,
@@ -133,14 +133,14 @@ const sendOtpCode = ({ name, email, code }) => {
   try {
     const transport = generateMailTransporter();
 
-    const message = `Dear <code>${name}</code> We've just sent a verification OTP to your email address: <i>${email}</i>. Please check your inbox and spam folder if needed.`;
+    const message = `Dear <code>${name}</code>, following is your OTP for login. Please do not share this OTP with anyone as it is confidential. <br>This OTP will expire after a certain period of time. Thank you.</br>`;
 
     transport.sendMail({
       to: email,
       from: VERIFICATION_EMAIL,
       subject: "Your Verification OTP Has Arrived",
       html: generateTemplate({
-        title: "Verify Your Account",
+        title: "Login with OTP",
         message: message,
         logo: "cid:logo",
         banner: "cid:otp",
@@ -240,7 +240,7 @@ const sendPaymentSuccessEmail = (email) => {
   try {
     const transport = generateMailTransporter();
 
-    const message = `Your payment has been successfully`;
+    const message = `Your payment has been successfully completed. Thank you for your cooperation. For any inquiries, please email us at inquiry.fotoidol@gmail.com.`;
 
     transport.sendMail({
       to: email,
