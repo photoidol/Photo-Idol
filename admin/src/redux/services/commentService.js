@@ -1,6 +1,6 @@
 import axios from "axios";
-import { BACKEND_URL } from "../../utils/helper";
-export const API_URL = `${BACKEND_URL}/api/v1/comment/`;
+import { REACT_APP_BACKEND_URL } from "../../utils/helper";
+export const API_URL = `${REACT_APP_BACKEND_URL}/api/v1/comment/`;
 
 const getAllComment = async() => {
     const response = await axios.get(API_URL);
