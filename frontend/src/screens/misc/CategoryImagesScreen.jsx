@@ -75,7 +75,7 @@ export const CategoryImagesContent = ({ posts, categorySingle }) => {
             <div className="mt-10 px-3">
               <h3 className=" text-dark text-2xl font-semibold">
                 Photos related to
-                <span className="font-bold text-[1.6rem] text-moonstone">
+                <span className="font-bold text-[1.6rem] px-2 text-moonstone">
                   {categorySingle?.title}
                 </span>
               </h3>
@@ -117,9 +117,7 @@ export const CategoryImagesContent = ({ posts, categorySingle }) => {
                   className="masonry-item hover:scale-[1.02] transition-all duration-200 relative group after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-black/40 after:opacity-0 after:transition-all after:ease-in-out after:duration-300 hover:after:opacity-100"
                 >
                   <LazyImage
-                    src={
-                      item?.assets?.length > 0 ? item?.assets[0].filePath : ""
-                    }
+                    src={item?.assets?.filePath ? item?.assets?.filePath : ""}
                     alt=""
                   />
                   <div className="item-info opacity-0 group-hover:opacity-100 absolute bottom-[12px] left-[12px] transition-all duration-300 ease-in-out flex items-center justify-start z-10">

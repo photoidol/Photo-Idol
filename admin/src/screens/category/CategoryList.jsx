@@ -3,7 +3,6 @@ import { CategoryDataTable } from "../../components/common/CategoryDataTable";
 import { useEffect } from "react";
 import Loader from "../../components/common/Loader";
 import { getallCategory } from "../../redux/slices/categorySlice";
-import { Typography } from "@material-tailwind/react";
 import { getFeaturedCategoriesLists } from "../../redux/slices/settings/SettingSlice";
 import useRedirectLoggedOutUser from "../../utils/useRedirectLoggedOutUser";
 
@@ -11,7 +10,6 @@ export function CategoryList() {
   useRedirectLoggedOutUser("/login");
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.category);
-  const { featuredCategories } = useSelector((state) => state.setting);
 
   useEffect(() => {
     dispatch(getallCategory());
@@ -27,19 +25,10 @@ export function CategoryList() {
   return (
     <div className="flex flex-col py-5 bg-white mt-8 rounded-md shadow-lg px-3">
       {isLoading && <Loader />}
-      {categories?.length > 0 &&
-      featuredCategories &&
-      featuredCategories[0]?.items ? (
-        <CategoryDataTable
-          tableTitle={"All Categories"}
-          TABLE_DATA={categories}
-          FEATURED_DATA={featuredCategories[0].items}
-        />
-      ) : (
-        <Typography variant="h6" color="blue-gray">
-          No categories found!
-        </Typography>
-      )}
+      <CategoryDataTable
+        tableTitle={"All Categories"}
+        TABLE_DATA={categories}
+      />
     </div>
   );
 }

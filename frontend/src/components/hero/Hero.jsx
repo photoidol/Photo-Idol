@@ -89,7 +89,7 @@ export const Hero = () => {
                         </h4>
                       </div>
                       {user ? (
-                        <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 py-4 border-b-[1px] border-dark/10 pb-12">
+                        <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 py-4 pb-12">
                           <p className="text-white opacity-90 text-base text-center font-medium">
                             Explore every picture within our image archive.
                           </p>
@@ -101,7 +101,7 @@ export const Hero = () => {
                           </Link>
                         </div>
                       ) : (
-                        <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 py-4 border-b-[1px] border-dark/10 pb-12">
+                        <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 py-4 pb-12">
                           <p className="text-white opacity-90 text-base  font-medium">
                             Create an account to upload photos.
                           </p>
@@ -139,7 +139,7 @@ export const Hero = () => {
                         </h4>
                       </div>
                       {user ? (
-                        <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 py-4 border-b-[1px] border-dark/10 pb-12">
+                        <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 py-4 pb-12">
                           <p className="text-white opacity-90 text-base text-center font-medium">
                             Explore every picture within our image archive.
                           </p>
@@ -151,7 +151,7 @@ export const Hero = () => {
                           </Link>
                         </div>
                       ) : (
-                        <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 py-4 border-b-[1px] border-dark/10 pb-12">
+                        <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 py-4 pb-12">
                           <p className="text-white opacity-90 text-base  font-medium">
                             Create an account to upload photos.
                           </p>

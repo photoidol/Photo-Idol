@@ -37,6 +37,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import {
   CATEGORY_ADMIN,
   CATEGORY_GUEST,
+  CATEGORY_GUEST_NO_LIMIT,
   CATEGORY_NO_LIMIT,
 } from "../../utils/constants";
 
@@ -61,11 +62,26 @@ export const CategoryDataTable = (props) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [updatedCategories, setUpdatedCategories] = useState(null);
   const [activeTab, setActiveTab] = useState(CATEGORY_ADMIN);
+  const [adminCategories, setAdminCategories] = useState([]);
+  const [guestCategories, setGuestCategories] = useState([]);
 
   // ### CATEGORY SEARCH & FILTER
   const filteredCategories = updatedCategories?.filter((category) =>
     category.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  useEffect(() => {
+    setAdminCategories(
+      updatedCategories?.filter(
+        (category) => category?.subcategory === CATEGORY_ADMIN
+      )
+    );
+    setGuestCategories(
+      updatedCategories?.filter(
+        (category) => category?.subcategory === CATEGORY_GUEST
+      )
+    );
+  }, [updatedCategories]);
 
   // ### PAGINATION
   const [currentPage, setCurrentPage] = useState(1);
@@ -80,27 +96,9 @@ export const CategoryDataTable = (props) => {
     indexOfLastCategory
   );
 
-  const checkFeaturedOrNot = (categoryId) => {
-    let isFeatured = false;
-    props.FEATURED_DATA.forEach((category) => {
-      if (category._id === categoryId) isFeatured = true;
-    });
-    return isFeatured;
-  };
-
   useEffect(() => {
-    if (
-      props.TABLE_DATA &&
-      props.TABLE_DATA.length > 0 &&
-      props.FEATURED_DATA
-    ) {
-      const tempCategories = props.TABLE_DATA.map((category) => {
-        return {
-          ...category,
-          isFeatured: checkFeaturedOrNot(category._id),
-        };
-      });
-      setUpdatedCategories(tempCategories);
+    if (props.TABLE_DATA && props.TABLE_DATA.length > 0) {
+      setUpdatedCategories(props.TABLE_DATA);
     }
   }, [props?.FEATURED_DATA, props?.TABLE_DATA, dispatch]);
 
@@ -156,18 +154,9 @@ export const CategoryDataTable = (props) => {
                 All Categories
               </Typography>
               <Typography color="gray" className="mt-1 font-normal">
-                See information about the categries that have been created.
+                See information about the categories that have been created.
               </Typography>
             </div>
-            {props?.TABLE_DATA?.length < CATEGORY_NO_LIMIT && (
-              <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-                <NavLink to="/admin/addcategory">
-                  <Button className="py-2.5 rounded bg-moonstone">
-                    Create
-                  </Button>
-                </NavLink>
-              </div>
-            )}
           </div>
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <div className="w-full md:w-80 font-inter">
@@ -209,6 +198,15 @@ export const CategoryDataTable = (props) => {
             </TabsHeader>
             <TabsBody className="overflow-x-scroll scrollbar-x-dir">
               <TabPanel value={CATEGORY_ADMIN} className="px-1">
+                {adminCategories?.length < CATEGORY_NO_LIMIT && (
+                  <div className="flex items-center justify-end">
+                    <NavLink to="/admin/addcategory">
+                      <Button className="py-2.5 rounded bg-moonstone">
+                        Create
+                      </Button>
+                    </NavLink>
+                  </div>
+                )}
                 <table className="mt-4 w-full min-w-max table-auto text-left">
                   <thead>
                     <tr>
@@ -326,14 +324,14 @@ export const CategoryDataTable = (props) => {
                                     View
                                   </div>
                                 </IconButton>
-                                {/* <IconButton
+                                <IconButton
                                   size="sm"
                                   className="rounded tooltip-custom group"
                                   color="red"
                                   onClick={() => handleDelete(category._id)}
                                 >
                                   <AiOutlineDelete size={20} />
-                                </IconButton> */}
+                                </IconButton>
                                 <IconButton
                                   size="sm"
                                   className="rounded tooltip-custom group"
@@ -356,6 +354,15 @@ export const CategoryDataTable = (props) => {
                 </table>
               </TabPanel>
               <TabPanel value={CATEGORY_GUEST} className="px-1">
+                {guestCategories?.length < CATEGORY_GUEST_NO_LIMIT && (
+                  <div className="flex items-center justify-end">
+                    <NavLink to="/admin/addcategory">
+                      <Button className="py-2.5 rounded bg-moonstone">
+                        Create
+                      </Button>
+                    </NavLink>
+                  </div>
+                )}
                 <table className="mt-4 w-full min-w-max table-auto text-left">
                   <thead>
                     <tr>
