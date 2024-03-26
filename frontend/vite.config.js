@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      external: ["aos", "aos/dist/aos.css"],
+      external: ["/aos", "./aos/dist/aos.css"],
     },
   },
 });
