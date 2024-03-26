@@ -215,7 +215,7 @@ export const Branches = ({ allLocation }) => {
         background: `url(${staticImages.nepal_map}) center/contain no-repeat`,
       }}
     >
-      <div className="containers">
+      <div className="containers w-full sm:w-auto">
         <div className="text-center mb-6 md:mb-8 lg:mb-10" data-aos="fade-up">
           <h2 className="text-2xl font-bold text-gray-900 sm:text-2xl lg:text-3xl">
             All Branches
@@ -223,7 +223,7 @@ export const Branches = ({ allLocation }) => {
         </div>
         <div data-aos="fade-up">
           {allLocation?.total > 0 ? (
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
               {allLocation?.data?.map((location) => {
                 return (
                   <div
@@ -241,19 +241,19 @@ export const Branches = ({ allLocation }) => {
                       </h6>
                       <div className="mt-2 text-sm lg:text-base">
                         <div className="text-slategray">
-                          <p className="py-0.5">
+                          <p className="py-0.5 flex flex-wrap">
                             <span className="font-semibold">Email:</span>&nbsp;
-                            {location?.email}
+                            <span>{location?.email}</span>
                           </p>
-                          <p className="py-0.5">
+                          <p className="py-0.5 flex flex-wrap">
                             <span className="font-semibold">Address:</span>
                             &nbsp;
-                            {location?.address}
+                            <span>{location?.address}</span>
                           </p>
-                          <p className="pt-0.5">
+                          <p className="pt-0.5 flex flex-wrap">
                             <span className="font-semibold">Phone no:</span>
                             &nbsp;
-                            {location?.phone}
+                            <span>{location?.phone}</span>
                           </p>
                         </div>
                       </div>

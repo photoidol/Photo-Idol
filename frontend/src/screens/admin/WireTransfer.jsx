@@ -52,7 +52,7 @@ const WireTransfer = () => {
         size="sm"
         open={openWireOffer}
         handler={handleWireOfferOpen}
-        className="max-w-[95%] max-h-[90vh] overflow-y-scroll"
+        className="max-w-[95%] max-h-[90vh] overflow-y-scroll scrollbar-y-dir"
       >
         <DialogHeader className="justify-between py-2 px-3 sm:px-4">
           <Typography
@@ -83,7 +83,7 @@ const WireTransfer = () => {
             </svg>
           </IconButton>
         </DialogHeader>
-        <DialogBody className="overflow-y-scroll scrollbar-y-dir ps-3 sm:ps-4 pe-1 sm:pe-2 pt-3 border-t border-gray-200 text-center font-normal">
+        <DialogBody className="ps-3 sm:ps-4 pe-1 sm:pe-2 pt-3 border-t border-gray-200 text-center font-normal">
           <div className="max-w-[80px] mx-auto rounded-md overflow-hidden mb-4">
             <img src={staticImages.wire_transfer} alt="" />
           </div>
@@ -136,7 +136,7 @@ const WireTransfer = () => {
         size="sm"
         open={openWire}
         handler={handleWireOpen}
-        className="max-w-[95%] max-h-[90vh] overflow-y-scroll"
+        className="max-w-[95%] max-h-[90vh] overflow-y-scroll scrollbar-y-dir"
       >
         <DialogHeader className="justify-between py-2 px-3 sm:px-4">
           <div className="flex items-center justify-start gap-x-4">
@@ -172,8 +172,8 @@ const WireTransfer = () => {
             </svg>
           </IconButton>
         </DialogHeader>
-        <DialogBody className="overflow-y-scroll scrollbar-y-dir ps-3 sm:ps-4 pe-1 sm:pe-2 pt-2 border-t border-gray-200">
-          <p className="font-normal text-indigo mb-2 sm:text-lg text-base">
+        <DialogBody className="ps-3 sm:ps-4 pe-1 sm:pe-2 pt-2 border-t border-gray-200">
+          <p className="font-bold text-indigo mb-2 sm:text-lg text-base">
             <span className="font-semibold">Total Price:</span> $3.00
           </p>
           <div className="flex items-center justify-between">

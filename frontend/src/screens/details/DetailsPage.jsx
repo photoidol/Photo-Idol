@@ -401,7 +401,7 @@ const DetailsPage = () => {
                   postId={singlePost._id}
                 />
               ) : (
-                <Typography className="mb-6 my-4 lg:my-5 text-slategray font-semibold text-sm lg:text-base">
+                <Typography className="mb-6 my-4 lg:my-5 text-slategray font-semibold mx-1 text-sm lg:text-base">
                   No comments found!
                 </Typography>
               )}
