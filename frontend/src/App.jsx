@@ -46,14 +46,6 @@ import StepByStep from "./screens/admin/StepByStep";
 function App() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  // const user = useSelector(selectUser);
-
-  // useEffect(() => {
-  //   dispatch(getLogInStatus());
-  //   if (isLoggedIn && user === null) {
-  //     dispatch(getUserProfile());
-  //   }
-  // }, [dispatch, isLoggedIn, user]);
 
   useEffect(() => {
     dispatch(getLogInStatus());

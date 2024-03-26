@@ -328,7 +328,7 @@ const authSlice = createSlice({
         state.isError = true;
         state.isLoggedIn = true;
         state.message = action.payload;
-        toast.error(action.payload);
+        // toast.error(action.payload);
       })
       .addCase(updateUserProfile.pending, (state) => {
         state.isLoading = true;
