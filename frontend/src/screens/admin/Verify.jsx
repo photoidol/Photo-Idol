@@ -36,7 +36,7 @@ export const Verify = () => {
         </Typography>
         <Button
           onClick={verifyAccount}
-          className="font-medium rounded-md capitalize bg-blue-gradient text-base tracking-[1px]"
+          className="font-medium rounded capitalize bg-blue-gradient text-base text-white tracking-[1px]"
         >
           Verify Now
         </Button>

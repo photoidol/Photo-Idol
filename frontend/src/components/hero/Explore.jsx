@@ -8,7 +8,7 @@ import { staticImages } from "../../images";
 import { CardSlanted } from "../common/CardSlanted";
 import ContactInfo from "../common/ContactInfo";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getAllPost, selectAllPosts } from "../../redux/slices/postsSlice";
 import Loader from "../common/Loader";
 import { getallCategory } from "../../redux/slices/categorySlice";
@@ -19,6 +19,7 @@ import {
 } from "../../redux/slices/settings/SettingSlice";
 import { format } from "date-fns";
 import {
+  CATEGORY_ADMIN,
   FEATURED_CATEGORY_REQ_LIMIT,
   HOME_SETTING_OPT_THREE,
   PHOTO_FEATURING_LIMIT,
@@ -33,11 +34,9 @@ import { IoCameraOutline } from "react-icons/io5";
 export const Explore = () => {
   const dispatch = useDispatch();
   const posts = useSelector(selectAllPosts);
+  const [adminCategories, setAdminCategories] = useState([]);
   const categories = useSelector(
     (state) => state.category.categorys?.categorys
-  );
-  const featuredCategories = useSelector(
-    (state) => state.setting.featuredCategories
   );
 
   const exploreGridOneCardClasses = [
@@ -53,9 +52,18 @@ export const Explore = () => {
   ];
 
   useEffect(() => {
+    if (categories?.length > 0) {
+      setAdminCategories(
+        categories?.filter(
+          (category) => category?.subcategory === CATEGORY_ADMIN
+        )
+      );
+    }
+  }, [categories]);
+
+  useEffect(() => {
     dispatch(getallCategory());
     dispatch(getAllPost());
-    dispatch(getFeaturedCategoriesLists());
   }, [dispatch]);
 
   return (
@@ -76,10 +84,9 @@ export const Explore = () => {
           </div>
 
           <div data-aos="fade-up">
-            {featuredCategories &&
-            featuredCategories[0]?.itemCount === FEATURED_CATEGORY_REQ_LIMIT ? (
+            {categories?.length > 0 && adminCategories?.length > 0 ? (
               <div className="grid explore-grid-one grid-cols-4 grid-rows-3 xxl:gap-4 md:gap-2 gap-1 mt-8 md:mt-10 lg:mt-12">
-                {featuredCategories[0].items?.map((category, index) => {
+                {adminCategories?.slice(0, 9)?.map((category, index) => {
                   return (
                     <Card
                       key={category?._id}
@@ -92,23 +99,9 @@ export const Explore = () => {
                 })}
               </div>
             ) : (
-              <>
-                {categories?.length > 0 && (
-                  <div className="grid explore-grid-one grid-cols-4 grid-rows-3 xxl:gap-4 md:gap-2 gap-1 mt-8 md:mt-10 lg:mt-12">
-                    {categories?.slice(0, 9)?.map((category, index) => {
-                      return (
-                        <Card
-                          key={category?._id}
-                          title={category?.title}
-                          image={category?.cover?.filePath}
-                          categoryId={category?._id}
-                          gridClass={`${exploreGridOneCardClasses[index]}`}
-                        />
-                      );
-                    })}
-                  </div>
-                )}
-              </>
+              <p className="text-indigo text-center font-semibold text-lg my-4">
+                No categories found!
+              </p>
             )}
           </div>
         </div>
@@ -290,7 +283,7 @@ export const Card1 = ({ title, icon, desc }) => {
       data-aos="fade-up"
     >
       <div className="icon flex items-center justify-center text-white bg-moonstone-gradient2 default-shadow rounded-full w-[52px] h-[52px] min-w-[52px] lg:w-[68px] lg:min-w-[68px] lg:h-[68px]">
-        {icon || <AiOutlineStar size = {30} />}
+        {icon || <AiOutlineStar size={30} />}
       </div>
       <div className="details">
         <h3 className="text-base md:text-lg lg:text-xl font-semibold mb-2 text-white drop-shadow-lg">

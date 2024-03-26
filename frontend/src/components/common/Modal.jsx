@@ -36,7 +36,7 @@ const Modal = () => {
       className="fixed modal-overlay w-full h-full left-0 top-0 right-0 bottom-0 bg-black/80 z-50"
       onClick={handleOverlayClick}
     >
-      <div className="preview-modal bg-white lg:max-w-[600px] max-w-[90vw] min-h-[400px] absolute top-1/2 -translate-y-1/2 left-1/2 h-auto max-h-[90vh] w-full -translate-x-1/2 z-50 rounded-lg overflow-x-hidden overflow-y-scroll scroll-y-dir flex flex-col items-center justify-center">
+      <div className="preview-modal bg-white lg:max-w-[600px] max-w-[90vw] absolute top-1/2 -translate-y-1/2 left-1/2 h-auto max-h-[90vh] w-full -translate-x-1/2 z-50 rounded-lg overflow-x-hidden overflow-y-scroll scroll-y-dir flex flex-col items-center justify-center">
         <button
           type="button"
           className="absolute top-3 right-2 text-dark z-[100]"

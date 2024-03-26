@@ -145,6 +145,8 @@ export const CategoryDataTable = (props) => {
     setCurrentPage(1);
   };
 
+  console.log(adminCategories, guestCategories);
+
   return (
     <>
       {modalOpen && <ImageViewer src={imageSrc} onClose={closeModal} />}
