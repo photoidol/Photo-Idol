@@ -47,14 +47,21 @@ import StepByStep from "./screens/admin/StepByStep";
 function App() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const user = useSelector(selectUser);
+  // const user = useSelector(selectUser);
+
+  // useEffect(() => {
+  //   dispatch(getLogInStatus());
+  //   if (isLoggedIn && user === null) {
+  //     dispatch(getUserProfile());
+  //   }
+  // }, [dispatch, isLoggedIn, user]);
 
   useEffect(() => {
     dispatch(getLogInStatus());
-    if (isLoggedIn && user === null) {
+    if (isLoggedIn) {
       dispatch(getUserProfile());
     }
-  }, [dispatch, isLoggedIn, user]);
+  }, [dispatch, isLoggedIn]);
 
   AOS.init({
     delay: 0,
