@@ -1,41 +1,40 @@
 import axios from "axios";
-import { BACKEND_URL } from "../../utils/helper";
+import { REACT_APP_BACKEND_URL } from "../../utils/helper";
+export const API_URL = `${REACT_APP_BACKEND_URL}/comment/`;
 
-export const API_URL = `${BACKEND_URL}/api/v1/comment/`;
-
-const getAllComment = async () => {
-  const response = await axios.get(API_URL);
-  return response.data;
+const getAllComment = async() => {
+    const response = await axios.get(API_URL);
+    return response.data;
 };
 
-const createComment = async (commentData) => {
-  const response = await axios.post(API_URL, commentData);
-  return response.data.message;
-};
+const createComment = async(commentData) => {
+    const response = await axios.post(API_URL, commentData);
+    return response.data.message;
+}
 
-const createChildComment = async (commentData) => {
-  const response = await axios.post(API_URL, commentData);
-  return response.data.message;
-};
+const createChildComment = async(commentData) => {
+    const response = await axios.post(API_URL, commentData);
+    return response.data.message;
+}
 
-const deleteComment = async (commentId) => {
-  const response = await axios.delete(API_URL, {
-    data: { id: commentId },
-  });
-  return response.data.message;
-};
+const deleteComment = async(commentId) => {
+    const response = await axios.delete(API_URL, {
+        data: { id: commentId}
+    });
+    return response.data.message;
+}
 
-const getPostComments = async (postId) => {
-  const response = await axios.get(API_URL + `single/${postId}`);
-  return response.data;
-};
+const getPostComments = async(postId) => {
+    const response = await axios.get(API_URL + `single/${postId}`);
+    return response.data;
+}
 
 const commentService = {
-  getAllComment,
-  createComment,
-  deleteComment,
-  createChildComment,
-  getPostComments,
-};
+    getAllComment,
+    createComment,
+    deleteComment,
+    createChildComment,
+    getPostComments
+}
 
 export default commentService;

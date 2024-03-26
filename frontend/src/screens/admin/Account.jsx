@@ -72,7 +72,7 @@ export function Account() {
                         <div className="px-4 py-4">
                           <div className="flex flex-wrap justify-center items-center lg:-mt-24">
                             <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
-                              <div className="relative mt-4 border-1 border-white">
+                              <div className="relative mt-4 border-1 border-white bg-white rounded-full">
                                 <img
                                   src={
                                     user?.avatar?.url
@@ -105,8 +105,7 @@ export function Account() {
                             <div className="flex items-center justify-center gap-x-6 flex-wrap">
                               <div className="text-sm leading-normal text-slategray mt-0 font-normal capitalize flex items-center justify-center">
                                 <FaMapMarkerAlt className="me-2" />
-                                {(user?.address && user?.address + ", ") ||
-                                  ""}
+                                {(user?.address && user?.address + ", ") || ""}
                                 {user?.country || ""}
                               </div>
                               <div className="text-sm leading-normal text-slategray mt-0 font-normal flex items-center justify-center">
@@ -117,30 +116,6 @@ export function Account() {
                               </div>
                             </div>
                           </div>
-                          {/* <div className="flex items-center justify-center mb-6 pt-4 mt-1 flex-wrap gap-3 border-t-[1px] border-blue-gray-50">
-                            <span className="text-indigo font-semibold">
-                              Social:
-                            </span>
-                            <div className="flex items-center">
-                              {links[0]?.links?.map((link, index) => {
-                                return (
-                                  <div
-                                    className="flex flex-col items-start gap-3"
-                                    key={index}
-                                  >
-                                    <SocialIcon
-                                      url={link.link}
-                                      target="_blank"
-                                      style={{
-                                        width: "36px",
-                                        height: "36px",
-                                      }}
-                                    />
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          </div> */}
                           <div className="pb-2 text-center">
                             <div className="flex flex-wrap justify-center">
                               <div className="w-full px-4">

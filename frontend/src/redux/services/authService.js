@@ -2,9 +2,9 @@ import axios from "axios";
 import { REACT_APP_BACKEND_URL } from "../../utils/helper";
 export const API_URL = `${REACT_APP_BACKEND_URL}/auth/`;
 
-const headers = {
-  "Content-Type": "multipart/form-data",
-};
+// const headers = {
+//   "Content-Type": "multipart/form-data",
+// };
 
 // Validate email
 export const validateEmail = (email) => {

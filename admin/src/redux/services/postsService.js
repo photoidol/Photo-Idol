@@ -1,6 +1,6 @@
 import axios from "axios";
 import { REACT_APP_BACKEND_URL } from "../../utils/helper";
-export const API_URL = `${REACT_APP_BACKEND_URL}/api/v1/posts/`;
+export const API_URL = `${REACT_APP_BACKEND_URL}/posts/`;
 
 const createPost = async (postData) => {
   const response = await axios.post(API_URL, postData);

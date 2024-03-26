@@ -60,8 +60,6 @@ export const Hero = () => {
     },
   ];
 
-  console.log(user);
-
   return (
     <div className="hero-banner-slider">
       <Slider

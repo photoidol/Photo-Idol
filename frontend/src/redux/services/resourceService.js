@@ -2,7 +2,7 @@ import axios from "axios";
 import { REACT_APP_BACKEND_URL } from "../../utils/helper";
 
 export const API_URL = `${REACT_APP_BACKEND_URL}/posts/`;
-export const API_URL_LIKES = `${API_URL}/like/`;
+export const API_URL_LIKES   = `${API_URL}/like/`;
 export const API_URL_CONFIG = `${REACT_APP_BACKEND_URL}/asset-limit/`;
 
 const config = {
@@ -19,18 +19,12 @@ const createResource = async (formdata) => {
   const response = await axios.post(API_URL, formdata, config);
   return response.data;
 };
-const updateResource = async (updateData) => {
-  const response = await axios.put(
-    API_URL + updateData.id,
-    updateData.formData,
-    config
-  );
+const updateResource = async(updateData) => {
+  const response = await axios.put(API_URL + updateData.id, updateData.formData, config);
   return response.data;
-};
+}
 const deleteResource = async (postId) => {
-  const response = await axios.delete(API_URL + "remove", {
-    data: { id: postId },
-  });
+  const response = await axios.delete(API_URL + "remove", { data: { id: postId } });
   return response.data.message;
 };
 
@@ -45,13 +39,10 @@ const getPostConfig = async () => {
 };
 
 // post likes
-const togglePostLikes = async (toggleData) => {
-  const response = await axios.post(
-    API_URL_LIKES + toggleData.postId,
-    toggleData.userData
-  );
+const togglePostLikes = async(toggleData) => {
+  const response = await axios.post(API_URL_LIKES + toggleData.postId, toggleData.userData);
   return response.data;
-};
+}
 
 const resourceService = {
   getallResource,
@@ -60,7 +51,7 @@ const resourceService = {
   addPostConfig,
   getPostConfig,
   updateResource,
-  togglePostLikes,
+  togglePostLikes
 };
 
 export default resourceService;
