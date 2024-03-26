@@ -71,16 +71,18 @@ export const CategoryDataTable = (props) => {
   );
 
   useEffect(() => {
-    setAdminCategories(
-      updatedCategories?.filter(
-        (category) => category?.subcategory === CATEGORY_ADMIN
-      )
-    );
-    setGuestCategories(
-      updatedCategories?.filter(
-        (category) => category?.subcategory === CATEGORY_GUEST
-      )
-    );
+    if (updatedCategories?.length > 0) {
+      setAdminCategories(
+        updatedCategories?.filter(
+          (category) => category?.subcategory === CATEGORY_ADMIN
+        )
+      );
+      setGuestCategories(
+        updatedCategories?.filter(
+          (category) => category?.subcategory === CATEGORY_GUEST
+        )
+      );
+    }
   }, [updatedCategories]);
 
   // ### PAGINATION
@@ -97,7 +99,7 @@ export const CategoryDataTable = (props) => {
   );
 
   useEffect(() => {
-    if (props.TABLE_DATA && props.TABLE_DATA.length > 0) {
+    if (props?.TABLE_DATA && props?.TABLE_DATA?.length > 0) {
       setUpdatedCategories(props.TABLE_DATA);
     }
   }, [props?.FEATURED_DATA, props?.TABLE_DATA, dispatch]);

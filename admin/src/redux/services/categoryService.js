@@ -15,6 +15,7 @@ const createCategory = async (formdata) => {
 };
 
 const getallCategory = async () => {
+  console.log(API_URL)
   const response = await axios.get(API_URL);
   return response.data;
 };
