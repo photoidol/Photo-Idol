@@ -25,7 +25,6 @@ import {
   getLogInStatus,
   getUserProfile,
   selectIsLoggedIn,
-  selectUser,
 } from "./redux/slices/authSlice";
 import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";

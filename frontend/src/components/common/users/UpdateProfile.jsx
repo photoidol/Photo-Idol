@@ -15,7 +15,7 @@ export const UpdateProfile = () => {
   useRedirectLoggedOutUser("/auth/login");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, isLoading } = useSelector((state) => state.auth);
+  const { user, isLoading, isLoggedIn } = useSelector((state) => state.auth);
 
   const fileInputRef = useRef(null);
 
@@ -35,8 +35,10 @@ export const UpdateProfile = () => {
   const [profileImgPreview, setProfileImgPreview] = useState(null);
 
   useEffect(() => {
-    dispatch(getUserProfile());
-  }, [dispatch]);
+    if (isLoggedIn) {
+      dispatch(getUserProfile());
+    }
+  }, [dispatch, isLoggedIn]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

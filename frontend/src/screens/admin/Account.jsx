@@ -19,12 +19,14 @@ import { scrollToTop } from "../../utils/scrollToTop";
 
 export function Account() {
   useRedirectLoggedOutUser("/auth/login");
-  const { user } = useSelector((state) => state.auth);
+  const { user, isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUserProfile());
-  }, [dispatch]);
+    if (isLoggedIn) {
+      dispatch(getUserProfile());
+    }
+  }, [dispatch, isLoggedIn]);
 
   useEffect(() => scrollToTop(), []);
 
