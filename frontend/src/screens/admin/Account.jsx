@@ -22,11 +22,11 @@ export function Account() {
   const { user, isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (isLoggedIn && user == null) {
-      dispatch(getUserProfile());
-    }
-  }, [dispatch, isLoggedIn, user]);
+  // useEffect(() => {
+  //   if (isLoggedIn && user == null) {
+  //     dispatch(getUserProfile());
+  //   }
+  // }, [dispatch, isLoggedIn, user]);
 
   useEffect(() => scrollToTop(), []);
 

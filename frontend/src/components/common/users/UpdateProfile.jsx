@@ -34,11 +34,11 @@ export const UpdateProfile = () => {
   const [profileImg, setProfileImg] = useState(null);
   const [profileImgPreview, setProfileImgPreview] = useState(null);
 
-  useEffect(() => {
-    if (isLoggedIn && user == null) {
-      dispatch(getUserProfile());
-    }
-  }, [dispatch, isLoggedIn, user]);
+  // useEffect(() => {
+  //   if (isLoggedIn && user == null) {
+  //     dispatch(getUserProfile());
+  //   }
+  // }, [dispatch, isLoggedIn, user]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

@@ -7,7 +7,14 @@ const Cryptr = require("cryptr");
 const { generateToken, formatUser, hashToken } = require("../../utils/helpers");
 const TokenModel = require("../../models/users/TokenModel");
 const jwt = require("jsonwebtoken");
-const { sendVerificationMail, sendForgotPassworLink, sendPasswordResetSuccessEmail, sendOtpCode, sendAutoMail, sendAutomatedEmailTrs } = require("../../utils/helpers/mail");
+const {
+  sendVerificationMail,
+  sendForgotPassworLink,
+  sendPasswordResetSuccessEmail,
+  sendOtpCode,
+  sendAutoMail,
+  sendAutomatedEmailTrs,
+} = require("../../utils/helpers/mail");
 const cloudinary = require("cloudinary").v2;
 const { OAuth2Client } = require("google-auth-library");
 const SocialMediaModel = require("../../models/users/SocialMediaModel");
@@ -20,7 +27,9 @@ const register = asyncHandler(async (req, res) => {
   const userExists = await UserModel.findOne({ email });
   if (userExists) {
     res.status(400);
-    throw new Error("A user with this email address already exists. Please use a different email address or try logging in.");
+    throw new Error(
+      "A user with this email address already exists. Please use a different email address or try logging in."
+    );
   }
 
   const ua = parse(req.headers["user-agent"]);
@@ -43,8 +52,31 @@ const register = asyncHandler(async (req, res) => {
     secure: true,
   });
   if (user) {
-    const { _id, name, email, phone, bio, avatar, role, isVerified, country, paid } = user;
-    res.status(201).json({ _id, name, email, phone, bio, avatar, role, isVerified, country, paid, token });
+    const {
+      _id,
+      name,
+      email,
+      phone,
+      bio,
+      avatar,
+      role,
+      isVerified,
+      country,
+      paid,
+    } = user;
+    res.status(201).json({
+      _id,
+      name,
+      email,
+      phone,
+      bio,
+      avatar,
+      role,
+      isVerified,
+      country,
+      paid,
+      token,
+    });
   } else {
     res.status(400);
     throw new Error("Invalid user data");
@@ -56,13 +88,17 @@ const login = asyncHandler(async (req, res) => {
   const user = await UserModel.findOne({ email });
   if (!user) {
     res.status(400);
-    throw new Error("No user found with this email address. Please register for a new account.");
+    throw new Error(
+      "No user found with this email address. Please register for a new account."
+    );
   }
 
   const passwordIsCorrect = await bcrypt.compare(password, user.password);
   if (!passwordIsCorrect) {
     res.status(400);
-    throw new Error("Incorrect email or password. Please check your credentials and try again.");
+    throw new Error(
+      "Incorrect email or password. Please check your credentials and try again."
+    );
   }
 
   const ua = parse(req.headers["user-agent"]);
@@ -88,7 +124,9 @@ const login = asyncHandler(async (req, res) => {
     }).save();
 
     res.status(400);
-    throw new Error("A new or unrecognized browser/device has been detected for your account. For security reasons, please verify your identity to continue.");
+    throw new Error(
+      "A new or unrecognized browser/device has been detected for your account. For security reasons, please verify your identity to continue."
+    );
   }
 
   const token = generateToken(user._id);
@@ -103,12 +141,26 @@ const login = asyncHandler(async (req, res) => {
     });
 
     if (user) {
-      const { _id, name, email, phone, bio, avatar, role, isVerified, paid } = user;
-      res.status(200).json({ _id, name, email, phone, bio, avatar, role, isVerified, paid, token });
+      const { _id, name, email, phone, bio, avatar, role, isVerified, paid } =
+        user;
+      res.status(200).json({
+        _id,
+        name,
+        email,
+        phone,
+        bio,
+        avatar,
+        role,
+        isVerified,
+        paid,
+        token,
+      });
     }
   } else {
     res.status(400);
-    throw new Error("An unexpected error occurred. Please check your input and try again. If the problem persists, contact support for assistance.");
+    throw new Error(
+      "An unexpected error occurred. Please check your input and try again. If the problem persists, contact support for assistance."
+    );
   }
 });
 
@@ -117,13 +169,17 @@ const adminLogin = asyncHandler(async (req, res) => {
   const user = await UserModel.findOne({ email });
   if (!user) {
     res.status(400);
-    throw new Error("No user found with this email address. Please register for a new account.");
+    throw new Error(
+      "No user found with this email address. Please register for a new account."
+    );
   }
 
   const passwordIsCorrect = await bcrypt.compare(password, user.password);
   if (!passwordIsCorrect) {
     res.status(400);
-    throw new Error("Incorrect email or password. Please check your credentials and try again.");
+    throw new Error(
+      "Incorrect email or password. Please check your credentials and try again."
+    );
   }
 
   const ua = parse(req.headers["user-agent"]);
@@ -149,7 +205,9 @@ const adminLogin = asyncHandler(async (req, res) => {
     }).save();
 
     res.status(400);
-    throw new Error("A new or unrecognized browser/device has been detected for your account. For security reasons, please verify your identity to continue.");
+    throw new Error(
+      "A new or unrecognized browser/device has been detected for your account. For security reasons, please verify your identity to continue."
+    );
   }
 
   if (user.role !== "admin") {
@@ -184,7 +242,9 @@ const adminLogin = asyncHandler(async (req, res) => {
     }
   } else {
     res.status(400);
-    throw new Error("An unexpected error occurred. Please check your input and try again. If the problem persists, contact support for assistance.");
+    throw new Error(
+      "An unexpected error occurred. Please check your input and try again. If the problem persists, contact support for assistance."
+    );
   }
 });
 
@@ -197,7 +257,8 @@ const logout = asyncHandler(async (req, res) => {
     secure: true,
   });
   return res.status(200).json({
-    message: "You have been successfully logged out. Thank you for using our services!",
+    message:
+      "You have been successfully logged out. Thank you for using our services!",
   });
 });
 
@@ -222,7 +283,20 @@ const getUserProfile = asyncHandler(async (req, res) => {
   const user = await UserModel.findById(req.user._id);
 
   if (user) {
-    const { _id, name, email, phone, bio, avatar, role, isVerified, country, address, paid, token } = user;
+    const {
+      _id,
+      name,
+      email,
+      phone,
+      bio,
+      avatar,
+      role,
+      isVerified,
+      country,
+      address,
+      paid,
+      token,
+    } = user;
     res.status(200).json({
       _id,
       name,
@@ -275,7 +349,11 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       };
     }
 
-    const savedUser = await UserModel.findByIdAndUpdate(req.user._id, updatedUser, { new: true });
+    const savedUser = await UserModel.findByIdAndUpdate(
+      req.user._id,
+      updatedUser,
+      { new: true }
+    );
 
     res.status(200).json({
       _id: savedUser._id,
@@ -286,6 +364,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       address: savedUser.address,
       role: savedUser.role,
       isVerified: savedUser.isVerified,
+      email: savedUser.email,
+      country: savedUser.country,
       message: "Your profile has been successfully updated.",
     });
   } else {
@@ -299,7 +379,9 @@ const sendVerificationEmail = asyncHandler(async (req, res) => {
   console.log(user);
   if (!user) {
     res.status(404);
-    throw new Error("The requested user was not found. Please check the user ID or ensure the user exists.");
+    throw new Error(
+      "The requested user was not found. Please check the user ID or ensure the user exists."
+    );
   }
   if (user.isVerified) {
     res.status(400);
@@ -351,7 +433,9 @@ const verifiedToUser = asyncHandler(async (req, res) => {
   });
   if (!usertoken) {
     res.status(404);
-    throw new Error("The provided token is either invalid or has expired. Please request a new token.");
+    throw new Error(
+      "The provided token is either invalid or has expired. Please request a new token."
+    );
   }
 
   // Find User
@@ -363,7 +447,9 @@ const verifiedToUser = asyncHandler(async (req, res) => {
 
   user.isVerified = true;
   await user.save();
-  res.status(200).json({ message: "Your account has been successfully verified. Welcome!" });
+  res
+    .status(200)
+    .json({ message: "Your account has been successfully verified. Welcome!" });
 });
 
 const forgotPassword = asyncHandler(async (req, res) => {
@@ -373,7 +459,9 @@ const forgotPassword = asyncHandler(async (req, res) => {
 
   if (!user) {
     res.status(404);
-    throw new Error("No user found with this email address. Please double-check the email you provided or register for a new account.");
+    throw new Error(
+      "No user found with this email address. Please double-check the email you provided or register for a new account."
+    );
   }
 
   // Delete Token if it exists in DB
@@ -409,7 +497,9 @@ const forgotPassword = asyncHandler(async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500);
-    throw new Error("An error occurred while sending the email. Please try again later.");
+    throw new Error(
+      "An error occurred while sending the email. Please try again later."
+    );
   }
 });
 
@@ -426,7 +516,9 @@ const resetPassword = asyncHandler(async (req, res) => {
 
   if (!usertoken) {
     res.status(404);
-    throw new Error("The provided token is either invalid or has expired. Please request a new password reset link.");
+    throw new Error(
+      "The provided token is either invalid or has expired. Please request a new password reset link."
+    );
   }
 
   // Find User
@@ -436,7 +528,8 @@ const resetPassword = asyncHandler(async (req, res) => {
   await user.save();
   await sendPasswordResetSuccessEmail(user.name, user.email);
   res.status(200).json({
-    message: "Your password has been successfully reset. You can now log in with your new password.",
+    message:
+      "Your password has been successfully reset. You can now log in with your new password.",
   });
 });
 
@@ -446,26 +539,34 @@ const changePassword = asyncHandler(async (req, res) => {
 
   if (!user) {
     res.status(400);
-    throw new Error("No user found with this email address. Please sign up for a new account.");
+    throw new Error(
+      "No user found with this email address. Please sign up for a new account."
+    );
   }
 
   if (!oldPassword || !newPassword) {
     res.status(400);
-    throw new Error("Both the old and new passwords are required to complete this action.");
+    throw new Error(
+      "Both the old and new passwords are required to complete this action."
+    );
   }
 
   // Check if oldPassword matches the password in DB
   const passwordIsCorrect = await bcrypt.compare(oldPassword, user.password);
   if (!passwordIsCorrect) {
     res.status(400);
-    throw new Error("The old password you entered is incorrect. Please double-check and try again.");
+    throw new Error(
+      "The old password you entered is incorrect. Please double-check and try again."
+    );
   }
 
   // Check if the new password is different from the old password
   const newPasswordIsDifferent = oldPassword !== newPassword;
   if (!newPasswordIsDifferent) {
     res.status(400);
-    throw new Error("The new password must be different from the old password.");
+    throw new Error(
+      "The new password must be different from the old password."
+    );
   }
 
   // Update the password if all checks pass
@@ -473,7 +574,8 @@ const changePassword = asyncHandler(async (req, res) => {
   await user.save();
   await sendPasswordResetSuccessEmail(user.name, user.email);
   res.status(200).json({
-    message: "Your password has been successfully changed. You can now log in with your new password.",
+    message:
+      "Your password has been successfully changed. You can now log in with your new password.",
   });
 });
 
@@ -494,7 +596,9 @@ const sendOTPctr = asyncHandler(async (req, res) => {
 
   if (!userToken) {
     res.status(404);
-    throw new Error("The provided token is invalid or has expired. Please log in again.");
+    throw new Error(
+      "The provided token is invalid or has expired. Please log in again."
+    );
   }
 
   const loginCode = userToken.loginToken;
@@ -531,14 +635,18 @@ const loginWithOTP = asyncHandler(async (req, res) => {
 
   if (!userToken) {
     res.status(404);
-    throw new Error("The provided token is invalid or has expired. Please log in again.");
+    throw new Error(
+      "The provided token is invalid or has expired. Please log in again."
+    );
   }
 
   const decryptedLoginCode = cryptr.decrypt(userToken.loginToken);
 
   if (loginCode !== decryptedLoginCode) {
     res.status(404);
-    throw new Error("The OTP code you entered is incorrect. Please double-check and try again.");
+    throw new Error(
+      "The OTP code you entered is incorrect. Please double-check and try again."
+    );
   } else {
     // Register userAgent
     const ua = parse(req.headers["user-agent"]);
@@ -643,17 +751,22 @@ const deleteAccount = asyncHandler(async (req, res) => {
 
   await user.deleteOne();
   res.status(200).json({
-    message: "Your account has been successfully deleted. We're sorry to see you go. If you ever decide to return, we'll be here to welcome you back.",
+    message:
+      "Your account has been successfully deleted. We're sorry to see you go. If you ever decide to return, we'll be here to welcome you back.",
   });
 });
 
 /* ---------------  Admin Access Control --------------- */
 const getAllAccounts = asyncHandler(async (req, res) => {
-  const usersList = await UserModel.find().sort("-createdAt").select("-password");
+  const usersList = await UserModel.find()
+    .sort("-createdAt")
+    .select("-password");
 
   if (!usersList) {
     res.status(500);
-    throw new Error("An unexpected error occurred. Please try again later or contact our support team for assistance.");
+    throw new Error(
+      "An unexpected error occurred. Please try again later or contact our support team for assistance."
+    );
   }
 
   let totalUsers = 0;
@@ -740,7 +853,9 @@ const updateRole = asyncHandler(async (req, res) => {
 
   if (!user) {
     res.status(404);
-    throw new Error("No user found with the provided details. Please check your input and try again.");
+    throw new Error(
+      "No user found with the provided details. Please check your input and try again."
+    );
   }
 
   user.role = role;
@@ -757,7 +872,9 @@ const updateUserStatus = asyncHandler(async (req, res) => {
 
   if (!user) {
     res.status(404);
-    throw new Error("No user found with the provided details. Please check your input and try again.");
+    throw new Error(
+      "No user found with the provided details. Please check your input and try again."
+    );
   }
 
   // Check if the logged-in user is an admin

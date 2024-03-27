@@ -25,6 +25,7 @@ import {
   getLogInStatus,
   getUserProfile,
   selectIsLoggedIn,
+  selectUser,
 } from "./redux/slices/authSlice";
 import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -46,13 +47,14 @@ import StepByStep from "./screens/admin/StepByStep";
 function App() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const user = useSelector(selectUser);
 
   useEffect(() => {
     dispatch(getLogInStatus());
-    if (isLoggedIn) {
+    if (isLoggedIn && user == null) {
       dispatch(getUserProfile());
     }
-  }, [dispatch, isLoggedIn]);
+  }, [dispatch, isLoggedIn, user]);
 
   AOS.init({
     delay: 0,
