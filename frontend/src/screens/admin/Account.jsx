@@ -23,10 +23,10 @@ export function Account() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isLoggedIn && user == null) {
       dispatch(getUserProfile());
     }
-  }, [dispatch, isLoggedIn]);
+  }, [dispatch, isLoggedIn, user]);
 
   useEffect(() => scrollToTop(), []);
 

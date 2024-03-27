@@ -35,10 +35,10 @@ export const UpdateProfile = () => {
   const [profileImgPreview, setProfileImgPreview] = useState(null);
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isLoggedIn && user == null) {
       dispatch(getUserProfile());
     }
-  }, [dispatch, isLoggedIn]);
+  }, [dispatch, isLoggedIn, user]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -63,7 +63,9 @@ export const UpdateProfile = () => {
         formData.append("avatar", profileImg);
       }
       await dispatch(updateUserProfile(formData));
-      await dispatch(getUserProfile);
+      if (isLoggedIn) {
+        await dispatch(getUserProfile);
+      }
       navigate("/admin/account");
     } catch (error) {
       toast.error(error);
