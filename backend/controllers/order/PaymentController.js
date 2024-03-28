@@ -3,7 +3,7 @@ const PriceLimitConfigModel = require("../../models/order/PriceLimitConfigModel"
 const PaymentModel = require("../../models/order/PaymentModel");
 const { ESEWA_KEY } = require("../../utils/variables");
 const UserModel = require("../../models/users/UserModel");
-const failureRedirectUrl = "http://fotoidol.com";
+const failureRedirectUrl = "http://fotoidol.com/admin";
 
 function generateUniqueId() {
   return Math.floor((1 + Math.random()) * 0x10000)

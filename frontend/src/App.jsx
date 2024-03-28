@@ -22,6 +22,7 @@ import { ImagesEdit } from "./screens/admin/ImagesEdit";
 import DetailsPage from "./screens/details/DetailsPage";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  RESET,
   getLogInStatus,
   getUserProfile,
   selectIsLoggedIn,
@@ -53,6 +54,8 @@ function App() {
     dispatch(getLogInStatus());
     if (isLoggedIn && user == null) {
       dispatch(getUserProfile());
+    } else if (!isLoggedIn) {
+      dispatch(RESET());
     }
   }, [dispatch, isLoggedIn, user]);
 
