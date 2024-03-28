@@ -15,7 +15,7 @@ import {
 } from "../../redux/slices/categorySlice";
 import Masonary from "../../components/common/Masonary";
 import { Option, Select, Typography } from "@material-tailwind/react";
-import { CATEGORY_GUEST } from "../../utils/constants";
+import { CATEGORY_GUEST, LOAD_MORE_POST_COUNT } from "../../utils/constants";
 import { MdArrowBackIos } from "react-icons/md";
 
 export const SearchScreen = () => {
@@ -49,6 +49,22 @@ export const SearchContent = () => {
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [sortedCategoryPosts, setSortedCategoryPosts] = useState([]);
   const [filteredCategoryPosts, setFilteredCategoryPosts] = useState([]);
+  const [visiblePosts, setVisiblePosts] = useState(LOAD_MORE_POST_COUNT);
+  const [visibleCategoryPosts, setVisibleCategoryPosts] =
+    useState(LOAD_MORE_POST_COUNT);
+
+  const loadMorePosts = () => {
+    setVisiblePosts(
+      (prevVisiblePosts) => prevVisiblePosts + LOAD_MORE_POST_COUNT
+    );
+  };
+
+  const loadMoreCategoryPosts = () => {
+    setVisibleCategoryPosts(
+      (prevVisibleCategoryPosts) =>
+        prevVisibleCategoryPosts + LOAD_MORE_POST_COUNT
+    );
+  };
 
   useEffect(() => {
     dispatch(getAllPost());
@@ -123,6 +139,7 @@ export const SearchContent = () => {
     } else {
       await dispatch(CATEGORY_SINGLE_RESET());
     }
+    setShowCategorySearch(false);
   };
 
   const handleCategorySearchVisibility = () => {
@@ -336,7 +353,17 @@ export const SearchContent = () => {
             </div>
           )}
           {isLoading && <Loader />}
-          <Masonary dataArr={sortedPosts} />
+          <Masonary dataArr={sortedPosts.slice(0, visiblePosts)} />
+          {sortedPosts?.length > visiblePosts && (
+            <div className="text-center mt-4 mb-10 flex items-center justify-center">
+              <button type="button"
+                className="text-center h-[44px] min-w-[160px] flex items-center justify-center font-semibold text-base  bg-moonstone-gradient2 text-white default-transition shadow-lg rounded"
+                onClick={loadMorePosts}
+              >
+                Load More
+              </button>
+            </div>
+          )}
           {filteredPosts?.length === 0 && (
             <Typography
               variant="h6"
@@ -400,7 +427,19 @@ export const SearchContent = () => {
             </div>
           )}
           {isLoading && <Loader />}
-          <Masonary dataArr={sortedCategoryPosts} />
+          <Masonary
+            dataArr={sortedCategoryPosts.slice(0, visibleCategoryPosts)}
+          />
+          {sortedCategoryPosts.length > visibleCategoryPosts && (
+            <div className="text-center mt-4 mb-10 flex items-center justify-center">
+              <button type="button"
+                className="text-center h-[44px] min-w-[160px] flex items-center justify-center font-semibold text-base  bg-moonstone-gradient2 text-white default-transition shadow-lg rounded"
+                onClick={loadMoreCategoryPosts}
+              >
+                Load More
+              </button>
+            </div>
+          )}
         </div>
       )}
     </>

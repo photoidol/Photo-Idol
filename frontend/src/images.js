@@ -38,6 +38,7 @@ import stepwise_guide from "./assets/images/stepwise-guide.png";
 import full_body_portrait_min from "./assets/images/full-body-portrait-min.jpg";
 import half_body_portrait_min from "./assets/images/half-body-portrait-min.jpg";
 import landscape_min from "./assets/images/landscape-min.jpg";
+import image_cover from "./assets/images/image_cover.jpg";
 
 export const staticImages = {
   hero,
@@ -80,4 +81,5 @@ export const staticImages = {
   full_body_portrait_min,
   half_body_portrait_min,
   landscape_min,
+  image_cover
 };

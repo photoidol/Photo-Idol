@@ -367,7 +367,7 @@ const DetailsPage = () => {
                 <div className="h-[320px] sm:h-[360px] md:h-[400px] overflow-hidden">
                   <img
                     className="cursor-pointer default-transition object-contain w-full h-full"
-                    src={singlePost?.assets?.filePath}
+                    src={singlePost?.assets?.filePath || staticImages.image_cover}
                     alt={singlePost?.title}
                     onClick={() => setToggler(!toggler)}
                   />

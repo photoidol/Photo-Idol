@@ -2,14 +2,14 @@ import { useEffect } from "react";
 import { staticImages } from "../../images";
 import Masonry from "react-masonry-css";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getAllPost } from "../../redux/slices/postsSlice";
 import Loader from "../../components/common/Loader";
 import { scrollToTop } from "../../utils/scrollToTop";
 import PropTypes from "prop-types";
 import LazyImage from "../../utils/LazyImage";
 import { getSingleCategory } from "../../redux/slices/categorySlice";
-import BackButton from "../../components/common/BackButton";
+import { MdArrowBackIos } from "react-icons/md";
 
 export const CategoryImagesScreen = () => {
   const { categoryId } = useParams();
@@ -52,6 +52,7 @@ export const CategoryImagesContent = ({ posts, categorySingle }) => {
   };
 
   const isCategoryLoading = useSelector((state) => state.category.isLoading);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -70,9 +71,17 @@ export const CategoryImagesContent = ({ posts, categorySingle }) => {
           </div>
         </div>
         <div className="max-w-[1440px] mx-auto px-4">
-          <BackButton backLink={"/"} />
+          <button
+            className="text-slategray flex items-center gap-x-1 pb-4 hover:gap-x-2 hover:text-moonstone default-transition mt-10"
+            onClick={() => navigate(-1)}
+          >
+            <MdArrowBackIos size={17} />
+            <span className="font-semibold text-sm lg:text-md uppercase">
+              Go Back
+            </span>
+          </button>
           {posts?.length > 0 ? (
-            <div className="mt-10 px-3">
+            <div className="px-3">
               <h3 className=" text-dark text-2xl font-semibold">
                 Photos related to
                 <span className="font-bold text-[1.6rem] px-2 text-moonstone">
