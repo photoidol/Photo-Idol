@@ -41,6 +41,7 @@ import {
 import { FaGlobe } from "react-icons/fa";
 import { ROLE_ADMIN, ROLE_AUTHOR } from "../../../utils/constants";
 import { DateFormatter } from "../../../components/common/DateFormatter";
+import Loader from "../../../components/common/Loader";
 
 const TABLE_HEAD = [
   "S.N.",
@@ -142,6 +143,7 @@ export const UserTable = () => {
 
   return (
     <>
+      {isLoading && <Loader />}
       <Card className="w-full rounded-md shadow-lg mt-8">
         <CardHeader floated={false} shadow={false} className="rounded-none">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">

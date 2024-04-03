@@ -2,20 +2,26 @@ import { useEffect } from "react";
 import { staticImages } from "../../images";
 import Masonry from "react-masonry-css";
 import { useDispatch, useSelector } from "react-redux";
-import { BsSearch } from "react-icons/bs";
 import { Link, useParams } from "react-router-dom";
 import { selectAllPosts } from "../../redux/slices/postsSlice";
 import { getAllPost } from "../../redux/slices/postsSlice";
 import Loader from "../../components/common/Loader";
 import { scrollToTop } from "../../utils/scrollToTop";
 import PropTypes from "prop-types";
+import { closeNavbar } from "../../redux/slices/navbarSlice";
 
 export const HomeSearchScreen = () => {
   const { searchQuery } = useParams();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     scrollToTop();
   }, []);
+
+  useEffect(() => {
+    dispatch(closeNavbar());
+  }, [dispatch]);
+
   return (
     <div
       style={{

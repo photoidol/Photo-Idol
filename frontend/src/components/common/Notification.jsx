@@ -32,6 +32,11 @@ export const Notification = () => {
           </span>
         </span>
       </Alert>
+      <p className="text-white bg-moonstone p-3 rounded-md shadow-md">
+        <span className="font-bold">Note: </span>If the message isn&apos;t
+        in your spam folder. If you find it there, mark it as <b>&quot;Report not
+        spam&quot;</b>, then double-check your inbox for verification.
+      </p>
     </>
   );
 };

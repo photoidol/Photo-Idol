@@ -1,6 +1,3 @@
-import hero from "./assets/images/hero.jpg";
-import user from "./assets/images/user.jpg";
-import avatar from "./assets/images/avatar.png";
 import intro_hero from "./assets/images/admin/intro_hero.jpg";
 import otp_illus from "./assets/images/otp_illus.svg";
 import reset_illus from "./assets/images/reset_illus.svg";
@@ -10,7 +7,6 @@ import banner3 from "./assets/images/banner3.jpg";
 import banner4 from "./assets/images/banner4.jpg";
 import modal from "./assets/images/modal.jpg";
 import booking from "./assets/images/booking.svg";
-import fash1 from "./assets/images/featured/fash1.jpg";
 import ripple from "./assets/images/ripple.svg";
 import blank_user from "./assets/images/blank_user.jpg";
 import page_404 from "./assets/images/admin/page_404.svg";
@@ -24,9 +20,6 @@ import no_image from "./assets/images/no_image.svg";
 import login_img from "./assets/images/login_img.jpg";
 
 export const staticImages = {
-  hero,
-  user,
-  avatar,
   intro_hero,
   otp_illus,
   reset_illus,
@@ -36,7 +29,6 @@ export const staticImages = {
   banner4,
   modal,
   booking,
-  fash1,
   ripple,
   page_404,
   page_500,

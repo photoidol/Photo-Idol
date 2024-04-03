@@ -17,6 +17,12 @@ import { FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import { Notification } from "../../components/common/Notification";
 import { scrollToTop } from "../../utils/scrollToTop";
 
+const ORIENTATION_TO_ANGLE = {
+  '3': 180,
+  '6': 90,
+  '8': -90,
+}
+
 export function Account() {
   useRedirectLoggedOutUser("/auth/login");
   const { user, isLoggedIn } = useSelector((state) => state.auth);

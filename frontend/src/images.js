@@ -1,13 +1,9 @@
 import hero from "./assets/images/hero.jpg";
-import user from "./assets/images/user.jpg";
-import avatar from "./assets/images/avatar.png";
-import intro_hero from "./assets/images/admin/intro_hero.jpg";
 import banner1 from "./assets/images/banner1.jpg";
 import banner2 from "./assets/images/banner2.jpg";
 import banner3 from "./assets/images/banner3.jpg";
 import banner4 from "./assets/images/banner4.jpg";
 import modal from "./assets/images/modal.jpg";
-import branch from "./assets/images/branch.png";
 import booking from "./assets/images/booking.svg";
 import ripple from "./assets/images/ripple.svg";
 import page_not_found from "./assets/images/page_not_found.svg";
@@ -39,18 +35,15 @@ import full_body_portrait_min from "./assets/images/full-body-portrait-min.jpg";
 import half_body_portrait_min from "./assets/images/half-body-portrait-min.jpg";
 import landscape_min from "./assets/images/landscape-min.jpg";
 import image_cover from "./assets/images/image_cover.jpg";
+import intro_hero from "./assets/images/admin/intro_hero.jpg";
 
 export const staticImages = {
   hero,
-  user,
-  avatar,
-  intro_hero,
   banner1,
   banner2,
   banner3,
   banner4,
   modal,
-  branch,
   booking,
   ripple,
   page_not_found,
@@ -81,5 +74,6 @@ export const staticImages = {
   full_body_portrait_min,
   half_body_portrait_min,
   landscape_min,
-  image_cover
+  image_cover,
+  intro_hero
 };

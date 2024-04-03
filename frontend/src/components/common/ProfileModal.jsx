@@ -150,28 +150,34 @@ const ProfileModal = ({
                       </div>
                     </div>
                     <div className="flex items-center justify-center gap-x-6 flex-wrap">
-                      <div className="text-sm leading-normal text-slategray mt-0 font-medium capitalize flex items-center justify-center">
-                        <FaMapMarkerAlt className="me-2" />
-                        {(singlePost?.user?.address &&
-                          singlePost?.user?.address + ", ") ||
-                          ""}
-                        {singlePost?.user?.country || ""}
-                      </div>
+                      {(singlePost?.user?.adddress ||
+                        singlePost?.user?.country) && (
+                        <div className="text-sm leading-normal text-slategray mt-0 font-medium capitalize flex items-center justify-center">
+                          <FaMapMarkerAlt className="me-2" />
+                          {(singlePost?.user?.address &&
+                            singlePost?.user?.address + ", ") ||
+                            ""}
+                          {singlePost?.user?.country || ""}
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="pb-2 text-center border-t-[1px] border-blue-gray-50 pt-3">
-                    <div className="flex flex-wrap justify-center">
-                      <div className="w-full lg:w-9/12 px-4">
-                        <p className="text-indigo font-semibold">
-                          Author Bio or Status{" "}
-                        </p>
-                        <p className="mb-1 sm:mb-2 md:mb-3 lg:mb-4 text-base">
-                          <span className="text-slategray text-sm font-medium">
-                            {singlePost?.user?.bio || "Nothing to show."}
-                          </span>
-                        </p>
-                      </div>
-                    </div>
+                    {singlePost?.user?.bio &&
+                      singlePost?.user?.bio?.length > 0 && (
+                        <div className="flex flex-wrap justify-center">
+                          <div className="w-full lg:w-9/12 px-4">
+                            <p className="text-indigo font-semibold">
+                              Author Bio or Status{" "}
+                            </p>
+                            <p className="mb-1 sm:mb-2 md:mb-3 lg:mb-4 text-base">
+                              <span className="text-slategray text-sm font-medium">
+                                {singlePost?.user?.bio || "Nothing to show."}
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+                      )}
                   </div>
                 </div>
                 <div className="px-6 mb-6 mt-2 flex flex-wrap justify-center gap-3 overflow-y-scroll scrollbar-y-dir h-[40vh]">

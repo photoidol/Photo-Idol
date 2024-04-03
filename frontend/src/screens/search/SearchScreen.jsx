@@ -353,10 +353,14 @@ export const SearchContent = () => {
             </div>
           )}
           {isLoading && <Loader />}
-          <Masonary dataArr={sortedPosts.slice(0, visiblePosts)} />
+          <Masonary
+            dataArr={sortedPosts.slice(0, visiblePosts)}
+            dataLength={sortedPosts?.length}
+          />
           {sortedPosts?.length > visiblePosts && (
             <div className="text-center mt-4 mb-10 flex items-center justify-center">
-              <button type="button"
+              <button
+                type="button"
                 className="text-center h-[44px] min-w-[160px] flex items-center justify-center font-semibold text-base  bg-moonstone-gradient2 text-white default-transition shadow-lg rounded"
                 onClick={loadMorePosts}
               >
@@ -429,10 +433,12 @@ export const SearchContent = () => {
           {isLoading && <Loader />}
           <Masonary
             dataArr={sortedCategoryPosts.slice(0, visibleCategoryPosts)}
+            dataLength={sortedCategoryPosts?.length}
           />
           {sortedCategoryPosts.length > visibleCategoryPosts && (
             <div className="text-center mt-4 mb-10 flex items-center justify-center">
-              <button type="button"
+              <button
+                type="button"
                 className="text-center h-[44px] min-w-[160px] flex items-center justify-center font-semibold text-base  bg-moonstone-gradient2 text-white default-transition shadow-lg rounded"
                 onClick={loadMoreCategoryPosts}
               >

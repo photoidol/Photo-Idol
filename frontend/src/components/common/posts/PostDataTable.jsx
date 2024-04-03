@@ -271,7 +271,7 @@ export const PostDataTable = (props) => {
                                 variant="small"
                                 className="font-bold capitalize text-slategray"
                               >
-                                {post?.title}
+                                {post?.title || ""}
                               </Typography>
                             </div>
                           </td>
@@ -281,7 +281,7 @@ export const PostDataTable = (props) => {
                                 variant="small"
                                 className="font-normal text-slategray"
                               >
-                                {post?.category?.title}
+                                {post?.category?.title || ""}
                               </Typography>
                             </div>
                           </td>

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RESET, logout, selectUser } from "../../redux/slices/authSlice";
 import { BsSearch } from "react-icons/bs";
 import useNavbarBackground from "../../hooks/useNavbarBackground";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useEffect } from "react";
 import {
   Menu,
@@ -31,14 +31,13 @@ export const Header = () => {
   const navigate = useNavigate();
   const url = useLocation();
   const isNavbarOpen = useSelector(selectIsNavbarOpen);
+  const topNavbarRef = useRef(null);
 
   // ### HEADER CHANGE ON SCROLL
   const scrollThreshold = 70;
   const hasBackground = useNavbarBackground(scrollThreshold);
   const headerStyle = {
-    background: hasBackground
-      ? "rgba(0, 0, 0, 0.5)"
-      : `rgba(0, 0, 0, 0.5)`,
+    background: hasBackground ? "rgba(0, 0, 0, 0.5)" : `rgba(0, 0, 0, 0.5)`,
   };
 
   //### HOME PAGE SEARCH
@@ -92,8 +91,30 @@ export const Header = () => {
 
   const location = useLocation();
 
+  const handleClickOutside = (event) => {
+    if (topNavbarRef.current && !topNavbarRef.current.contains(event.target)) {
+      dispatch(closeNavbar());
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleScrollLinkClick = (event) => {
+    event.target.parentElement.click();
+  };
+
   return (
     <>
+      <div
+        className={`top-navbar-overlay fixed top-0 left-0 bg-black/70 w-full h-full z-[40] ${
+          !isNavbarOpen ? "invisible" : "visible"
+        }`}
+      ></div>
       <div className="fixed top-0 left-0 z-50 w-full">
         {location.pathname === "/" && <AuthHeader />}
         <header
@@ -111,6 +132,7 @@ export const Header = () => {
             </Link>
 
             <div
+              ref={topNavbarRef}
               className={`lg:flex items-center top-navbar ${
                 isNavbarOpen ? "show" : ""
               }`}
@@ -156,7 +178,7 @@ export const Header = () => {
                     </button>
                   </div>
                   <div
-                    className={`absolute top-full mt-2 bg-white shadow rounded px-3 py-1 text-dark/60 font-medium ${
+                    className={`absolute top-full mt-2 bg-white shadow rounded px-3 py-1 text-dark/60 text-xs font-medium ${
                       showSearchError ? "block" : "hidden"
                     }`}
                   >
@@ -176,7 +198,7 @@ export const Header = () => {
                 </div>
                 <div
                   className={`relative navbar-link-dropdown ${
-                    url.pathname === "/" && "hidden md:block"
+                    url.pathname === "/" && ""
                   } ${url.pathname.startsWith("/results/") ? "hidden" : ""} ${
                     url.pathname.startsWith("/search") ? "hidden" : ""
                   } ${url.pathname.startsWith("/category") ? "hidden" : ""} ${
@@ -190,7 +212,7 @@ export const Header = () => {
                         <FiChevronDown size={22} />
                       </button>
                     </MenuHandler>
-                    <MenuList className="max-w-[18rem] px-2 py-1">
+                    <MenuList className="max-w-[18rem] px-2 py-1 menu-list-check">
                       <MenuItem className="flex items-center gap-2 p-0 text-base h-[36px]">
                         <ScrollLink
                           className="inline-flex items-center justify-start px-3 w-full font-semibold h-full text-sm text-slategray"
@@ -198,6 +220,7 @@ export const Header = () => {
                           smooth={true}
                           duration={400}
                           offset={-90}
+                          onClick={handleScrollLinkClick}
                         >
                           Pricing
                         </ScrollLink>
@@ -209,6 +232,7 @@ export const Header = () => {
                           smooth={true}
                           duration={400}
                           offset={-80}
+                          onClick={handleScrollLinkClick}
                         >
                           Studio Archives
                         </ScrollLink>
@@ -220,6 +244,7 @@ export const Header = () => {
                           smooth={true}
                           duration={400}
                           offset={-90}
+                          onClick={handleScrollLinkClick}
                         >
                           Top Portraits
                         </ScrollLink>
@@ -231,6 +256,7 @@ export const Header = () => {
                           smooth={true}
                           duration={400}
                           offset={-90}
+                          onClick={handleScrollLinkClick}
                         >
                           Top Landscapes
                         </ScrollLink>
@@ -242,6 +268,7 @@ export const Header = () => {
                           smooth={true}
                           duration={400}
                           offset={-90}
+                          onClick={handleScrollLinkClick}
                         >
                           Recent Uploads
                         </ScrollLink>
@@ -253,6 +280,7 @@ export const Header = () => {
                           smooth={true}
                           duration={400}
                           offset={-90}
+                          onClick={handleScrollLinkClick}
                         >
                           Contact Us
                         </ScrollLink>

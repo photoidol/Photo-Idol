@@ -16,7 +16,7 @@ import {
 } from "../../redux/slices/userSlice";
 import { isEmptyObject } from "../../utils/helper";
 
-const Masonary = ({ dataArr }) => {
+const Masonary = ({ dataArr, dataLength }) => {
   const breakpointColumnsObj = {
     default: 5,
     1100: 4,
@@ -53,14 +53,14 @@ const Masonary = ({ dataArr }) => {
 
   return (
     <>
-      <div className="-ms-[16px] -me-[16px]">
+      <div className="-ms-[16px] -me-[16px]" data-aos="fade-up">
         <Masonry
           breakpointCols={breakpointColumnsObj}
           className="my-masonry-grid"
-          columnClassName="my-masonry-grid_column sm:my-9 my-5"
+          columnClassName="my-masonry-grid_column sm:my-9 my-5" 
         >
           {dataArr?.length > 0 &&
-            dataArr?.slice(0, 18).map((item) => {
+            dataArr?.slice(0, dataLength).map((item) => {
               return (
                 <Link
                   to={`/search/${item?.slug}`}
@@ -119,5 +119,11 @@ const Masonary = ({ dataArr }) => {
 
 Masonary.propTypes = {
   dataArr: PropTypes.any,
+  dataLength: PropTypes.number
 };
+
+Masonary.defaultProps = {
+  dataLength: 18
+}
+
 export default Masonary;

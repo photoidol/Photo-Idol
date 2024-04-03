@@ -13,14 +13,10 @@ import { getAllPost, selectAllPosts } from "../../redux/slices/postsSlice";
 import Loader from "../common/Loader";
 import { getallCategory } from "../../redux/slices/categorySlice";
 import { Typography } from "@material-tailwind/react";
-import {
-  getFeaturedCategoriesLists,
-  getFeaturesLists,
-} from "../../redux/slices/settings/SettingSlice";
+import { getFeaturesLists } from "../../redux/slices/settings/SettingSlice";
 import { format } from "date-fns";
 import {
   CATEGORY_ADMIN,
-  FEATURED_CATEGORY_REQ_LIMIT,
   HOME_SETTING_OPT_THREE,
   PHOTO_FEATURING_LIMIT,
 } from "../../utils/constants";
@@ -333,7 +329,7 @@ export const ExploreTwo = () => {
             </p>
           </div>
           {isLoading && <Loader />}
-          <div data-aos="fade-up">
+          <div>
             {posts?.length > 0 && (
               <div className="mt-4 masonry-wrapper">
                 <Masonary dataArr={posts?.slice(0, 18)} />
