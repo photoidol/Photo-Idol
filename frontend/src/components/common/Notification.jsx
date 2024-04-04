@@ -28,14 +28,14 @@ export const Notification = () => {
           <span className="font-semibold"> check your email </span>for a
           verification link.{" "}
           <span className="font-medium">
-            If you haven&apos;t received yet, please click below.
+            If you haven&apos;t received yet, please click Resend Link.
           </span>
         </span>
       </Alert>
       <p className="text-white bg-moonstone p-3 rounded-md shadow-md">
         <span className="font-bold">Note: </span>If the message isn&apos;t
-        in your spam folder. If you find it there, mark it as <b>&quot;Report not
-        spam&quot;</b>, then double-check your inbox for verification.
+        in your inbox, kindly check your spam folder. If you find it there, mark it as <b>&quot;Report not
+        spam&quot;</b>, then double-check your inbox and verify.
       </p>
     </>
   );
