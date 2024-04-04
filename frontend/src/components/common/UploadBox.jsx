@@ -39,8 +39,8 @@ export const UploadBox = () => {
           navigate("/admin/upload");
         } else {
           handlePopupOpen(
-            "You've hit the Upload Limit 3 images!",
-            "Upload Complete: You've reached the maximum of 3 images allowed.",
+            "You've hit the Upload Limit 2 images!",
+            "Upload Complete: You've reached the maximum of 2 images allowed.",
             staticImages.payment1
           );
           navigate("/admin/images");
