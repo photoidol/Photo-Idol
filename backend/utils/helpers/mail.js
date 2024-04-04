@@ -24,7 +24,7 @@ const sendVerificationMail = (verificationToken, profile) => {
   try {
     const transport = generateMailTransporter();
     const { name, email } = profile;
-    const message = `Dear ${name}, We're excited to have you join us at Foto Idol! To get started, all you need to do is verify your account.`;
+    const message = `Dear ${name}, We're excited to have you join us at Foto Idol ! To get started, all you need to do is verify your account.`;
 
     transport.sendMail({
       to: email,
