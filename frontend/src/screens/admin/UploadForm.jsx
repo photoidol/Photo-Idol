@@ -79,8 +79,8 @@ const UploadForm = () => {
       return "Please choose an image.";
     } else if (value.length > 1) {
       return "Please select only one image.";
-    } else if (value.size > 1 * 1024 * 1024) {
-      return "Image size can't be larger than 1 MB.";
+    } else if (value.size > 3 * 1024 * 1024) {
+      return "Image size can't be larger than 3 MB.";
     }
     return "";
   };
