@@ -218,7 +218,7 @@ export const Branches = ({ allLocation }) => {
       <div className="containers w-full sm:w-auto">
         <div className="text-center mb-6 md:mb-8 lg:mb-10" data-aos="fade-up">
           <h2 className="text-2xl font-bold text-gray-900 sm:text-2xl lg:text-3xl">
-            All Branches
+            Our Location
           </h2>
         </div>
         <div data-aos="fade-up">
