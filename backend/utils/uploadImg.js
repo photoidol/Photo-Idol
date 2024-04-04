@@ -55,7 +55,7 @@ function fileFilter(req, file, cb) {
 const upload = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 1 * 1024 * 1024 }, // Limit file size to 1MB
+  limits: { fileSize: 3 * 1024 * 1024 }, // Limit file size to 1MB
 });
 
 // Middleware function to check image size
