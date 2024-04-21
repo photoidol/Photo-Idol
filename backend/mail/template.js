@@ -721,7 +721,8 @@ const generateTemplate = (options) => {
                                   <td class="pad" style="width: 100%; padding-right: 0px; padding-left: 0px">
                                     <div class="alignment" align="center" style="line-height: 10px">
                                       <a href="https://fotoidol.com/" target="_blank" rel="noopener noreferrer">
-                                      <img src="https://fotoidol.com/assets/site_logo-8fe97392.png" style="display: block; height: auto; border: 0; max-width: 100px; width: 100%" width="100" alt="Company Logo" title="Company Logo" />
+                                      // <img src="https://fotoidol.com/assets/site_logo-8fe97392.png" style="display: block; height: auto; border: 0; max-width: 100px; width: 100%" width="100" alt="Company Logo" title="Company Logo" />
+                                      <img src="https://www.facebook.com/photo?fbid=122094480242257393&set=a.122094472220257393" style="display: block; height: auto; border: 0; max-width: 100px; width: 100%" width="100" alt="Company Logo" title="Company Logo" />
                                       </a>
                                     </div>
                                   </td>
