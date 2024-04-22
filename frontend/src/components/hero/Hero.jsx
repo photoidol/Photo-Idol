@@ -74,7 +74,7 @@ export const Hero = () => {
                   <section
                     className="min-h-screen flex flex-col justify-center"
                     style={{
-                      background: `linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.2)), url(${banner?.cover?.filePath}) center/cover no-repeat`,
+                      background: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${banner?.cover?.filePath}) center/cover no-repeat`,
                     }}
                   >
                     <div className="min-h-[720px] flex flex-col justify-center">
